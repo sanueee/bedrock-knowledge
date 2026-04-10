@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     FILE* inp = fopen(path, "r");
     if (inp == NULL)
     {
-        fprintf(stderr, "erorr: opening %s", path);
+        fprintf(stderr, "error: opening %s", path);
         return 1;
     }
     
