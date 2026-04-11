@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <inttypes.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
@@ -46,7 +47,7 @@ void ProcessByPID(const char *arg)
     }
 
     char pid_string[21];
-    snprintf(pid_string, sizeof(pid_string), "%llu", pid);
+    snprintf(pid_string, sizeof(pid_string), "%" PRIu64, pid);
 
     char path[64] = "/proc/";
     strncat(path, pid_string, 21);
@@ -79,7 +80,7 @@ void ProcessByPID(const char *arg)
             if (sscanf(line + 6, "%63s %15s", val, units) == 2) {
                 uint64_t res_kb = strtoull(val, NULL, 10);
                 uint64_t res_mb = res_kb / 1024;
-                fprintf(stdout, "Memory:\t%llu MB\n", res_mb);
+                fprintf(stdout, "Memory:\t%" PRIu64 " MB\n", res_mb);
             }
         }
     }
@@ -157,7 +158,7 @@ void ProcessTop()
     {
         fprintf(stdout, "Name: %s\n", proc_arr[i].name);
         fprintf(stdout, "PID: %s\n", proc_arr[i].pid);
-        fprintf(stdout, "Memory: %llu kb\n",proc_arr[i].vmrss_kb);
+        fprintf(stdout, "Memory: %" PRIu64 " kb\n", proc_arr[i].vmrss_kb);
         fprintf(stdout, "\n");
     }
 }
