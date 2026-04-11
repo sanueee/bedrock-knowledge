@@ -27,7 +27,7 @@ int main(int argc, char **argv)
         if (strcmp(curr_fd->d_name, ".") == 0 || strcmp(curr_fd->d_name, "..") == 0)
             continue;
 
-        char full_path[128];
+        char full_path[384];
         snprintf(full_path, sizeof(full_path), "%s/%s", path, curr_fd->d_name);
 
         char target[256];
