@@ -5,6 +5,27 @@
 
 ---
 
+## Текущая позиция
+
+> Обновлять после каждого завершённого task (скилл `session-debrief`).
+
+**Активный блок:** A — Linux Internals (C)
+**Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait
+**Последний выполненный task:** task-04 (procfork)
+
+**Следующая задача — A5: Сигналы (signal, kill, sigaction)**
+- Написать программу с обработчиком SIGINT и SIGTERM: при получении сигнала писать в лог и корректно завершаться
+- Функции: `sigaction()`, `sigset_t`, `kill()`
+- Man-страницы: `man 2 sigaction`, `man 7 signal`
+- После: добавить обработку сигналов в procfork из task-04
+- Код: `linux/proc/`
+- Vault: `knowledge-base/tasks/task-05.md`, тема: `topics/linux/signals.md`
+
+**Счётчик задач с последнего мок-собеса:** 4
+*(мок-собес каждые 8 задач — при достижении предложить `mock-interview`)*
+
+---
+
 ## Главный вектор
 
 **Сети → VPN-клиент → Блокчейн**
