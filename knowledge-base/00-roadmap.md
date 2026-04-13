@@ -72,4 +72,4 @@ PoW-цепочка + P2P синхронизация + JSON-RPC.
 | 01 | [[task-01-procinfo\|procinfo]] | выполнено | 2026-04 |
 | 02 | [[task-02-procinfo-top5\|procinfo top5]] | выполнено, протестировано на Linux | 2026-04 |
 | 03 | [[task-03-fdlist\|fdlist]] | выполнено, протестировано на Linux | 2026-04-11 |
-| 04 | [[task-04-procfork\|procfork]] | в процессе | 2026-04-13 |
+| 04 | [[task-04-procfork\|procfork]] | выполнено | 2026-04-13 |
