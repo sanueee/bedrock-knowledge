@@ -14,7 +14,7 @@ void handler(int sig)
     }
     else if (sig == SIGTERM)
     {
-        fprintf(log_file, "[%u] caught SIGTERM, shutting down\n");
+        fprintf(log_file, "[%u] caught SIGTERM, shutting down\n", getpid());
         exit(0);
     }
 }
