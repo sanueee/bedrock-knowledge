@@ -32,6 +32,7 @@
 - Task 02 — procinfo top5: ✅ выполнено
 - Task 03 — fdlist: ✅ выполнено
 - Task 04 — procfork: ✅ выполнено
+- Task 05 — signals: ✅ выполнено
 
 ## Структура проекта
 

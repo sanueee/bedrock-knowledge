@@ -10,18 +10,16 @@
 > Обновлять после каждого завершённого task (скилл `session-debrief`).
 
 **Активный блок:** A — Linux Internals (C)
-**Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait
-**Последний выполненный task:** task-04 (procfork)
+**Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause)
+**Последний выполненный task:** task-05 (signals)
 
-**Следующая задача — A5: Сигналы (signal, kill, sigaction)**
-- Написать программу с обработчиком SIGINT и SIGTERM: при получении сигнала писать в лог и корректно завершаться
-- Функции: `sigaction()`, `sigset_t`, `kill()`
-- Man-страницы: `man 2 sigaction`, `man 7 signal`
-- После: добавить обработку сигналов в procfork из task-04
+**Следующая задача — A6: Pipes и IPC**
+- Родитель и дочерний процесс общаются через pipe: дочерний пишет, родитель читает
+- Функции: `pipe()`, `dup2()`, `read()`, `write()`
 - Код: `linux/proc/`
-- Vault: `knowledge-base/tasks/task-05.md`, тема: `topics/linux/signals.md`
+- Vault: `knowledge-base/tasks/task-06.md`, тема: `topics/linux/pipes-linux.md`
 
-**Счётчик задач с последнего мок-собеса:** 4
+**Счётчик задач с последнего мок-собеса:** 5
 *(мок-собес каждые 8 задач — при достижении предложить `mock-interview`)*
 
 ---

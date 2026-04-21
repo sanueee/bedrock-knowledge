@@ -15,3 +15,4 @@
 | 02 | [[task-02-procinfo-top5\|procinfo top5]] | выполнено, протестировано на Linux | 2026-04 |
 | 03 | [[task-03-fdlist\|fdlist]] | выполнено, протестировано на Linux | 2026-04-11 |
 | 04 | [[task-04-procfork\|procfork]] | выполнено | 2026-04-13 |
+| 05 | [[task-05-signals\|signals]] | выполнено | 2026-04-21 |
