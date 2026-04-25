@@ -16,7 +16,7 @@ int main(void)
         char state[32];
         if (sscanf(line, "%*s %63s %63s %31s", local_address, rem_address, state) == 3)
         {
-            fprintf(stdout, "%s %s %s\n", local_address, rem_address, state);
+            fprintf(stdout, "%-22s %-22s %-22s\n", local_address, rem_address, state);
         }
     }
     fclose(f_tcp);
