@@ -2,7 +2,7 @@
 task: task-07
 title: procnet — чтение активных TCP-соединений из /proc/net/tcp
 status: in-progress
-topic: "[[proc-net]]"
+date: 2026-04
 ---
 
 ## Задание
@@ -26,10 +26,10 @@ local           remote          state
 4. Из каждой строки распарсить:
    - local address: поле 2 (`XXXXXXXX:PPPP` — hex IP:hex port)
    - remote address: поле 3
-   - state: поле 4 (hex число: `01` = ESTABLISHED, `0A` = LISTEN)
+   - state: поле 4 (hex: `01` = ESTABLISHED, `0A` = LISTEN)
 5. Конвертировать hex IP в dotted decimal (`strtol` + побайтовый разбор)
 6. Конвертировать hex port в десятичный
-7. Вывести только соединения в состоянии ESTABLISHED и LISTEN
+7. Вывести только ESTABLISHED и LISTEN
 
 **Функции для использования:**
 - `fopen()`, `fgets()`, `fclose()` — чтение файла
@@ -40,23 +40,37 @@ local           remote          state
 **Где сохранить:** `linux/proc/procnet.c`
 
 **Как проверить:**
-```
+```bash
 gcc procnet.c -o procnet && ./procnet
 ```
 Сравнить с выводом `ss -tn` или `netstat -tn`.
 
-**Vault после завершения:** `knowledge-base/topics/linux/proc-net.md`
-
 ---
+
+## Моё решение
+
+*(заполняется после выполнения)*
+
+## Ключевые функции
+
+*(заполняется после выполнения)*
 
 ## Что узнал
 
-*(заполняется после session-debrief)*
+*(заполняется после выполнения)*
 
-## Сложности
+## Ошибки и трудности
 
-*(заполняется после session-debrief)*
+*(заполняется после выполнения)*
+
+## Что бы сделал иначе
+
+*(заполняется после выполнения)*
 
 ## Код
 
-*(ссылка на файл после выполнения)*
+`linux/proc/procnet.c`
+
+## Связанные темы
+
+[[proc-filesystem]] [[file-io-c]] [[string-formatting-c]]
