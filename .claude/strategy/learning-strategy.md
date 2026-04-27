@@ -71,15 +71,26 @@
 ### Блок A — Linux Internals (C) [ТЕКУЩИЙ]
 
 Освоенные темы (не давать снова):
-- /proc filesystem: чтение /proc/\<pid\>/status
-- directory traversal: opendir/readdir
-- file descriptors: /proc/\<pid\>/fd/, readlink
-- string formatting: snprintf, fprintf, PRIu64
-- sorting: qsort с компаратором
-- error handling: внешний мир vs внутренняя логика
-- процессы: fork/exec/wait — fork(), execv(), waitpid(), WEXITSTATUS()
 
-**Следующие темы по порядку:**
+#### A1 — /proc filesystem
+Цель: читать и парсить /proc/\<pid\>/status.
+Задание-шаблон: вывести список процессов с именем и RSS-памятью.
+Функции: `opendir()`, `readdir()`, `fopen()`, `fgets()`, `snprintf()`, `fprintf()`
+
+#### A2 — Сортировка: qsort
+Цель: отсортировать список процессов по использованию памяти.
+Задание-шаблон: вывести top-5 процессов по VmRSS.
+Функции: `qsort()`, компаратор с `const void *`
+
+#### A3 — Файловые дескрипторы
+Цель: читать /proc/\<pid\>/fd/ и раскрывать симлинки.
+Задание-шаблон: вывести список открытых файлов процесса.
+Функции: `readlink()`, `opendir()`, `readdir()`
+
+#### A4 — Процессы: fork/exec/wait
+Цель: создавать дочерние процессы и управлять ими.
+Задание-шаблон: fork + exec дочернего процесса + waitpid с корректной обработкой кода выхода.
+Функции: `fork()`, `execv()`, `waitpid()`, `WEXITSTATUS()`
 
 #### A5 — Сигналы: signal, kill, sigaction
 Цель: понять межпроцессное взаимодействие через сигналы.
