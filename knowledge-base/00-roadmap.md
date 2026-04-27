@@ -19,7 +19,7 @@
 | 04 | [[task-04-procfork\|procfork]] | ✅ выполнено | `procfork.c` |
 | 05 | [[task-05-signals\|signals]] | ✅ выполнено | `signals.c` |
 | 06 | [[task-06-pipes\|pipes]] | ✅ выполнено | `pipechat.c` |
-| 07 | [[task-07-procnet\|procnet]] | 🔄 in-progress | `procnet.c` |
+| 07 | [[task-07-procnet\|procnet]] | ✅ выполнено | `procnet.c` |
 
 ---
 
@@ -29,6 +29,7 @@
 - [[fork-linux]] — создание процессов, fork/waitpid
 - [[signals-linux]] — сигналы, sigaction, SIGINT/SIGTERM
 - [[pipes-linux]] — межпроцессное взаимодействие через pipe
+- [[proc-net]] — чтение /proc/net/tcp, парсинг TCP-соединений
 - [[symlinks-linux]] — символические ссылки, readlink
 - [[anon-inode]] — анонимные inode: epoll, signalfd, timerfd
 - [[ssh-basics]] — основы SSH

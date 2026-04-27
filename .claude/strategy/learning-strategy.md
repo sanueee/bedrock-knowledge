@@ -10,16 +10,16 @@
 > Обновлять после каждого завершённого task (скилл `session-debrief`).
 
 **Активный блок:** A — Linux Internals (C)
-**Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause)
-**Последний выполненный task:** task-05 (signals)
+**Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause), pipes/IPC (pipe/dup2/read/write), /proc/net/tcp parsing (sscanf, bitwise ops, little-endian IP)
+**Последний выполненный task:** task-07 (procnet)
 
-**Следующая задача — A6: Pipes и IPC**
-- Родитель и дочерний процесс общаются через pipe: дочерний пишет, родитель читает
-- Функции: `pipe()`, `dup2()`, `read()`, `write()`
+**Следующая задача — A8: Потоки (pthreads)**
+- Параллельный сбор данных из /proc — несколько потоков читают разные PID, результат в общий массив с мьютексом
+- Функции: `pthread_create()`, `pthread_join()`, `pthread_mutex_t`
 - Код: `linux/proc/`
-- Vault: `knowledge-base/tasks/task-06.md`, тема: `topics/linux/pipes-linux.md`
+- Vault: `knowledge-base/tasks/task-08.md`, тема: `topics/linux/pthreads-linux.md`
 
-**Счётчик задач с последнего мок-собеса:** 5
+**Счётчик задач с последнего мок-собеса:** 7
 *(мок-собес каждые 8 задач — при достижении предложить `mock-interview`)*
 
 ---
