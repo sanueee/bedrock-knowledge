@@ -35,6 +35,7 @@
 - Task 05 — signals: ✅ выполнено
 - Task 06 — pipes: ✅ выполнено
 - Task 07 — procnet: ✅ выполнено
+- Task 08 — pthreads: ✅ выполнено
 
 ## Структура проекта
 

@@ -10,16 +10,16 @@
 > Обновлять после каждого завершённого task (скилл `session-debrief`).
 
 **Активный блок:** A — Linux Internals (C)
-**Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause), pipes/IPC (pipe/dup2/read/write), /proc/net/tcp parsing (sscanf, bitwise ops, little-endian IP)
-**Последний выполненный task:** task-07 (procnet)
+**Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause), pipes/IPC (pipe/dup2/read/write), /proc/net/tcp parsing (sscanf, bitwise ops, little-endian IP), pthreads (pthread_create/join, mutex, data race)
+**Последний выполненный task:** task-08 (pthreads)
 
-**Следующая задача — A8: Потоки (pthreads)**
-- Параллельный сбор данных из /proc — несколько потоков читают разные PID, результат в общий массив с мьютексом
-- Функции: `pthread_create()`, `pthread_join()`, `pthread_mutex_t`
-- Код: `linux/proc/`
-- Vault: `knowledge-base/tasks/task-08.md`, тема: `topics/linux/pthreads-linux.md`
+**Следующая задача — B1: TCP-сокеты**
+- Простейший echo-сервер и клиент
+- Функции: `socket()`, `bind()`, `listen()`, `accept()`, `connect()`, `send()`, `recv()`
+- Код: `networking/`
+- Vault: `knowledge-base/tasks/task-09.md`, тема: `topics/networking/tcp-sockets.md`
 
-**Счётчик задач с последнего мок-собеса:** 7
+**Счётчик задач с последнего мок-собеса:** 8
 *(мок-собес каждые 8 задач — при достижении предложить `mock-interview`)*
 
 ---

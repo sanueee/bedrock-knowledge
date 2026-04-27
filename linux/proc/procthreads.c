@@ -91,7 +91,7 @@ int main(void)
             }
         }
     }
-    pid_list[count] = -1;
+    closedir(d_proc);
 
     int chunk = count / 4;
 
