@@ -13,6 +13,7 @@ int main(void)
         return 1;
     }
     char line[512];
+    fprintf(stdout, "%-25s %-25s %s\n", "local", "remote", "state");
     while (fgets(line, sizeof(line), f_tcp) != NULL)
     {
         char local_address[16];
