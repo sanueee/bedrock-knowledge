@@ -37,12 +37,14 @@ void print_converted_address(char *address)
     unsigned int ip, port;
     sscanf(address, "%X:%X", &ip, &port);
 
-    fprintf(stdout, "%d.%d.%d.%d:%d",
+    char buf[32];
+    snprintf(buf, sizeof(buf), "%d.%d.%d.%d:%d",
     (ip) & 0xFF,
     (ip >> 8)  & 0xFF,
     (ip >> 16) & 0xFF,
     (ip >> 24) & 0xFF,
     port);
+    fprintf(stdout, "%-25s", buf);
 }
 
 void print_converted_state(char *state)
@@ -59,4 +61,5 @@ void print_converted_state(char *state)
     {
         fprintf(stdout, "TIME_WAIT");
     }
+    else { fprintf(stdout, "(%s)", state); }
 }
