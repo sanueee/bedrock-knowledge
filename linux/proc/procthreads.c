@@ -49,7 +49,7 @@ void *worker(void *arg)
 {
     ThreadArg *t = (ThreadArg *)arg;
     for (int i = 0; i < t->count; i++) {
-        ProcInfo info;
+        ProcInfo info = {0};
         if (read_proc_status(t->pids[i], &info) == 0) 
         {
             pthread_mutex_lock(&mutex);
@@ -113,9 +113,9 @@ int main(void)
     }
 
     qsort(results, results_count, sizeof(ProcInfo), cmp_rss);
-    printf("%-6s %-20s %s\n", "PID", "NAME", "VmRSS (kB)");
+    printf("%-6s %-30s %s\n", "PID", "NAME", "VmRSS (kB)");
     for (int i = 0; i < results_count; i++)
     {
-        printf("%-6d %-20s %ld\n", results[i].pid, results[i].name, results[i].rss);
+        printf("%-6d %-30s %ld\n", results[i].pid, results[i].name, results[i].rss);
     }
 }
