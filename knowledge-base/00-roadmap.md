@@ -46,6 +46,14 @@
 
 ---
 
+## Мок-собесы
+
+| # | Дата | Слабые места |
+|---|------|-------------|
+| 01 | 2026-04-28 | opendir vs readdir, зомби/таблица процессов, sigaction vs signal, pipe EOF |
+
+---
+
 ## Стратегия
 
 `.claude/strategy/learning-strategy.md`
