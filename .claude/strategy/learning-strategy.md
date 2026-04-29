@@ -22,22 +22,39 @@
 **Счётчик задач с последнего мок-собеса:** 0
 *(мок-собес каждые 8 задач — при достижении предложить `mock-interview`)*
 
+**Счётчик задач с последнего reading-code:** 0
+*(reading-сессия каждые 4 задачи — при достижении вызвать `reading-code`. Также обязательная reading-сессия при завершении любого блока.)*
+
 ---
 
 ## Главный вектор
 
-**Сети → VPN-клиент → Блокчейн**
+**Сети → VPN-клиент → Изоляция и наблюдение (sandbox + eBPF + LLM-security)**
 
 Навыки учатся не сами по себе — они учатся под конкретный проект.
 Каждый этап заканчивается живым якорным проектом.
 
 | Этап | Якорный проект | Когда |
 |------|---------------|-------|
-| 1. Фундамент | Network scanner (C) | сейчас — конец 2026 |
+| 1. Фундамент | Network scanner (C) + bonus: prompt injection detector (Python) | сейчас — конец 2026 |
 | 2. VPN | Упрощённый VPN-клиент (Rust) | 2027 |
-| 3. Блокчейн | Минимальная блокчейн-нода (Rust) | 2027–2028 |
+| 3. Изоляция и наблюдение | LLM-jail: sandbox для LLM-агентов с eBPF-телеметрией (C/Rust) | 2027–2028 |
 
 **Цель:** первый оффер к лету–осени 2028 (конец 3-го курса).
+
+### Языки в стратегии
+
+**Основные** (под якорные проекты, осознанная глубина):
+- **C** — этап 1 (Linux internals, сети, mini-firejail в этапе 3)
+- **Rust** — этап 2 (VPN, потом части этапа 3)
+
+**Инструментальные** (учим по необходимости, без отдельных учебных блоков):
+- **Python** — везде где LLM-security и SAST: блок Z (prompt injection detector), блоки I и J этапа 3 (LLM-обвязка, NeMo Guardrails, llm-guard, Microsoft Presidio), DevSecOps-tooling (bandit, semgrep), CTF (pwntools для exploit dev). Прокачивается через эти задачи, не отдельным курсом.
+- **Go** — для user-space части eBPF-инструментов (libbpf-go, Inspektor Gadget) и для чтения/патчинга чужого кода экосистемы (Cilium, Tetragon, Falco, Trivy). В блоке H можно опционально написать syscall-tracer на Go вместо C — это упростит user-space часть и даст входной билет в Go.
+
+**Правило**: Python/Go не получают отдельных блоков и task'ов "учим язык". Они растут вместе с проектами. Когда упираемся в задачу где они нужны — `explain-code` объясняет минимально достаточный фрагмент языка, пишем, движемся дальше.
+
+**Почему LLM-jail как финальный проект.** Это пересечение трёх стеков (Linux internals + observability + LLM-security), которое даёт уникальную точку дифференциации. Sandbox и eBPF по отдельности — стандартные инструменты разработчика СЗИ. Применение их к изоляции LLM-агентов — редкое и востребованное сочетание для 2028 года.
 
 ---
 
@@ -49,6 +66,8 @@
 4. **Одна тема — один task** — не смешивать `fork()` и `epoll` в одном задании.
 5. **Каждый task завершается vault-записью** — иначе знание не зафиксировано.
 6. **Раз в 8 задач — мок-собес** — по пройденным темам, в формате вопрос-ответ без кода.
+7. **Раз в 4 задачи — чтение чужого кода** — маленький модуль open-source/kernel с разбором архитектуры. Без этого ты только пишешь, но не учишься читать. Скилл `reading-code`.
+8. **Английский — рабочий словарь** — термины и концепции в vault фиксируются на английском (с русским переводом). Будущие мануалы, RFC, собеседования — на английском.
 
 ---
 
@@ -60,6 +79,14 @@
 Сканер сети: ARP discovery + TCP port scan + определение сервиса по порту.
 Не клон nmap — свой инструмент с пониманием каждой строки.
 Все блоки A и B работают на него.
+
+**Bonus-проект в конце этапа: prompt injection detector на Python**
+1-2 недели после network scanner. Цель — войти в LLM-security как builder, не как исследователь. Подробнее в блоке Z.
+
+**Параллельные треки на всё время этапа 1:**
+- **CTF (picoCTF)** — 1-2 челленджа в неделю, начать прямо сейчас. Категории: General Skills, Forensics, потом Binary Exploitation/Reverse. Не превращать в основное занятие — это тренажёр, не цель.
+- **OWASP Top 10 (web)** — пройти в начале блока B (когда дойдёшь до сетей и HTTP). Статья + DVWA/WebGoat для практики.
+- **Reading-code** — каждые 4 task'а, скилл `reading-code`.
 
 **Связь с универом:**
 - Структуры данных (сем. 2) → напрямую используются в блоках A и B
@@ -136,6 +163,12 @@
 
 ### Блок B — Сетевой стек (C) [после A7–A8]
 
+#### B0 — OWASP Top 10 (web): теоретический заход
+Цель: знать на пальцах SQLi, XSS, SSRF, IDOR, Broken Auth, CSRF и остальные.
+Это не код, это знание для собеседований и для понимания "что атакуют" в блоке B.
+Формат: прочитать актуальный OWASP Top 10, потом 3-5 челленджей на DVWA/WebGoat.
+Место: `topics/security/owasp-top10.md`.
+
 #### B1 — TCP-сокеты: первый клиент-сервер
 Простейший echo-сервер и клиент.
 Функции: `socket()`, `bind()`, `listen()`, `accept()`, `connect()`, `send()`, `recv()`
@@ -177,6 +210,31 @@
 
 #### C4 — Rust: обработка ошибок (Result, Option, ?)
 Отдельная тема — Rust-идиома без аналога в C.
+
+---
+
+### Блок Z — Заход в LLM-security [конец этапа 1, перед этапом 2]
+
+**Зачем:** познакомиться с LLM-security как builder до того как этап 3 завязан на ней. Если нравится — этап 3 идёт уверенно. Если нет — корректируем стратегию заранее.
+
+#### Z1 — OWASP Top 10 for LLM Applications: теория
+Цель: знать ключевые атаки. Prompt injection (LLM01), insecure output handling (LLM02), training data poisoning (LLM03), model DoS (LLM04), supply chain (LLM05), sensitive info disclosure (LLM06), insecure plugin design (LLM07), excessive agency (LLM08), overreliance (LLM09), model theft (LLM10).
+Формат: статья + threat model на одностраничку в vault.
+Место: `topics/llm-sec/owasp-llm-top10.md`.
+
+#### Z2 — Pet-project: prompt injection detector
+1-2 недели на **Python**. Это первая серьёзная Python-задача после школьного уровня — параллельно с детектором подтянуть Python: type hints, virtualenv/poetry, pytest, requests, базовые dataclasses.
+Что делает: на вход — пользовательский prompt, на выход — флаг "подозрительно / чисто" + причина.
+Слои детекции:
+- regex-паттерны на классические injection-фразы ("ignore previous instructions", "you are now ...")
+- эвристики: соотношение спец-токенов, аномальная длина, multi-language switch
+- (опционально) лёгкий классификатор на embeddings (sentence-transformers + logistic regression)
+
+Корпус: открытые датасеты атак (например, Lakera Gandalf prompts, JailbreakBench).
+Тестовая часть: precision/recall на размеченном датасете.
+Выложить в **отдельную репу** на GitHub с README, лицензией, парой тестов.
+
+Место: `llm-sec/prompt-injection-detector/`, vault: `tasks/task-NN-llm-pi-detector.md`.
 
 ---
 
@@ -245,49 +303,120 @@ ECDH handshake перед началом передачи данных.
 
 ---
 
-## Этап 3 — Блокчейн (2027–2028)
+## Этап 3 — Изоляция и наблюдение (2027–2028)
 
-**Якорный проект: минимальная блокчейн-нода на Rust**
-Proof-of-Work цепочка с P2P синхронизацией и JSON-RPC интерфейсом.
-Не Ethereum — свой протокол с нуля с пониманием каждой части.
+**Якорный проект: LLM-jail — sandbox для LLM-агентов с eBPF-телеметрией**
+LLM-агент с tool use (например LangChain/LlamaIndex) запускается в изолированном sandbox'е (namespaces + seccomp + cgroups). Все его действия (системные вызовы, открытие файлов, сетевые соединения) логируются через eBPF. Входы фильтруются prompt injection детектором. На выходе — DLP для секретов/PII.
+
+Это пересечение трёх миров: kernel internals, observability, LLM-security. Никто из 3 курса такого не делает — это сильное портфолио для СЗИ-вакансий.
 
 **Что нужно освоить:**
-- Распределённые системы: P2P networking, Nakamoto consensus
-- Криптография: хеш-цепочки, merkle trees, ECDSA подписи
-- Сети: P2P discovery, gossip protocol
+- Linux primitives изоляции: namespaces (PID/mount/net/user), seccomp-bpf, cgroups, capabilities, pivot_root
+- eBPF: модель, верификатор, libbpf, ring buffer, kprobes/tracepoints
+- LLM-security application layer: prompt injection, agent security, DLP для LLM-output
+- Threat modeling: STRIDE-like разбор для LLM-агентов
 
 ---
 
-### Блок G — Распределённые системы
+### Блок G — Sandbox: Linux primitives изоляции (C)
 
-#### G1 — P2P: TCP-mesh из нескольких нод
-Три процесса находят друг друга и поддерживают соединения.
+#### G1 — Namespaces: первый jail
+Цель: запустить процесс в собственных PID/mount/net namespace.
+Функции: `clone()` с `CLONE_NEW*`, `unshare()`.
+Задание-шаблон: запустить `/bin/sh` в новом PID namespace — убедиться что `ps` показывает только себя.
 
-#### G2 — Gossip-протокол
-Сообщение отправленное одной ноде расходится по всей сети.
+#### G2 — pivot_root и mount namespace
+Цель: дать процессу собственную файловую систему (минимальный rootfs).
+Функции: `mount()`, `pivot_root()`, `umount2()`.
 
-#### G3 — Consensus: Nakamoto PoW
-Реализовать поиск хеша с нужным prefix (proof of work).
+#### G3 — seccomp-bpf: фильтр сисколлов
+Цель: разрешить процессу только whitelist сисколлов.
+Библиотека: `libseccomp` (потом понять как написать BPF-фильтр вручную).
+
+#### G4 — Capabilities: дробление root-прав
+Цель: дропнуть все capabilities кроме нужных.
+Функции: `prctl(PR_CAPBSET_DROP, ...)`, `cap_set_proc()`.
+
+#### G5 — cgroups v2: лимиты ресурсов
+Цель: ограничить процесс по памяти, CPU, pids.
+Через файловую систему: `/sys/fs/cgroup/`.
+
+#### G6 — Промежуточный проект: mini-firejail
+Объединить G1–G5 в утилиту: `./jail --memory 100M --syscalls read,write,exit ./target_program`.
+~500-700 строк на C. Свой mini Firejail.
+Место: `sandbox/mini-firejail/`. **Отдельная репа на GitHub с README.**
 
 ---
 
-### Блок H — Блокчейн-проект
+### Блок H — eBPF: observability и runtime security
 
-#### H1 — Структуры: Block, Transaction, Chain
-Базовые типы, сериализация, валидация.
+**Стек user-space:** kernel-side всегда на C (это требование eBPF-верификатора). User-space loader можно писать на C (libbpf) или **Go** (libbpf-go / cilium/ebpf). Go в этом блоке — опционально, но даёт входной билет в Go-экосистему cloud-native security (Cilium, Tetragon, Falco, Trivy). Решение принимаем после H1 в зависимости от настроения.
 
-#### H2 — Mining: PoW на SHA-256
-Майнинг блока с настраиваемой сложностью.
+#### H1 — Первая eBPF-программа: hello world
+Цель: понять модель — user-space loader + kernel-space программа.
+Инструмент: libbpf + clang. Загрузить программу, которая срабатывает на `execve`.
 
-#### H3 — P2P sync: синхронизация цепочки между нодами
-Ноды договариваются какая цепочка длиннее (longest chain rule).
+#### H2 — kprobes / tracepoints: трейс сисколлов
+Цель: ловить события в ядре и передавать в user-space.
+Механика: ring buffer / perf buffer для передачи событий.
 
-#### H4 — RPC: JSON-RPC для взаимодействия с нодой
-Отправить транзакцию, получить баланс, посмотреть блоки.
+#### H3 — Карты (BPF maps): хранение состояния
+Цель: считать события на per-pid основе, агрегировать.
+Типы: `BPF_MAP_TYPE_HASH`, `BPF_MAP_TYPE_RINGBUF`.
 
-#### H5 — Финал: три ноды, майнинг, синхронизация
-Три инстанса на одной машине, транзакции расходятся по сети.
-Место: `blockchain/`
+#### H4 — XDP/TC: сетевая обработка
+Цель: фильтровать/инспектировать пакеты на уровне драйвера. Только обзорно — не углубляться.
+
+#### H5 — Промежуточный проект: syscall-tracer
+Утилита: `./tracer --pid <PID>` → лог всех `execve`, `open`, `connect` процесса с аргументами.
+Аналог: упрощённый `execsnoop` + `opensnoop` + `tcpconnect` из bcc.
+Стек: kernel-side — C; user-side — на выбор C (libbpf) или **Go** (cilium/ebpf). Если выбираем Go — это будет первый серьёзный Go-проект, прокачка идёт параллельно (стандартная библиотека, channels, context, cobra для CLI).
+Место: `ebpf/syscall-tracer/`. **Отдельная репа на GitHub.**
+
+---
+
+### Блок I — LLM-security application layer
+
+**Стек:** в основном **Python** (это де-факто язык LLM-экосистемы). К этому моменту Python уже подтянут через блок Z. В блоке I добавляются: transformers, sentence-transformers, opentelemetry, FastAPI, Microsoft Presidio.
+
+#### I1 — OWASP Top 10 for LLM (углублённо)
+Уже знаком из блока Z. Углубление: для каждой категории — атакующий пример + защитный паттерн.
+
+#### I2 — Prompt injection detection: refresh + hardening
+Доработать детектор из блока Z до production-ready: тесты, CI, документация. Возможно — добавить классификатор на base-модели через transformers.
+
+#### I3 — Agent security: tool use threat model
+Прочитать NeMo Guardrails / OpenAI plugin guidelines / LangChain security docs. Threat model для агента с tool use: что ломается, как защищать.
+Место: `topics/llm-sec/agent-threat-model.md`.
+
+#### I4 — Output sanitization / LLM DLP
+Утилита-фильтр LLM-вывода: детектит секреты (API keys, JWT, PII) через regex + Microsoft Presidio. Удаляет/маскирует.
+Место: `llm-sec/llm-dlp/`. **Отдельная репа.**
+
+---
+
+### Блок J — Финал этапа 3: LLM-jail
+
+**Полиглот по дизайну:** sandbox runner — C/Rust (G6 → J2), eBPF kernel-side — C (H → J5), eBPF user-side и tool-orchestrator — C/Rust/Go, gates (prompt injection, DLP) — Python, e2e обвязка и LangChain-агент — Python. Реальные production-системы выглядят именно так — это и есть упражнение по интеграции стека.
+
+#### J1 — Архитектура и threat model
+Один документ: что защищаем, от кого, какие границы доверия. Без этого код будет хаотичным.
+
+#### J2 — Sandbox runner для LLM-агента
+Берём `mini-firejail` из G6, адаптируем: дополнительно мониторим всё что делает процесс (через eBPF из H5), пробрасываем строго ограниченный network namespace, ограничиваем capabilities.
+
+#### J3 — Prompt injection gate на входе
+Перед передачей пользовательского ввода в LLM — прогон через детектор из I2. Подозрительные запросы блокируются или помечаются.
+
+#### J4 — DLP gate на выходе
+Перед возвратом ответа LLM пользователю — прогон через DLP из I4.
+
+#### J5 — Tool execution observability
+Каждый tool call агента → логируется eBPF-трейсером. Анализ: что вызвал, к каким файлам обращался, какие сетевые соединения открывал.
+
+#### J6 — Финал: e2e демо
+LangChain-агент в твоём sandbox'е решает реальную задачу, твоя обвязка ловит попытки jailbreak'а, eBPF-логи показывают что именно делал агент. README + видео-демо + блог-пост.
+Место: `llm-sec/llm-jail/`. **Главный pet-project портфолио.**
 
 ---
 
@@ -297,39 +426,59 @@ Proof-of-Work цепочка с P2P синхронизацией и JSON-RPC и�
 |--------|------|--------|
 | Beej's Guide to Network Programming | 1 | онлайн, бесплатно |
 | The Linux Programming Interface (TLPI) | 1 | книга, главы по запросу |
+| OWASP Top 10 (web) | 1 (блок B) | онлайн, бесплатно |
+| OWASP Top 10 for LLM Applications | 1 (блок Z) / 3 | онлайн, бесплатно |
 | The Rust Programming Language (The Book) | 1–2 | онлайн, бесплатно |
 | WireGuard whitepaper | 2 | PDF, 15 страниц |
 | Serious Cryptography — Aumasson | 2 | книга |
-| Bitcoin whitepaper — Satoshi Nakamoto | 3 | PDF, 10 страниц |
-| Mastering Bitcoin — Antonopoulos | 3 | книга / онлайн бесплатно |
+| Containers from Scratch (Liz Rice) — talk + code | 3 (блок G) | YouTube + GitHub |
+| Learning eBPF — Liz Rice | 3 (блок H) | книга, ~150 стр. |
+| libbpf-bootstrap | 3 (блок H) | GitHub repo, примеры |
+| NVIDIA NeMo Guardrails docs | 3 (блок I) | онлайн |
+| Anthropic / OpenAI safety blog posts | 1–3 параллельно | онлайн, бесплатно |
 
 ---
 
 ## Чекпойнты
 
 **Конец 2026 (этап 1):**
-- [ ] Network scanner работает: находит хосты, сканирует порты, определяет сервисы
+- [ ] Network scanner работает: находит хосты, сканирует порты, определяет сервисы (отдельная репа на GitHub с README)
+- [ ] Prompt injection detector работает (отдельная репа на GitHub с README, тестами, лицензией)
 - [ ] Понимаешь что происходит при `connect()` на уровне ядра
 - [ ] Можешь написать простую структуру данных на Rust без подсказок
-- [ ] GitHub: минимум 50 осмысленных коммитов с читаемой историей
+- [ ] OWASP Top 10 (web и LLM) — могу объяснить на пальцах
+- [ ] picoCTF: минимум 30 решённых челленджей
+- [ ] Reading-code: ≥ 6 разборов чужого кода в `topics/reading/`
 
 **Середина 2027 (этап 2):**
-- [ ] VPN туннель между двумя VM работает
+- [ ] VPN туннель между двумя VM работает (отдельная репа)
 - [ ] Можешь объяснить ECDH key exchange на словах
 - [ ] Читаешь чужой Rust-код и понимаешь 80%
+- [ ] Прошёл скрининг на стажировку DevSecOps/AppSec (или отказались — но был на собеседовании)
 
 **К офферу (лето–осень 2028):**
-- [ ] Три живых проекта на GitHub с README
-- [ ] Можешь пройти технический скрининг по C/Rust и системному программированию
-- [ ] Участвовал в одном CTF или сделал вклад в опен-сорс
+- [ ] Четыре живых проекта на GitHub с README: network scanner, VPN, mini-firejail, llm-jail (или их подмножество)
+- [ ] Можешь пройти технический скрининг по C/Rust, системному программированию, основам ИБ
+- [ ] Минимум один CTF до призового места ИЛИ вклад в open-source (PR с обзором кода)
+- [ ] Reading-code: ≥ 30 разборов в vault — сформированная привычка читать чужой код
 
 ---
 
 ## CTF
 
-Попробовать в конце блока B: **picoCTF** (beginner, бесплатно, онлайн).
-Цель — не стать CTF-плеером, а проверить знания сетей и систем в боевом контексте.
-Если зайдёт — 1 CTF в семестр, параллельно с основным планом.
+**Параллельно с этапом 1, начиная сейчас.** picoCTF — beginner, бесплатно, онлайн.
+Темп: **1-2 челленджа в неделю**, 2-3 часа суммарно. Не превращать в основное занятие — это тренажёр и резюме-строитель, не цель.
+
+Прогрессия категорий:
+1. **General Skills** + **Forensics** — для разогрева, изучения утилит
+2. **Web Exploitation** — параллельно с блоком B (синергия с OWASP Top 10)
+3. **Binary Exploitation** + **Reverse Engineering** — параллельно с этапом 3 (глубокий стек)
+4. **Cryptography** — параллельно с этапом 2 (после изучения Serious Cryptography)
+
+Цель к концу 2026: **30+ решённых челленджей**.
+Если зайдёт по-крупному — пробовать командные CTF-ы (CTFTime: VolgaCTF, RuCTF), 1 в семестр.
+
+Каждый решённый нетривиальный челлендж → запись в `knowledge-base/ctf/<name>.md` с writeup'ом. Это и тренировка письменного английского (writeup лучше делать на нём), и материал для будущих собеседований.
 
 ---
 
@@ -353,6 +502,11 @@ Proof-of-Work цепочка с P2P синхронизацией и JSON-RPC и�
 - Фиксировать в `knowledge-base/interviews/`
 - Слабые места → вернуться к соответствующей теме в topics/
 
+## Reading-code
+
+Каждые 4 task'а (writing-задачи) — обязательная reading-сессия. Также при завершении любого блока — отдельная reading-сессия по теме блока.
+Формат: маленький модуль (150-400 строк) из open-source / kernel с конкретной целью-вопросом. Скилл `reading-code`. Запись в `topics/reading/`.
+
 ---
 
 ## Обновление этого файла
@@ -364,7 +518,7 @@ Proof-of-Work цепочка с P2P синхронизацией и JSON-RPC и�
 
 ---
 
-## Карьерная стратегия (обновлено 2026-04-21)
+## Карьерная стратегия (обновлено 2026-04-29)
 
 ### Конечная цель: Разработчик СЗИ
 
@@ -382,23 +536,37 @@ Proof-of-Work цепочка с P2P синхронизацией и JSON-RPC и�
 
 **Важно:** DevSecOps — это стартовая площадка, не конечный пункт. Не застрять в операционной работе. Системное программирование (fn2s) продолжается параллельно.
 
-### Навыки ИБ-направления для включения в план
+### Навыки ИБ-направления (вспомогательные, для DevSecOps-стажировки)
 
-Изучать параллельно с основным roadmap, встраивая в существующие блоки:
+Не основной roadmap, но обязательные для стартовой позиции. Встраиваются в существующие блоки:
 
 | Навык | Когда | Как |
 |-------|-------|-----|
-| OWASP Top 10 | Блок B (сети) | Статья + тест на уязвимом стенде (DVWA/WebGoat) |
-| SAST / DAST | Блок B–C | Запустить на своём коде (semgrep, bandit) |
-| Опыт тестирования приложений | Блок B + CTF | picoCTF, HackTheBox (web/binary) |
-| CI/CD + GitLab CI | Блок B | Добавить pipeline к network scanner |
-| SBOM | Блок C (Rust) | Сгенерировать SBOM для Rust-проекта (cargo-sbom) |
+| OWASP Top 10 (web) | Блок B0 | Статья + DVWA/WebGoat (3-5 челленджей) |
+| OWASP Top 10 for LLM | Блок Z1 / I1 | Статья + threat model в vault |
+| picoCTF | Параллельно с этапом 1 | 1-2 челленджа в неделю, 30+ к концу 2026 |
+| SAST | Блок B-C | semgrep / bandit (Python) на своём коде, cargo-clippy на Rust |
+| CI/CD (GitHub Actions) | Блок B | Добавить pipeline к network scanner: build + clang-tidy + tests |
+| SBOM | Блок C / D | cargo-sbom для своего Rust-проекта |
+| Reading-code | Каждые 4 task'а | Скилл `reading-code` |
+| Python (как инструмент) | Блок Z, I, J | Прокачивается через LLM-проекты, не отдельным курсом |
+| Go (как инструмент) | Блок H/J опционально | Прокачивается через user-space часть eBPF-инструментов |
 
 ### Реальный мост к СЗИ-разработчику
 
 Путь не через DevSecOps-операции, а через:
-1. Глубокое системное программирование (текущий fn2s roadmap)
-2. Pet-project — маленький инструмент защиты на C/Rust (сканер, агент, детектор)
-3. Знание OWASP/уязвимостей как теоретическая база
+1. Глубокое системное программирование (текущий fn2s roadmap, этапы 1-2)
+2. Несколько pet-projects на C/Rust на GitHub: network scanner, VPN, mini-firejail, syscall-tracer, llm-jail
+3. Знание OWASP (web и LLM) как теоретическая база
+4. Уникальная специализация: пересечение Linux internals + LLM-security (этап 3)
 
 DevSecOps стажировка = деньги + опыт + рыночный старт. Не = путь к СЗИ.
+
+### Почему LLM-security именно как specialization
+
+К 2027-2028 ИБ-индустрия будет в острой фазе адаптации к LLM-агентам. Большинство security-специалистов — либо классические AppSec без понимания LLM, либо ML-инженеры без понимания изоляции и kernel-level threat'ов. Builder, который умеет одновременно:
+- писать sandbox на C/Rust
+- инструментировать процесс через eBPF
+- понимать prompt injection и agent threat model
+
+— это редкая комбинация. Это **точка дифференциации**, которая отличает резюме среди студентов 3 курса. Не "ещё один человек умеющий C", а "человек, который собрал работающий LLM-jail".
