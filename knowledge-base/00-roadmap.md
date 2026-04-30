@@ -54,6 +54,14 @@
 
 ---
 
+## CTF
+
+| # | Дата | Платформа | Категория | Таск | Главное |
+|---|------|-----------|-----------|------|---------|
+| 01 | 2026-04-30 | picoCTF | General Skills | [[ctf/picoctf/general-skills/ping-cmd\|ping-cmd]] | command injection через `&&`; space vs shell metacharacter; `execve` over `system` |
+
+---
+
 ## Стратегия
 
 `.claude/strategy/learning-strategy.md`

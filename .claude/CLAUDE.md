@@ -91,6 +91,7 @@ Claude Code **обязан** прочитать соответствующий s
 | Я прошу "добавь в vault", "запиши тему", или вызов из другого скилла | `.claude/skills/vault-write/skill.md` |
 | Я пишу "мок-собес" / "проверь меня" / "вопросы по пройденному", или give-task видит счётчик ≥ 8 | `.claude/skills/mock-interview/skill.md` |
 | Я пишу "дай почитать код", "хочу разобрать чужой код", или give-task видит счётчик reading ≥ 4, или завершён блок | `.claude/skills/reading-code/skill.md` |
+| Я пишу "дай ctf", "хочу picoctf", "ctf-сессия", или give-task видит счётчик ctf ≥ 5 | `.claude/skills/ctf/skill.md` |
 | Я пишу "на этом все" / "заканчиваем", или Claude понял что тема усвоена | `.claude/skills/session-debrief/skill.md` |
 
 **Ветка "хочу разобраться в теме не из стратегии"**:
