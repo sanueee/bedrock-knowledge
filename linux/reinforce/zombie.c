@@ -12,12 +12,12 @@ int main(void)
     {
         exit(0);
     }
-    printf("curr - %d, child - %d", curr, child);
+    printf("curr %d: child - %d\n", curr, child);
 
     sleep(15);
     int status;
     waitpid(child, &status, 0);
-    printf("child %d - status - %d", child, status);
+    printf("child %d: status - %d\n", child, status);
 
     return 0;
 }
