@@ -6,18 +6,24 @@
 int main(void)
 {
     pid_t p = fork();
-    pid_t curr = getpid();
-    pid_t child = getppid();
+    if (p < 0) { perror("fork"); exit(1); }
     if (p == 0)
     {
-        exit(0);
+        exit(0);  // child
     }
-    printf("curr %d: child - %d\n", curr, child);
+    printf("curr %d: child - %d\n", getpid(), p);
 
     sleep(15);
     int status;
-    waitpid(child, &status, 0);
-    printf("child %d: status - %d\n", child, status);
-
+    pid_t reaped = waitpid(p, &status, 0);
+    if (reaped == -1)
+    {
+        perror("waitpid");
+        exit(1);
+    }
+    if (WIFEXITED(status))
+    {
+        printf("child %d exited normally, code = %d\n", p, WEXITSTATUS(status));
+    }
     return 0;
 }
