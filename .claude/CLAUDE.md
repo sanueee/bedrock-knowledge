@@ -86,7 +86,8 @@ Claude Code **обязан** прочитать соответствующий s
 | Триггер | Скилл |
 |---------|-------|
 | Я прошу объяснить код, концепцию, функцию | `.claude/skills/explain-code/skill.md` |
-| Я показываю код на ревью / прошу ревью | `.claude/skills/code-review/skill.md` |
+| Я показываю код на ревью / прошу ревью / пишу "посмотри код"/"посмотри файл" / вызываю `/check` | `.claude/skills/code-review/skill.md` (через `check/skill.md` если триггер `/check`) |
+| Я вызываю `/theory` или прошу разобрать пробелы в понимании по моему коду | `.claude/skills/theory/skill.md` |
 | Я пишу "у меня есть N часов" или "дай задание" | `.claude/skills/give-task/skill.md` |
 | Я пишу "не компилируется", "segfault", "ошибка", "не работает" | `.claude/skills/debug/skill.md` |
 | Я прошу "добавь в vault", "запиши тему", или вызов из другого скилла | `.claude/skills/vault-write/skill.md` |
