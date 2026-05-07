@@ -147,6 +147,29 @@ spawn 2
 
 ---
 
+## Чтение status — только через макросы
+
+`waitpid` записывает в `status` **bit-packed** структуру, где упакованы: код выхода, номер сигнала-убийцы, флаг "core dumped", флаг "stopped by signal". Прямое чтение как `int` — мусор.
+
+| Макрос | Что проверяет / достаёт |
+|---|---|
+| `WIFEXITED(status)` | true если ребёнок завершился нормально через `exit()` |
+| `WEXITSTATUS(status)` | код выхода (то что ребёнок передал в `exit(N)`); валиден только если `WIFEXITED == true` |
+| `WIFSIGNALED(status)` | true если ребёнок убит сигналом |
+| `WTERMSIG(status)` | номер сигнала-убийцы; валиден только если `WIFSIGNALED == true` |
+| `WCOREDUMP(status)` | true если был сброшен core dump |
+| `WIFSTOPPED(status)` | true если ребёнок остановлен (не завершён) — нужно `WUNTRACED` в `waitpid` |
+
+```c
+if (waitpid(pid, &status, 0) == -1) { perror("waitpid"); exit(1); }
+if (WIFEXITED(status))
+    printf("exit code = %d\n", WEXITSTATUS(status));
+else if (WIFSIGNALED(status))
+    printf("killed by signal %d\n", WTERMSIG(status));
+```
+
+---
+
 ## Частые ошибки
 
 | Ошибка | Последствие |
@@ -154,6 +177,9 @@ spawn 2
 | Нет `exit()` в дочернем | Дочерний продолжает цикл и сам форкает детей — форк-бомба |
 | Нет `waitpid()` в родителе | Дочерние становятся зомби и держат PID до завершения родителя |
 | Читать `wstatus` напрямую | Неверный exit code — нужен `WEXITSTATUS()` |
+| `getppid()` вместо возврата `fork()` | Ловушка: `getppid()` это "**get parent** PID" — PID родителя текущего процесса (для `./a.out` это shell). Чтобы получить PID **только что созданного ребёнка** — только через возвращаемое значение `fork()` |
+| Не проверять возврат `waitpid` | При ошибке (например `ECHILD` если ждёшь не своего ребёнка) `status` остаётся неинициализированным — читаешь мусор |
+| `printf` без `\n` перед `sleep`/долгой операцией | stdout line-buffered на терминале → текст висит в буфере процесса до `\n` или `exit()`. Решение: либо `\n`, либо `fflush(stdout)`. На pipe/file даже `\n` не помогает (fully-buffered) — только `fflush` |
 
 ---
 
