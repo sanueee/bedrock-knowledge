@@ -21,6 +21,7 @@
 | 06 | [[task-06-pipes\|pipes]] | ✅ выполнено | `pipechat.c` |
 | 07 | [[task-07-procnet\|procnet]] | ✅ выполнено | `procnet.c` |
 | 08 | [[task-08-pthreads\|pthreads]] | ✅ выполнено | `procthreads.c` |
+| 09 | [[task-09-interview01-reinforce\|interview-01 reinforce]] | ✅ выполнено | `linux/reinforce/` |
 
 ---
 

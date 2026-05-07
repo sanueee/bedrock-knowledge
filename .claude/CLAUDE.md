@@ -45,6 +45,7 @@
 - Task 06 — pipes: ✅ выполнено
 - Task 07 — procnet: ✅ выполнено
 - Task 08 — pthreads: ✅ выполнено
+- Task 09 — interview-01 reinforce (opendir-errors, zombie, signal-vs-sigaction, pipe-eof): ✅ выполнено
 
 ## Структура проекта
 

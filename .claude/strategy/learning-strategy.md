@@ -10,8 +10,8 @@
 > Обновлять после каждого завершённого task (скилл `session-debrief`).
 
 **Активный блок:** A — Linux Internals (C)
-**Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause), pipes/IPC (pipe/dup2/read/write), /proc/net/tcp parsing (sscanf, bitwise ops, little-endian IP), pthreads (pthread_create/join, mutex, data race)
-**Последний выполненный task:** task-08 (pthreads)
+**Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause), pipes/IPC (pipe/dup2/read/write), /proc/net/tcp parsing (sscanf, bitwise ops, little-endian IP), pthreads (pthread_create/join, mutex, data race), interview-01 reinforce (opendir/readdir errors, getppid vs fork return, WIFEXITED/WEXITSTATUS, async-signal-safety, volatile sig_atomic_t, SA_RESTART, pipe write-end counter, char* vs char[])
+**Последний выполненный task:** task-09 (interview-01 reinforce)
 
 **Следующая задача — B1: TCP-сокеты**
 - Простейший echo-сервер и клиент
@@ -19,13 +19,13 @@
 - Код: `networking/`
 - Vault: `knowledge-base/tasks/task-09.md`, тема: `topics/networking/tcp-sockets.md`
 
-**Счётчик задач с последнего мок-собеса:** 0
+**Счётчик задач с последнего мок-собеса:** 1
 *(мок-собес каждые 8 задач — при достижении предложить `mock-interview`)*
 
-**Счётчик задач с последнего reading-code:** 0
+**Счётчик задач с последнего reading-code:** 1
 *(reading-сессия каждые 4 задачи — при достижении вызвать `reading-code`. Также обязательная reading-сессия при завершении любого блока.)*
 
-**Счётчик задач с последнего CTF:** 0
+**Счётчик задач с последнего CTF:** 1
 *(CTF-сессия каждые 5 задач — при достижении мягко предложить `ctf` (не блокировать). Параллельный трек, ~1-2 часа на picoCTF.)*
 
 ---
@@ -156,11 +156,11 @@
 - `sigaction()` vs `signal()`: не знал про автосброс обработчика и `sa_mask`
 - Pipe EOF: не знал что `read()` зависнет если не закрыть write-end у читателя
 
-**Закрепляющие задания:**
-- Написать программу которая вызывает `opendir()` на несуществующем пути, обрабатывает ошибку через `errno`/`perror()`, затем открывает корректный путь и итерирует через `readdir()` до NULL
-- Написать программу: родитель делает `fork()`, дочерний сразу завершается, родитель спит 10 секунд не вызывая `waitpid()` — посмотреть зомби через `ps aux | grep Z`, потом вызвать `waitpid()` и убедиться что запись исчезла
-- Написать обработчик SIGINT через `signal()` — убедиться что второй сигнал убивает процесс, затем переписать на `sigaction()` с `SA_RESTART` — убедиться что обработчик не сбрасывается
-- Написать pipe между родителем и дочерним: намеренно не закрывать `fd[1]` у родителя — убедиться что `read()` зависает, затем добавить `close(fd[1])` и убедиться что EOF приходит корректно
+**Закрепляющие задания:** ✅ закрыты в task-09 (2026-05-06)
+- ~~`opendir()` на несуществующем пути → `errno`/`perror()`, потом `readdir()` до NULL~~
+- ~~`fork()` + дочерний `exit`, родитель спит без `waitpid()` → зомби в `ps aux | grep Z`~~
+- ~~`signal()` vs `sigaction()` с `SA_RESTART` — увидеть разницу поведения~~
+- ~~pipe + не закрывать `fd[1]` у родителя → `read()` виснет; `close(fd[1])` → EOF~~
 
 ---
 
