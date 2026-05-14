@@ -55,6 +55,7 @@
 - Task 07 — procnet: ✅ выполнено
 - Task 08 — pthreads: ✅ выполнено
 - Task 09 — interview-01 reinforce (opendir-errors, zombie, signal-vs-sigaction, pipe-eof): ✅ выполнено
+- Reading 01 — musl popen/pclose/_Fork: ✅ выполнено (2026-05-08). Vault: `topics/reading/musl-popen.md`. Открытые вопросы → `/theory` (kernel/user boundary, refcount, EINTR, COW).
 
 ## Структура проекта
 
