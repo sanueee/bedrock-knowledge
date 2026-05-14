@@ -155,17 +155,17 @@ Mutex нужен потому что список общий для всех т�
 
 ## Что осталось плыть (открытые вопросы)
 
-После reading-01 эти концепции всплыли, но не положены ровно — нужен отдельный `/theory` заход:
+После reading-01 эти концепции всплыли, но не положены ровно — разобраны в `/theory` (2026-05-14):
 
-- **Граница kernel space / user space** — что значит "сисколл уходит в ядро", что такое `__sys_*` обёртка, какой код выполняется где.
-- **Refcount на уровне ядра** — где живёт `struct file`, как inc/dec при `fork`/`close`/`dup`, как ядро решает EOF.
-- **Copy-on-write (COW)** — упоминалось при разборе `_Fork`, но механика не разобрана.
-- **Async-signal-safe код** — почему `_Fork` обходит pthread atfork-handlers, что значит "safe" в этом контексте.
+- **Граница kernel space / user space** → [[syscalls-linux]]
+- **Refcount на уровне ядра** → [[fd-kernel-model]]
+- **Copy-on-write (COW)** → [[virtual-memory-cow]]
+- **Async-signal-safe код** → [[async-signal-safe]]
 
-Это всё фундамент для блоков B-G. Решено в `/theory` после reading-01.
+Это всё фундамент для блоков B-G.
 
 ---
 
 ## Связанные темы
 
-[[pipes-linux]] [[fork-linux]] [[signals-linux]] [[pthreads-linux]] [[reading-01]]
+[[pipes-linux]] [[fork-linux]] [[signals-linux]] [[pthreads-linux]] [[syscalls-linux]] [[fd-kernel-model]] [[virtual-memory-cow]] [[async-signal-safe]] [[reading-01]]
