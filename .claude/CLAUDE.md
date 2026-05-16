@@ -7,7 +7,7 @@
 
 ## Кто я
 
-19 лет, 1 курс, Информационная Безопасность, СПбПУ Петра Великого.
+20 лет, 1 курс, Информационная Безопасность, СПбПУ Петра Великого.
 Тип: **builder** — меня цепляет создание инструментов, а не эксплуатация.
 
 **Карьерные ориентиры:**
@@ -55,7 +55,8 @@
 - Task 07 — procnet: ✅ выполнено
 - Task 08 — pthreads: ✅ выполнено
 - Task 09 — interview-01 reinforce (opendir-errors, zombie, signal-vs-sigaction, pipe-eof): ✅ выполнено
-- Reading 01 — musl popen/pclose/_Fork: ✅ выполнено (2026-05-08). Vault: `topics/reading/musl-popen.md`. Открытые вопросы → `/theory` (kernel/user boundary, refcount, EINTR, COW).
+- Reading 01 — musl popen/pclose/_Fork: ✅ выполнено (2026-05-08). Vault: `topics/reading/musl-popen.md`.
+- /theory — фундамент перед B1: ✅ выполнено (2026-05-14). Vault: `topics/linux/syscalls-linux.md`, `topics/linux/fd-kernel-model.md`, `topics/linux/async-signal-safe.md`, `topics/linux/virtual-memory-cow.md`.
 
 ## Структура проекта
 

@@ -9,21 +9,19 @@
 
 > Обновлять после каждого завершённого task (скилл `session-debrief`).
 
-**Активный блок:** A — Linux Internals (C) → завершён, переход к B после `/theory` по фундаменту
+**Активный блок:** B — Сетевой стек (C). Блок A завершён, /theory по фундаменту закрыта.
 **Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause), pipes/IPC (pipe/dup2/read/write), /proc/net/tcp parsing (sscanf, bitwise ops, little-endian IP), pthreads (pthread_create/join, mutex, data race), interview-01 reinforce (opendir/readdir errors, getppid vs fork return, WIFEXITED/WEXITSTATUS, async-signal-safety, volatile sig_atomic_t, SA_RESTART, pipe write-end counter, char* vs char[])
-**Последний выполненный task:** reading-01 (musl popen/pclose/_Fork)
+**Фундамент (theory 2026-05-14):** syscalls и kernel/user boundary, fd kernel model + refcount, async-signal-safety, virtual memory + copy-on-write, EINTR семантика
+**Последний выполненный task:** /theory сессия (фундамент перед B1)
 
-**Следующий шаг — `/theory` сессия по фундаменту перед B1**
-После reading-01 всплыли концепции которые лежат неровно: kernel/user boundary, refcount в `struct file`, EINTR семантика, copy-on-write. Закрыть theory-сессией без кода, потом — B1.
-
-**Дальше — B1: TCP-сокеты**
+**Следующий шаг — B1: TCP echo server + client**
 - Простейший echo-сервер и клиент
 - Функции: `socket()`, `bind()`, `listen()`, `accept()`, `connect()`, `send()`, `recv()`
 - Код: `networking/`
 - Vault: `knowledge-base/tasks/task-10.md`, тема: `topics/networking/tcp-sockets.md`
 - Перед началом перечитать: `topics/linux/pipes-linux.md` (для понимания blocking I/O), `topics/reading/musl-popen.md` (для понимания fd inheritance).
 
-**Счётчик задач с последнего мок-собеса:** 1
+**Счётчик задач с последнего мок-собеса:** 2
 *(мок-собес каждые 8 задач — при достижении предложить `mock-interview`)*
 
 **Счётчик задач с последнего reading-code:** 0
