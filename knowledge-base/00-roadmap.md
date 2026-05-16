@@ -1,5 +1,5 @@
 ---
-обновлено: 2026-05-06
+обновлено: 2026-05-17
 ---
 
 # Roadmap
@@ -22,6 +22,9 @@
 | 07 | [[task-07-procnet\|procnet]] | ✅ выполнено | `procnet.c` |
 | 08 | [[task-08-pthreads\|pthreads]] | ✅ выполнено | `procthreads.c` |
 | 09 | [[task-09-interview01-reinforce\|interview-01 reinforce]] | ✅ выполнено | `linux/reinforce/` |
+| reading-01 | [[musl-popen\|musl popen/pclose/_Fork]] | ✅ выполнено (2026-05-08) | `topics/reading/` |
+| theory | фундамент перед B1 (kernel/user, fd model, async-signal-safe, COW) | ✅ выполнено (2026-05-14) | `topics/linux/` |
+| 10 | [[task-10-tcp-echo\|TCP echo server + client]] | ✅ выполнено (2026-05-17) | `networking/echo_server.c`, `networking/echo_client.c` |
 
 ---
 
@@ -36,6 +39,14 @@
 - [[symlinks-linux]] — символические ссылки, readlink
 - [[anon-inode]] — анонимные inode: epoll, signalfd, timerfd
 - [[ssh-basics]] — основы SSH
+- [[syscalls-linux]] — системные вызовы, kernel/user boundary
+- [[fd-kernel-model]] — file descriptor table, struct file, refcount
+- [[async-signal-safe]] — какие функции safe в обработчиках сигналов
+- [[virtual-memory-cow]] — виртуальная память и copy-on-write при fork
+
+## Темы — Networking
+
+- [[tcp-sockets]] — TCP-сокеты, socket/bind/listen/accept/connect, partial read, EPIPE, SIGPIPE защита
 
 ## Темы — C
 

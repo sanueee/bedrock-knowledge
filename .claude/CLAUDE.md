@@ -24,7 +24,7 @@
 | Rust | 0, следующий приоритет после блока B (этап 2). |
 | Linux | Комфортно в терминале. /proc — знаю. Internals — поверхностно. |
 | Git | Базово, формирую привычку. |
-| Сети | TCP/IP концептуально (handshake). /proc/net/tcp — читал и парсил. |
+| Сети | TCP/IP концептуально (handshake, TIME_WAIT, RST, FIN, partial read/write на stream). /proc/net/tcp — парсил. Сокеты — написал echo server+client (B1). |
 | Английский | B2: читаю и смотрю свободно, говорить и слушать на слух — слабее. |
 
 **Инструментальные языки** (учим по необходимости, без отдельных учебных блоков):
@@ -57,6 +57,7 @@
 - Task 09 — interview-01 reinforce (opendir-errors, zombie, signal-vs-sigaction, pipe-eof): ✅ выполнено
 - Reading 01 — musl popen/pclose/_Fork: ✅ выполнено (2026-05-08). Vault: `topics/reading/musl-popen.md`.
 - /theory — фундамент перед B1: ✅ выполнено (2026-05-14). Vault: `topics/linux/syscalls-linux.md`, `topics/linux/fd-kernel-model.md`, `topics/linux/async-signal-safe.md`, `topics/linux/virtual-memory-cow.md`.
+- Task 10 — TCP echo server + client (B1): ✅ выполнено (2026-05-17). Vault: `topics/networking/tcp-sockets.md`. Самое сложное — дисциплина `errno`-дискриминации (когда break, когда perror, когда continue) и защита от SIGPIPE.
 
 ## Структура проекта
 

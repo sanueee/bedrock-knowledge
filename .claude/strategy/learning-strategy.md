@@ -9,25 +9,26 @@
 
 > Обновлять после каждого завершённого task (скилл `session-debrief`).
 
-**Активный блок:** B — Сетевой стек (C). Блок A завершён, /theory по фундаменту закрыта.
+**Активный блок:** B — Сетевой стек (C). B1 завершён.
 **Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause), pipes/IPC (pipe/dup2/read/write), /proc/net/tcp parsing (sscanf, bitwise ops, little-endian IP), pthreads (pthread_create/join, mutex, data race), interview-01 reinforce (opendir/readdir errors, getppid vs fork return, WIFEXITED/WEXITSTATUS, async-signal-safety, volatile sig_atomic_t, SA_RESTART, pipe write-end counter, char* vs char[])
 **Фундамент (theory 2026-05-14):** syscalls и kernel/user boundary, fd kernel model + refcount, async-signal-safety, virtual memory + copy-on-write, EINTR семантика
-**Последний выполненный task:** /theory сессия (фундамент перед B1)
+**Выполненные темы блока B:** B1 — TCP-сокеты (socket/bind/listen/accept/connect/send/recv, sockaddr_in + htons/htonl, SO_REUSEADDR/TIME_WAIT, accept value-result socklen_t, three-way recv (0/-1/>0), partial read on stream, EINTR на разных слоях, EPIPE/ECONNRESET как штатное событие, SIGPIPE через sigaction(SIG_IGN), inet_pton/inet_ntop)
+**Последний выполненный task:** task-10 — TCP echo server + client
 
-**Следующий шаг — B1: TCP echo server + client**
-- Простейший echo-сервер и клиент
-- Функции: `socket()`, `bind()`, `listen()`, `accept()`, `connect()`, `send()`, `recv()`
-- Код: `networking/`
-- Vault: `knowledge-base/tasks/task-10.md`, тема: `topics/networking/tcp-sockets.md`
-- Перед началом перечитать: `topics/linux/pipes-linux.md` (для понимания blocking I/O), `topics/reading/musl-popen.md` (для понимания fd inheritance).
+**Следующий шаг — B2: разбор пакетов (libpcap)**
+- Перехват и парсинг пакетов на уровне Ethernet/IP/TCP
+- Библиотека: libpcap (нужна установка `libpcap-dev`)
+- Код: `networking/sniffer/` или подобное
+- Vault: `knowledge-base/tasks/task-11-pcap.md`, темы: `topics/networking/libpcap.md`, `topics/networking/ethernet-frame.md`
+- Перед началом перечитать: `topics/networking/tcp-sockets.md` (host vs network byte order), `topics/networking/proc-net.md` (структура IP/TCP заголовков на уровне байтов)
 
-**Счётчик задач с последнего мок-собеса:** 2
+**Счётчик задач с последнего мок-собеса:** 3
 *(мок-собес каждые 8 задач — при достижении предложить `mock-interview`)*
 
-**Счётчик задач с последнего reading-code:** 0
+**Счётчик задач с последнего reading-code:** 1
 *(reading-сессия каждые 4 задачи — при достижении вызвать `reading-code`. Также обязательная reading-сессия при завершении любого блока. Reading-01 — выполнено 2026-05-08.)*
 
-**Счётчик задач с последнего CTF:** 1
+**Счётчик задач с последнего CTF:** 2
 *(CTF-сессия каждые 5 задач — при достижении мягко предложить `ctf` (не блокировать). Параллельный трек, ~1-2 часа на picoCTF.)*
 
 ---
