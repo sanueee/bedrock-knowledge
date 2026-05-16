@@ -1,35 +1,8 @@
 # Стратегия обучения — fn2s
 
-Этот файл читается перед выдачей каждого задания (скилл `give-task`).
-Здесь — полный учебный план, текущая позиция и логика движения вперёд.
+Этот файл — **план обучения и принципы**. Что выполнено, где сейчас, счётчики, журналы — в [knowledge-base/00-roadmap.md](../../knowledge-base/00-roadmap.md) → "Текущая позиция".
 
----
-
-## Текущая позиция
-
-> Обновлять после каждого завершённого task (скилл `session-debrief`).
-
-**Активный блок:** B — Сетевой стек (C). B1 завершён.
-**Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause), pipes/IPC (pipe/dup2/read/write), /proc/net/tcp parsing (sscanf, bitwise ops, little-endian IP), pthreads (pthread_create/join, mutex, data race), interview-01 reinforce (opendir/readdir errors, getppid vs fork return, WIFEXITED/WEXITSTATUS, async-signal-safety, volatile sig_atomic_t, SA_RESTART, pipe write-end counter, char* vs char[])
-**Фундамент (theory 2026-05-14):** syscalls и kernel/user boundary, fd kernel model + refcount, async-signal-safety, virtual memory + copy-on-write, EINTR семантика
-**Выполненные темы блока B:** B1 — TCP-сокеты (socket/bind/listen/accept/connect/send/recv, sockaddr_in + htons/htonl, SO_REUSEADDR/TIME_WAIT, accept value-result socklen_t, three-way recv (0/-1/>0), partial read on stream, EINTR на разных слоях, EPIPE/ECONNRESET как штатное событие, SIGPIPE через sigaction(SIG_IGN), inet_pton/inet_ntop)
-**Последний выполненный task:** task-10 — TCP echo server + client
-
-**Следующий шаг — B2: разбор пакетов (libpcap)**
-- Перехват и парсинг пакетов на уровне Ethernet/IP/TCP
-- Библиотека: libpcap (нужна установка `libpcap-dev`)
-- Код: `networking/sniffer/` или подобное
-- Vault: `knowledge-base/tasks/task-11-pcap.md`, темы: `topics/networking/libpcap.md`, `topics/networking/ethernet-frame.md`
-- Перед началом перечитать: `topics/networking/tcp-sockets.md` (host vs network byte order), `topics/networking/proc-net.md` (структура IP/TCP заголовков на уровне байтов)
-
-**Счётчик задач с последнего мок-собеса:** 3
-*(мок-собес каждые 8 задач — при достижении предложить `mock-interview`)*
-
-**Счётчик задач с последнего reading-code:** 1
-*(reading-сессия каждые 4 задачи — при достижении вызвать `reading-code`. Также обязательная reading-сессия при завершении любого блока. Reading-01 — выполнено 2026-05-08.)*
-
-**Счётчик задач с последнего CTF:** 2
-*(CTF-сессия каждые 5 задач — при достижении мягко предложить `ctf` (не блокировать). Параллельный трек, ~1-2 часа на picoCTF.)*
+Скиллы (give-task, mock-interview, reading-code, ctf, session-debrief) читают **00-roadmap.md** для статуса и **этот файл** для плана/принципов.
 
 ---
 
@@ -37,8 +10,7 @@
 
 **Сети → VPN-клиент → Изоляция и наблюдение (sandbox + eBPF + LLM-security)**
 
-Навыки учатся не сами по себе — они учатся под конкретный проект.
-Каждый этап заканчивается живым якорным проектом.
+Навыки учатся не сами по себе — они учатся под конкретный проект. Каждый этап заканчивается живым якорным проектом.
 
 | Этап | Якорный проект | Когда |
 |------|---------------|-------|
@@ -90,9 +62,9 @@
 1-2 недели после network scanner. Цель — войти в LLM-security как builder, не как исследователь. Подробнее в блоке Z.
 
 **Параллельные треки на всё время этапа 1:**
-- **CTF (picoCTF)** — 1-2 челленджа в неделю, начать прямо сейчас. Категории: General Skills, Forensics, потом Binary Exploitation/Reverse. Не превращать в основное занятие — это тренажёр, не цель.
-- **OWASP Top 10 (web)** — пройти в начале блока B (когда дойдёшь до сетей и HTTP). Статья + DVWA/WebGoat для практики.
-- **Reading-code** — каждые 4 task'а, скилл `reading-code`.
+- **CTF (picoCTF)** — 1-2 челленджа в неделю, начать прямо сейчас. Категории: General Skills, Forensics, потом Binary Exploitation/Reverse. Не превращать в основное занятие — это тренажёр, не цель. Детали категорий и приоритетов — раздел "## CTF" внизу.
+- **OWASP Top 10 (web)** — пройти параллельно с блоком B (любой момент до B5/TLS — синергия с HTTP-темами). Статья + DVWA/WebGoat для практики. Место: `topics/security/owasp-top10.md`.
+- **Reading-code** — каждые 4 task'а, скилл `reading-code`. Также обязательно при завершении блока.
 
 **Связь с универом:**
 - Структуры данных (сем. 2) → напрямую используются в блоках A и B
@@ -101,9 +73,7 @@
 
 ---
 
-### Блок A — Linux Internals (C) [ТЕКУЩИЙ]
-
-Освоенные темы (не давать снова):
+### Блок A — Linux Internals (C)
 
 #### A1 — /proc filesystem
 Цель: читать и парсить /proc/\<pid\>/status.
@@ -159,21 +129,22 @@
 - `sigaction()` vs `signal()`: не знал про автосброс обработчика и `sa_mask`
 - Pipe EOF: не знал что `read()` зависнет если не закрыть write-end у читателя
 
-**Закрепляющие задания:** ✅ закрыты в task-09 (2026-05-06)
-- ~~`opendir()` на несуществующем пути → `errno`/`perror()`, потом `readdir()` до NULL~~
-- ~~`fork()` + дочерний `exit`, родитель спит без `waitpid()` → зомби в `ps aux | grep Z`~~
-- ~~`signal()` vs `sigaction()` с `SA_RESTART` — увидеть разницу поведения~~
-- ~~pipe + не закрывать `fd[1]` у родителя → `read()` виснет; `close(fd[1])` → EOF~~
+**Закрепляющие задания:**
+- `opendir()` на несуществующем пути → `errno`/`perror()`, потом `readdir()` до NULL
+- `fork()` + дочерний `exit`, родитель спит без `waitpid()` → зомби в `ps aux | grep Z`
+- `signal()` vs `sigaction()` с `SA_RESTART` — увидеть разницу поведения
+- pipe + не закрывать `fd[1]` у родителя → `read()` виснет; `close(fd[1])` → EOF
 
 ---
 
-### Блок B — Сетевой стек (C) [после A7–A8]
+### Блок B — Сетевой стек (C)
 
 #### B0 — OWASP Top 10 (web): теоретический заход
 Цель: знать на пальцах SQLi, XSS, SSRF, IDOR, Broken Auth, CSRF и остальные.
 Это не код, это знание для собеседований и для понимания "что атакуют" в блоке B.
 Формат: прочитать актуальный OWASP Top 10, потом 3-5 челленджей на DVWA/WebGoat.
 Место: `topics/security/owasp-top10.md`.
+Параллельный трек — не блокирует writing-задачи блока B. Закрыть до B5 (TLS) — тогда HTTP-контекст будет под рукой.
 
 #### B1 — TCP-сокеты: первый клиент-сервер
 Простейший echo-сервер и клиент.
@@ -201,7 +172,7 @@
 
 ---
 
-### Блок C — Rust [параллельно или после B1]
+### Блок C — Rust [параллельный трек, доступен после B1]
 
 #### C1 — The Book главы 1–4
 Не задание на код — чтение с вопросами. Ownership, borrowing, lifetimes.
@@ -445,31 +416,6 @@ LangChain-агент в твоём sandbox'е решает реальную за
 
 ---
 
-## Чекпойнты
-
-**Конец 2026 (этап 1):**
-- [ ] Network scanner работает: находит хосты, сканирует порты, определяет сервисы (отдельная репа на GitHub с README)
-- [ ] Prompt injection detector работает (отдельная репа на GitHub с README, тестами, лицензией)
-- [ ] Понимаешь что происходит при `connect()` на уровне ядра
-- [ ] Можешь написать простую структуру данных на Rust без подсказок
-- [ ] OWASP Top 10 (web и LLM) — могу объяснить на пальцах
-- [ ] picoCTF: минимум 30 решённых челленджей
-- [ ] Reading-code: ≥ 6 разборов чужого кода в `topics/reading/`
-
-**Середина 2027 (этап 2):**
-- [ ] VPN туннель между двумя VM работает (отдельная репа)
-- [ ] Можешь объяснить ECDH key exchange на словах
-- [ ] Читаешь чужой Rust-код и понимаешь 80%
-- [ ] Прошёл скрининг на стажировку DevSecOps/AppSec (или отказались — но был на собеседовании)
-
-**К офферу (лето–осень 2028):**
-- [ ] Четыре живых проекта на GitHub с README: network scanner, VPN, mini-firejail, llm-jail (или их подмножество)
-- [ ] Можешь пройти технический скрининг по C/Rust, системному программированию, основам ИБ
-- [ ] Минимум один CTF до призового места ИЛИ вклад в open-source (PR с обзором кода)
-- [ ] Reading-code: ≥ 30 разборов в vault — сформированная привычка читать чужой код
-
----
-
 ## CTF
 
 **Параллельно с этапом 1, начиная сейчас.** picoCTF — beginner, бесплатно, онлайн.
@@ -486,41 +432,16 @@ LangChain-агент в твоём sandbox'е решает реальную за
 
 Каждый решённый нетривиальный челлендж → запись в `knowledge-base/ctf/<name>.md` с writeup'ом. Это и тренировка письменного английского (writeup лучше делать на нём), и материал для будущих собеседований.
 
----
-
-## Логика выбора следующего задания
-
-```
-1. Где сейчас? → читай 00-roadmap.md
-2. Какой последний выполненный task? → найди его тему в этом файле
-3. Следующая тема по порядку в текущем блоке
-4. Если блок завершён → переходи к следующему блоку
-5. Масштаб задания → по времени из скилла give-task
-```
+Детальный алгоритм CTF-сессии — `.claude/skills/ctf/skill.md`.
 
 ---
 
-## Мок-собесы
+## Принципы треков (детали в скиллах)
 
-Каждые 8 задач (или по запросу) проводить мок-собес:
-- 5–7 вопросов по пройденным темам
-- Формат: вопрос → пауза → ответ пользователя → разбор
-- Фиксировать в `knowledge-base/interviews/`
-- Слабые места → вернуться к соответствующей теме в topics/
-
-## Reading-code
-
-Каждые 4 task'а (writing-задачи) — обязательная reading-сессия. Также при завершении любого блока — отдельная reading-сессия по теме блока.
-Формат: маленький модуль (150-400 строк) из open-source / kernel с конкретной целью-вопросом. Скилл `reading-code`. Запись в `topics/reading/`.
-
----
-
-## Обновление этого файла
-
-Обновлять когда:
-- Завершён целый блок (A, B, C...) → отмечать как выполненный
-- Появилась новая тема которую стоит добавить
-- Изменился приоритет или вектор
+- **Мок-собесы** — каждые 8 задач или по запросу. Скилл `.claude/skills/mock-interview/skill.md`. Журнал — `00-roadmap.md` → "Мок-собесы".
+- **Reading-code** — каждые 4 task'а (writing) + обязательно при завершении блока. Скилл `.claude/skills/reading-code/skill.md`. Журнал — `00-roadmap.md` → "Reading-сессии".
+- **Логика выбора задания** — `.claude/skills/give-task/skill.md` (читает 00-roadmap.md → "Текущая позиция").
+- **Обновление файлов после сессии** — `.claude/skills/session-debrief/skill.md`.
 
 ---
 

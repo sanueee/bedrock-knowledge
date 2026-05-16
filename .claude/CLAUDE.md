@@ -21,7 +21,7 @@
 | Технология | Уровень |
 |------------|---------|
 | C | Джун, уверенно. Файловая система, POSIX dirent, /proc, qsort, snprintf, readlink. |
-| Rust | 0, следующий приоритет после блока B (этап 2). |
+| Rust | 0, параллельный трек доступен с момента завершения B1 (2026-05-17). C1 (The Book гл. 1-4) — следующий шаг по треку. |
 | Linux | Комфортно в терминале. /proc — знаю. Internals — поверхностно. |
 | Git | Базово, формирую привычку. |
 | Сети | TCP/IP концептуально (handshake, TIME_WAIT, RST, FIN, partial read/write на stream). /proc/net/tcp — парсил. Сокеты — написал echo server+client (B1). |
@@ -37,7 +37,11 @@
 
 ## Текущий прогресс
 
-> **Важно — дисклеймер по выполненным темам.** "Выполнено" означает, что пользователь работал с темой в прошлых сессиях (писал код, разбирал детали, проходил мок-собес). Это **не** означает что пользователь — специалист в теме. Знания со временем выветриваются.
+**Где смотреть:** [knowledge-base/00-roadmap.md](../knowledge-base/00-roadmap.md) — "Текущая позиция", счётчики, журналы задач/мок-собесов/CTF/reading-сессий. Это primary source, обновляется через `session-debrief`.
+
+**План обучения и принципы:** [strategy/learning-strategy.md](strategy/learning-strategy.md).
+
+> **Дисклеймер по выполненным темам.** "Выполнено" в roadmap означает, что пользователь работал с темой в прошлых сессиях (писал код, разбирал детали, проходил мок-собес). Это **не** означает что пользователь — специалист в теме. Знания со временем выветриваются.
 >
 > Перед каждым новым заданием — особенно reading-сессией или мок-собесом, где тема всплывает заново, — Claude обязан:
 > 1. Найти соответствующий конспект в `knowledge-base/topics/` (по теме) или `knowledge-base/tasks/` (по task).
@@ -45,19 +49,6 @@
 > 3. Если конспекта нет — пометить это и предложить создать через `vault-write` после сессии.
 >
 > Это не церемония, это защита от ситуации когда задание требует свежей теории, а у пользователя по ней — только мышечная память месячной давности.
-
-- Task 01 — procinfo: ✅ выполнено
-- Task 02 — procinfo top5: ✅ выполнено
-- Task 03 — fdlist: ✅ выполнено
-- Task 04 — procfork: ✅ выполнено
-- Task 05 — signals: ✅ выполнено
-- Task 06 — pipes: ✅ выполнено
-- Task 07 — procnet: ✅ выполнено
-- Task 08 — pthreads: ✅ выполнено
-- Task 09 — interview-01 reinforce (opendir-errors, zombie, signal-vs-sigaction, pipe-eof): ✅ выполнено
-- Reading 01 — musl popen/pclose/_Fork: ✅ выполнено (2026-05-08). Vault: `topics/reading/musl-popen.md`.
-- /theory — фундамент перед B1: ✅ выполнено (2026-05-14). Vault: `topics/linux/syscalls-linux.md`, `topics/linux/fd-kernel-model.md`, `topics/linux/async-signal-safe.md`, `topics/linux/virtual-memory-cow.md`.
-- Task 10 — TCP echo server + client (B1): ✅ выполнено (2026-05-17). Vault: `topics/networking/tcp-sockets.md`. Самое сложное — дисциплина `errno`-дискриминации (когда break, когда perror, когда continue) и защита от SIGPIPE.
 
 ## Структура проекта
 
@@ -74,13 +65,13 @@ fn2s/
 │   └── topics/          # концепции с [[wikilinks]]
 │       ├── c/           # темы по языку C
 │       ├── linux/       # темы по Linux internals
-│       ├── networking/  # сети (после блока B)
+│       ├── networking/  # сети (блок B, начат — есть tcp-sockets.md)
 │       ├── reading/     # разборы чужого кода (скилл reading-code)
 │       └── llm-sec/     # LLM-security (этап 3)
 ├── linux/               # C-код: системное программирование Linux
 │   ├── proc/            # работа с /proc
 │   └── fd/              # файловые дескрипторы
-├── networking/          # сетевой стек (этап 1, блок B)
+├── networking/          # сетевой стек (этап 1, блок B — есть echo_server.c/echo_client.c)
 ├── crypto/              # крипто-инструменты (этап 2)
 ├── rust/                # Rust (этап 2+)
 ├── sandbox/             # namespaces/seccomp/cgroups (этап 3)

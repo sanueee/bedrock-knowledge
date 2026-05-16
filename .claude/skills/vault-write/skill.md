@@ -26,9 +26,18 @@
 
 | Ситуация | Куда |
 |----------|------|
-| Концепция, системный вызов, функция | `knowledge-base/topics/c/` или `topics/linux/` или `topics/networking/` |
+| Концепция языка C | `knowledge-base/topics/c/` |
+| Концепция Linux internals | `knowledge-base/topics/linux/` |
+| Сети, сокеты, протоколы | `knowledge-base/topics/networking/` |
+| Разбор чужого open-source кода | `knowledge-base/topics/reading/` |
+| LLM-security (этапы Z/I/J) | `knowledge-base/topics/llm-sec/` |
+| Web/CTF/общая безопасность | `knowledge-base/topics/security/` |
+| Концепция Rust | `knowledge-base/topics/rust/` (создать при первом C-task'е) |
 | Выполненное задание | `knowledge-base/tasks/task-NN.md` |
-| Обновление существующей записи | найти файл → дополнить |
+| Reading-сессия | `knowledge-base/tasks/reading-NN.md` + конспект в `topics/reading/` |
+| Мок-собес | `knowledge-base/interviews/interview-NN.md` |
+| CTF writeup | `knowledge-base/ctf/<platform>/<category>/<task>.md` |
+| Обновление существующей записи | найти файл → дополнить (не создавать дубликат) |
 
 Перед созданием нового файла — проверить что он не существует (`Glob` или `Grep`).
 
