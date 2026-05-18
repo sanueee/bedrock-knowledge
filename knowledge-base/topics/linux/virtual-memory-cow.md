@@ -1,3 +1,14 @@
+---
+тема: Copy-on-write при fork / Copy-on-write (COW)
+блок: Фундамент (theory)
+дата: 2026-05-14
+связано:
+  - "[[async-signal-safe]]"
+  - "[[fd-kernel-model]]"
+  - "[[fork-linux]]"
+  - "[[syscalls-linux]]"
+---
+
 # Copy-on-write при fork / Copy-on-write (COW)
 
 ## Что это

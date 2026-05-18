@@ -1,3 +1,15 @@
+---
+тема: Файловые дескрипторы в ядре / File descriptors kernel model
+блок: Фундамент (theory)
+дата: 2026-05-14
+связано:
+  - "[[fork-linux]]"
+  - "[[pipes-linux]]"
+  - "[[symlinks-linux]]"
+  - "[[virtual-memory-cow]]"
+  - "[[syscalls-linux]]"
+---
+
 # Файловые дескрипторы в ядре / File descriptors kernel model
 
 ## Что это

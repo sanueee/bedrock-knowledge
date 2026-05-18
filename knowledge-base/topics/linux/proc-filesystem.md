@@ -1,3 +1,13 @@
+---
+тема: /proc — псевдофайловая система / proc filesystem
+блок: A — Linux syscalls
+дата: 2026-04-13
+связано:
+  - "[[directory-traversal-c]]"
+  - "[[file-io-c]]"
+  - "[[symlinks-linux]]"
+---
+
 # /proc — псевдофайловая система
 
 ## Суть (своими словами)

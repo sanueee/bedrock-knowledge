@@ -1,3 +1,14 @@
+---
+тема: Системные вызовы / System calls
+блок: Фундамент (theory)
+дата: 2026-05-14
+связано:
+  - "[[async-signal-safe]]"
+  - "[[fd-kernel-model]]"
+  - "[[signals-linux]]"
+  - "[[virtual-memory-cow]]"
+---
+
 # Системные вызовы / System calls
 
 ## Что это

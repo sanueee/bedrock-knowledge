@@ -1,3 +1,14 @@
+---
+тема: fork() — создание процессов в Linux / Fork
+блок: A — Linux syscalls
+дата: 2026-04-13
+связано:
+  - "[[proc-filesystem]]"
+  - "[[signals-linux]]"
+  - "[[pipes-linux]]"
+  - "[[virtual-memory-cow]]"
+---
+
 # fork() — создание процессов в Linux
 
 ## Суть (своими словами)

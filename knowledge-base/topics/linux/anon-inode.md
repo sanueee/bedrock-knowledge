@@ -1,3 +1,13 @@
+---
+тема: anon_inode — анонимные файловые дескрипторы / Anonymous inodes
+блок: A — Linux syscalls
+дата: 2026-04-13
+связано:
+  - "[[proc-filesystem]]"
+  - "[[symlinks-linux]]"
+  - "[[fd-kernel-model]]"
+---
+
 # anon_inode — анонимные файловые дескрипторы
 
 ## Суть (своими словами)

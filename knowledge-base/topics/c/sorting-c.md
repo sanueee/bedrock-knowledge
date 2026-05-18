@@ -1,3 +1,12 @@
+---
+тема: Сортировка в C — qsort / Sorting
+блок: A — Linux syscalls
+дата: 2026-04-13
+связано:
+  - "[[directory-traversal-c]]"
+  - "[[proc-filesystem]]"
+---
+
 # Сортировка в C — qsort
 
 ## Суть (своими словами)

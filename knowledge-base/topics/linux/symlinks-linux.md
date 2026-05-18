@@ -1,3 +1,13 @@
+---
+тема: Симлинки / Symbolic links
+блок: A — Linux syscalls
+дата: 2026-04-13
+связано:
+  - "[[directory-traversal-c]]"
+  - "[[file-io-c]]"
+  - "[[proc-filesystem]]"
+---
+
 # Симлинки (symbolic links)
 
 ## Суть (своими словами)

@@ -2,7 +2,8 @@
 тема: Rust toolchain (rustup, rustc, cargo)
 блок: C — Rust
 дата: 2026-05-18
-связано: [[guessing-game-notes]]
+связано:
+  - "[[guessing-game-notes]]"
 ---
 
 # Rust toolchain

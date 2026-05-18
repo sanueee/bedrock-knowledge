@@ -1,3 +1,15 @@
+---
+тема: Pipes — межпроцессный канал данных / Pipes
+блок: A — Linux syscalls
+дата: 2026-04-25
+связано:
+  - "[[fork-linux]]"
+  - "[[musl-popen]]"
+  - "[[pthreads-linux]]"
+  - "[[signals-linux]]"
+  - "[[fd-kernel-model]]"
+---
+
 # pipes — межпроцессный канал данных / Pipes
 
 ## Что это

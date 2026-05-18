@@ -1,3 +1,14 @@
+---
+тема: Сигналы Linux / Signals
+блок: A — Linux syscalls
+дата: 2026-04-21
+связано:
+  - "[[fork-linux]]"
+  - "[[pipes-linux]]"
+  - "[[proc-filesystem]]"
+  - "[[async-signal-safe]]"
+---
+
 # Сигналы Linux / Signals
 
 ## Что это

@@ -1,3 +1,16 @@
+---
+тема: TCP-сокеты в Linux / TCP sockets
+блок: B — Сетевой стек
+дата: 2026-05-16
+связано:
+  - "[[async-signal-safe]]"
+  - "[[fd-kernel-model]]"
+  - "[[pipes-linux]]"
+  - "[[proc-net]]"
+  - "[[signals-linux]]"
+  - "[[syscalls-linux]]"
+---
+
 # TCP-сокеты в Linux / TCP sockets
 
 ## Что это

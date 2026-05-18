@@ -1,3 +1,13 @@
+---
+тема: pthreads — многопоточность в Linux / POSIX threads
+блок: A — Linux syscalls
+дата: 2026-04-28
+связано:
+  - "[[fork-linux]]"
+  - "[[pipes-linux]]"
+  - "[[proc-filesystem]]"
+---
+
 # pthreads — многопоточность в Linux
 
 ## Что это

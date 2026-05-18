@@ -1,3 +1,14 @@
+---
+тема: /proc/net/tcp — чтение TCP-соединений / proc-net
+блок: A — Linux syscalls
+дата: 2026-04-28
+связано:
+  - "[[file-io-c]]"
+  - "[[proc-filesystem]]"
+  - "[[string-formatting-c]]"
+  - "[[tcp-sockets]]"
+---
+
 # /proc/net/tcp — чтение TCP-соединений
 
 ## Что это

@@ -1,3 +1,18 @@
+---
+тема: musl popen/pclose — pipe+fork+exec в одной функции / Reading
+блок: Reading
+дата: 2026-05-08
+связано:
+  - "[[async-signal-safe]]"
+  - "[[fd-kernel-model]]"
+  - "[[fork-linux]]"
+  - "[[pipes-linux]]"
+  - "[[pthreads-linux]]"
+  - "[[signals-linux]]"
+  - "[[syscalls-linux]]"
+  - "[[virtual-memory-cow]]"
+---
+
 # musl popen/pclose — как stdlib собирает pipe+fork+exec в одну функцию / Reading
 
 ## Что разобрано

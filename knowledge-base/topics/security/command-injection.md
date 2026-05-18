@@ -1,8 +1,9 @@
 ---
-topic: command-injection
-category: security
-date: 2026-04-30
-source: ctf/picoctf/general-skills/ping-cmd
+тема: Command injection — внедрение команд через shell metacharacters
+блок: Security/CTF
+дата: 2026-04-30
+связано:
+  - "[[ctf/picoctf/general-skills/ping-cmd]]"
 ---
 
 # Command Injection

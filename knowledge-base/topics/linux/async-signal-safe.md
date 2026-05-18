@@ -1,3 +1,15 @@
+---
+тема: Async-signal-safe код / Async-signal-safety
+блок: Фундамент (theory)
+дата: 2026-05-14
+связано:
+  - "[[signals-linux]]"
+  - "[[fork-linux]]"
+  - "[[pthreads-linux]]"
+  - "[[virtual-memory-cow]]"
+  - "[[syscalls-linux]]"
+---
+
 # Async-signal-safe код / Async-signal-safety
 
 ## Что это
