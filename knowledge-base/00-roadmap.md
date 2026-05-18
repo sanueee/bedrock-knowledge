@@ -1,5 +1,5 @@
 ---
-обновлено: 2026-05-17
+обновлено: 2026-05-18
 ---
 
 # Roadmap — хаб проекта
@@ -16,7 +16,7 @@
 
 > Обновляется после каждой завершённой сессии через `session-debrief`. **Это primary source** для всех skills (give-task, mock-interview, reading-code, ctf).
 
-**Активный блок:** B — Сетевой стек (C). B1 завершён.
+**Активный блок:** B — Сетевой стек (C). B1 завершён. Параллельно: блок C — Rust, C1.1 завершён.
 
 **Фундамент (theory 2026-05-14):** syscalls + kernel/user boundary, fd kernel model + refcount, async-signal-safety, virtual memory + copy-on-write, EINTR семантика.
 
@@ -24,7 +24,9 @@
 
 **Выполненные темы блока B:** B1 — TCP-сокеты (socket/bind/listen/accept/connect/send/recv, sockaddr_in + htons/htonl, SO_REUSEADDR/TIME_WAIT, accept value-result socklen_t, three-way recv (0/-1/>0), partial read on stream, EINTR на разных слоях, EPIPE/ECONNRESET как штатное событие, SIGPIPE через sigaction(SIG_IGN), inet_pton/inet_ntop).
 
-**Последний выполненный task:** task-10 — TCP echo server + client (2026-05-17).
+**Выполненные темы блока C:** C1.1 — Rust toolchain (rustup/rustc/cargo, Cargo.toml/lock, edition, crate binary vs library, crates.io); прочитаны главы 1–2 The Book (hello_world через cargo, guessing_game с rand). Список открытых вопросов после главы 2 (mut, &mut, shadowing, match exhaustive, Result/expect, String vs &str, trait imports) зафиксирован в [[guessing-game-notes]] — закроется в C1.2 (главы 3–4).
+
+**Последний выполненный task:** task-11 — Rust ch.1–2 (2026-05-18).
 
 **Следующий шаг — B2: разбор пакетов (libpcap)**
 - Перехват и парсинг пакетов на уровне Ethernet/IP/TCP.
@@ -34,7 +36,7 @@
 - Перед началом перечитать: `topics/networking/tcp-sockets.md` (host vs network byte order), `topics/linux/proc-net.md` (структура IP/TCP заголовков на уровне байтов).
 
 **Параллельные блоки/треки доступны сейчас:**
-- **Блок C — Rust** (с C1: The Book главы 1–4). Доступен с момента завершения B1. Можно чередовать с B-задачами сессиями. Параллельно прокачивается Rust, не теряется темп по сетям.
+- **Блок C — Rust**. C1.1 (The Book гл. 1–2) завершено. Следующий шаг: **C1.2 — главы 3–4** (типы, control flow, Ownership). Это содержательное ядро Rust — после него guessing_game и hello_world перестают быть "магией". Можно чередовать с B-задачами сессиями.
 - **B0 — OWASP Top 10 (web)** — теоретический трек, не writing-задача. Закрыть до B5 (TLS) для синергии с HTTP. Время: 1-2 сессии (статья + DVWA).
 - **picoCTF** — управляется счётчиком CTF.
 - **Reading-code** — управляется счётчиком reading.
@@ -43,9 +45,9 @@
 
 ### Счётчики
 
-- **Счётчик задач с последнего мок-собеса:** 3 *(каждые 8 — предложить `mock-interview`)*
-- **Счётчик задач с последнего reading-code:** 1 *(каждые 4 — обязательно `reading-code`. Также обязательно при завершении любого блока. Reading-01 — 2026-05-08.)*
-- **Счётчик задач с последнего CTF:** 2 *(каждые 5 — мягко предложить `ctf`. Параллельный трек, ~1-2 часа на picoCTF.)*
+- **Счётчик задач с последнего мок-собеса:** 4 *(каждые 8 — предложить `mock-interview`)*
+- **Счётчик задач с последнего reading-code:** 2 *(каждые 4 — обязательно `reading-code`. Также обязательно при завершении любого блока. Reading-01 — 2026-05-08.)*
+- **Счётчик задач с последнего CTF:** 3 *(каждые 5 — мягко предложить `ctf`. Параллельный трек, ~1-2 часа на picoCTF.)*
 
 ### Невыполненные закрепляющие задания
 
@@ -67,6 +69,7 @@
 | 08 | [[task-08-pthreads\|pthreads]] | ✅ выполнено | `linux/proc/procthreads.c` |
 | 09 | [[task-09-interview01-reinforce\|interview-01 reinforce]] | ✅ выполнено | `linux/reinforce/` |
 | 10 | [[task-10-tcp-echo\|TCP echo server + client]] | ✅ выполнено (2026-05-17) | `networking/echo_server.c`, `networking/echo_client.c` |
+| 11 | [[task-11-rust-ch1-2\|Rust: toolchain + hello_world + Guessing Game]] | ✅ выполнено (2026-05-18) | `rust/hello_world/`, `rust/guessing_game/` |
 
 ---
 
@@ -122,6 +125,11 @@
 - [[fd-kernel-model]] — file descriptor table, struct file, refcount
 - [[async-signal-safe]] — какие функции safe в обработчиках сигналов
 - [[virtual-memory-cow]] — виртуальная память и copy-on-write при fork
+
+## Темы — Rust
+
+- [[toolchain]] — rustup, rustc, cargo, Cargo.toml/lock, crate, edition, crates.io
+- [[guessing-game-notes]] — открытые вопросы после главы 2 The Book (mut, &mut, shadowing, Result, match exhaustive, trait imports)
 
 ## Темы — Networking
 

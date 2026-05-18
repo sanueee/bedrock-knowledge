@@ -21,7 +21,7 @@
 | Технология | Уровень |
 |------------|---------|
 | C | Джун, уверенно. Файловая система, POSIX dirent, /proc, qsort, snprintf, readlink. |
-| Rust | 0, параллельный трек доступен с момента завершения B1 (2026-05-17). C1 (The Book гл. 1-4) — следующий шаг по треку. |
+| Rust | Старт. Toolchain установлен (rustc 1.94.0, cargo). Прочитаны главы 1–2 The Book (hello_world через cargo, Guessing Game с rand). Концепции `mut`/`&mut`, Ownership, traits, `Result`/`expect`, shadowing — обзорно знаком, детали не разобраны (вопросы в [[guessing-game-notes]], закроются в C1.2 — гл. 3–4). |
 | Linux | Комфортно в терминале. /proc — знаю. Internals — поверхностно. |
 | Git | Базово, формирую привычку. |
 | Сети | TCP/IP концептуально (handshake, TIME_WAIT, RST, FIN, partial read/write на stream). /proc/net/tcp — парсил. Сокеты — написал echo server+client (B1). |
