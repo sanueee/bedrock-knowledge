@@ -1,5 +1,5 @@
 ---
-обновлено: 2026-05-18
+обновлено: 2026-05-18 (task-12)
 ---
 
 # Roadmap — хаб проекта
@@ -16,7 +16,7 @@
 
 > Обновляется после каждой завершённой сессии через `session-debrief`. **Это primary source** для всех skills (give-task, mock-interview, reading-code, ctf).
 
-**Активный блок:** B — Сетевой стек (C). B1 завершён. Параллельно: блок C — Rust, C1.1 завершён.
+**Активный блок:** B — Сетевой стек (C). B1 завершён. Параллельно: блок C — Rust, C1.2 завершён.
 
 **Фундамент (theory 2026-05-14):** syscalls + kernel/user boundary, fd kernel model + refcount, async-signal-safety, virtual memory + copy-on-write, EINTR семантика.
 
@@ -24,9 +24,9 @@
 
 **Выполненные темы блока B:** B1 — TCP-сокеты (socket/bind/listen/accept/connect/send/recv, sockaddr_in + htons/htonl, SO_REUSEADDR/TIME_WAIT, accept value-result socklen_t, three-way recv (0/-1/>0), partial read on stream, EINTR на разных слоях, EPIPE/ECONNRESET как штатное событие, SIGPIPE через sigaction(SIG_IGN), inet_pton/inet_ntop).
 
-**Выполненные темы блока C:** C1.1 — Rust toolchain (rustup/rustc/cargo, Cargo.toml/lock, edition, crate binary vs library, crates.io); прочитаны главы 1–2 The Book (hello_world через cargo, guessing_game с rand). Список открытых вопросов после главы 2 (mut, &mut, shadowing, match exhaustive, Result/expect, String vs &str, trait imports) зафиксирован в [[guessing-game-notes]] — закроется в C1.2 (главы 3–4).
+**Выполненные темы блока C:** C1.1 — Rust toolchain (rustup/rustc/cargo, Cargo.toml/lock, edition, crate binary vs library, crates.io); главы 1–2 The Book (hello_world, guessing_game). C1.2 — главы 3–4 The Book: типы (`i32`/`u32`/`usize`/`bool`/`char` Unicode, integer overflow панично в debug, wrapping в release), `let`/`mut`/`const`, shadowing (новая переменная того же имени, в т.ч. с другим типом), statements vs expressions (блок и `if` — выражения, `;` отбрасывает значение), control flow (`if` строго `bool`, `loop`/`while`/`for in collection`, ranges `a..b` exclusive / `a..=b` inclusive). Ownership (move vs Copy — `String` not Copy, `i32` is Copy), borrow (`&T` shared N штук / `&mut T` exclusive 1 штука — XOR), `String` (owned, heap) vs `&str` (slice, view), slices `&s[a..b]` без аллокации, deref coercion `&String` → `&str`, dangling reference как compile error (lifetime). Видел реальные сообщения borrow checker'а: E0499 (two &mut), E0502 (mut+immut), E0382 (use after move), E0106/E0515 (dangling) — см. [[ownership]].
 
-**Последний выполненный task:** task-11 — Rust ch.1–2 (2026-05-18).
+**Последний выполненный task:** task-12 — Rust ch.3–4 + word_tools (2026-05-18).
 
 **Следующий шаг — B2: разбор пакетов (libpcap)**
 - Перехват и парсинг пакетов на уровне Ethernet/IP/TCP.
@@ -36,7 +36,7 @@
 - Перед началом перечитать: `topics/networking/tcp-sockets.md` (host vs network byte order), `topics/linux/proc-net.md` (структура IP/TCP заголовков на уровне байтов).
 
 **Параллельные блоки/треки доступны сейчас:**
-- **Блок C — Rust**. C1.1 (The Book гл. 1–2) завершено. Следующий шаг: **C1.2 — главы 3–4** (типы, control flow, Ownership). Это содержательное ядро Rust — после него guessing_game и hello_world перестают быть "магией". Можно чередовать с B-задачами сессиями.
+- **Блок C — Rust**. C1.2 (The Book гл. 3–4) завершено — Ownership, borrow, slices, типы, control flow. Следующий шаг: **C1.3 — главы 5–6** (structs, enums, match exhaustive — закрывает вопрос 6 из [[guessing-game-notes]]). Чередовать с B-задачами сессиями.
 - **B0 — OWASP Top 10 (web)** — теоретический трек, не writing-задача. Закрыть до B5 (TLS) для синергии с HTTP. Время: 1-2 сессии (статья + DVWA).
 - **picoCTF** — управляется счётчиком CTF.
 - **Reading-code** — управляется счётчиком reading.
@@ -45,9 +45,9 @@
 
 ### Счётчики
 
-- **Счётчик задач с последнего мок-собеса:** 4 *(каждые 8 — предложить `mock-interview`)*
-- **Счётчик задач с последнего reading-code:** 2 *(каждые 4 — обязательно `reading-code`. Также обязательно при завершении любого блока. Reading-01 — 2026-05-08.)*
-- **Счётчик задач с последнего CTF:** 3 *(каждые 5 — мягко предложить `ctf`. Параллельный трек, ~1-2 часа на picoCTF.)*
+- **Счётчик задач с последнего мок-собеса:** 5 *(каждые 8 — предложить `mock-interview`)*
+- **Счётчик задач с последнего reading-code:** 3 *(каждые 4 — обязательно `reading-code`. Также обязательно при завершении любого блока. Reading-01 — 2026-05-08.)*
+- **Счётчик задач с последнего CTF:** 4 *(каждые 5 — мягко предложить `ctf`. Параллельный трек, ~1-2 часа на picoCTF.)*
 
 ### Невыполненные закрепляющие задания
 
@@ -70,6 +70,7 @@
 | 09 | [[task-09-interview01-reinforce\|interview-01 reinforce]] | ✅ выполнено | `linux/reinforce/` |
 | 10 | [[task-10-tcp-echo\|TCP echo server + client]] | ✅ выполнено (2026-05-17) | `networking/echo_server.c`, `networking/echo_client.c` |
 | 11 | [[task-11-rust-ch1-2\|Rust: toolchain + hello_world + Guessing Game]] | ✅ выполнено (2026-05-18) | `rust/hello_world/`, `rust/guessing_game/` |
+| 12 | [[task-12-rust-ch3-4\|Rust ch.3–4 + word_tools (slices/ownership)]] | ✅ выполнено (2026-05-18) | `rust/word_tools/src/main.rs` |
 
 ---
 
@@ -129,7 +130,9 @@
 ## Темы — Rust
 
 - [[toolchain]] — rustup, rustc, cargo, Cargo.toml/lock, crate, edition, crates.io
-- [[guessing-game-notes]] — открытые вопросы после главы 2 The Book (mut, &mut, shadowing, Result, match exhaustive, trait imports)
+- [[guessing-game-notes]] — открытые вопросы после главы 2 The Book (закрыто 1,2,3,5,7; открыто 4,6,8)
+- [[types-control-flow]] — глава 3: immutable by default, shadowing, типы, statements vs expressions, ranges
+- [[ownership]] — глава 4: move/copy, `&T`/`&mut T`, slices, dangling, реальные сообщения borrow checker'а
 
 ## Темы — Networking
 

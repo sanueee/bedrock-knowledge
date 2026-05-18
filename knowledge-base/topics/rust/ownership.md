@@ -230,6 +230,112 @@ fn first_word(s: &str) -> &str { ... }
 
 ---
 
+## Сообщения borrow checker'а (из task-12)
+
+Запись четырёх провокаций для будущей подстановки шаблонов. Когда увидишь что-то похожее — узнаваешь паттерн сразу.
+
+### 1. Two mutable refs одновременно
+
+```rust
+let mut s = String::from("hello");
+let r1 = &mut s;
+let r2 = &mut s;
+println!("{r1} {r2}");
+```
+
+```
+error[E0499]: cannot borrow `s` as mutable more than once at a time
+ --> src/main.rs
+  |
+  | let r1 = &mut s;
+  |          ------ first mutable borrow occurs here
+  | let r2 = &mut s;
+  |          ^^^^^^ second mutable borrow occurs here
+  | println!("{r1} {r2}");
+  |            -- first borrow later used here
+```
+
+**Что говорит компилятор:** `&mut T` exclusive. Пока `r1` жив (используется ниже), нельзя сделать второй `&mut`. Если бы `r1` не использовался после — NLL (non-lexical lifetimes) разрешил бы.
+
+### 2. Mutable + immutable одновременно
+
+```rust
+let mut s = String::from("hello");
+let r1 = &s;
+let r2 = &mut s;
+println!("{r1}");
+```
+
+```
+error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
+ --> src/main.rs
+  |
+  | let r1 = &s;
+  |          -- immutable borrow occurs here
+  | let r2 = &mut s;
+  |          ^^^^^^ mutable borrow occurs here
+  | println!("{r1}");
+  |            -- immutable borrow later used here
+```
+
+**Что говорит компилятор:** правило borrow в чистом виде — либо N `&T`, либо 1 `&mut T`, не оба одновременно. Логика: если позволить и то и другое, читатель `r1` может видеть данные в момент когда `r2` их меняет (data race в одном потоке — inconsistent view).
+
+### 3. Use after move
+
+```rust
+let s1 = String::from("hi");
+let s2 = s1;
+println!("{s1}");
+```
+
+```
+error[E0382]: borrow of moved value: `s1`
+ --> src/main.rs
+  |
+  | let s1 = String::from("hi");
+  |     -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
+  | let s2 = s1;
+  |          -- value moved here
+  | println!("{s1}");
+  |            ^^ value borrowed here after move
+```
+
+**Что говорит компилятор:** `String` не `Copy` — присваивание это move. После move `s1` "пуст" с точки зрения системы типов, любое использование запрещено. С `i32` или другим `Copy`-типом ошибки не было бы.
+
+### 4. Dangling reference
+
+```rust
+fn dangle() -> &String {
+    let s = String::from("oops");
+    &s
+}
+```
+
+```
+error[E0106]: missing lifetime specifier
+ --> src/main.rs
+  |
+  | fn dangle() -> &String {
+  |                ^ expected named lifetime parameter
+  |
+help: this function's return type contains a borrowed value, but there is no value
+      for it to be borrowed from
+```
+
+Если добавить lifetime `&'static`:
+
+```
+error[E0515]: cannot return reference to local variable `s`
+ --> src/main.rs
+  |
+  |     &s
+  |     ^^ returns a reference to data owned by the current function
+```
+
+**Что говорит компилятор:** `s` живёт только пока работает функция. После `return` `s` дропнется, и ссылка станет dangling. В C это UB-ловушка, тут — compile error до запуска.
+
+---
+
 ## Ключевые термины (English)
 
 - **ownership** — система compile-time управления ресурсами.
