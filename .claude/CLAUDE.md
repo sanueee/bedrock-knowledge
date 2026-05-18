@@ -20,10 +20,10 @@
 **Основные языки** (учим осознанно, под якорные проекты):
 | Технология | Уровень |
 |------------|---------|
-| C | Джун, уверенно. Файловая система, POSIX dirent, /proc, qsort, snprintf, readlink. |
+| C | Джун, уверенно. POSIX dirent + /proc, qsort/snprintf/readlink, fork/exec/wait, signals (sigaction, async-signal-safety, SA_RESTART), pipes/IPC (pipe/dup2), pthreads (mutex, data race), TCP-сокеты (socket/bind/listen/accept, SO_REUSEADDR, partial read, EINTR/EPIPE/SIGPIPE через SIG_IGN), парсинг /proc/net/tcp (sscanf, bitwise, little-endian). |
 | Rust | Старт. Toolchain установлен (rustc 1.94.0, cargo). Прочитаны главы 1–2 The Book (hello_world через cargo, Guessing Game с rand). Концепции `mut`/`&mut`, Ownership, traits, `Result`/`expect`, shadowing — обзорно знаком, детали не разобраны (вопросы в [[guessing-game-notes]], закроются в C1.2 — гл. 3–4). |
-| Linux | Комфортно в терминале. /proc — знаю. Internals — поверхностно. |
-| Git | Базово, формирую привычку. |
+| Linux | Комфортно в терминале. /proc — знаю предметно (parsing, fd, маршрутизация запросов через `/proc/[pid]/`). Понимаю kernel/user boundary, syscalls, fd kernel model + refcount, virtual memory + copy-on-write, async-signal-safety, EINTR-семантику. Internals глубже (планировщик, VFS, namespaces) — пока поверхностно. |
+| Git | Базово (add/commit/push/log/diff), формирую привычку коммитить по смыслу. Ребейзы, rerere, bisect, worktrees — пока не трогал. |
 | Сети | TCP/IP концептуально (handshake, TIME_WAIT, RST, FIN, partial read/write на stream). /proc/net/tcp — парсил. Сокеты — написал echo server+client (B1). |
 | Английский | B2: читаю и смотрю свободно, говорить и слушать на слух — слабее. |
 
@@ -66,11 +66,14 @@ fn2s/
 │       ├── c/           # темы по языку C
 │       ├── linux/       # темы по Linux internals
 │       ├── networking/  # сети (блок B, начат — есть tcp-sockets.md)
+│       ├── rust/        # Rust (toolchain, types/control flow, ownership)
 │       ├── reading/     # разборы чужого кода (скилл reading-code)
 │       └── llm-sec/     # LLM-security (этап 3)
 ├── linux/               # C-код: системное программирование Linux
 │   ├── proc/            # работа с /proc
-│   └── fd/              # файловые дескрипторы
+│   ├── fd/              # файловые дескрипторы
+│   ├── reading/         # разборы чужого C-кода (скилл reading-code)
+│   └── reinforce/       # закрепляющие задания после мок-собесов
 ├── networking/          # сетевой стек (этап 1, блок B — есть echo_server.c/echo_client.c)
 ├── crypto/              # крипто-инструменты (этап 2)
 ├── rust/                # Rust (этап 2+)
