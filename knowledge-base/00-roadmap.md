@@ -1,5 +1,5 @@
 ---
-обновлено: 2026-05-20 (task-13)
+обновлено: 2026-05-21 (reading-02)
 ---
 
 # Roadmap — хаб проекта
@@ -26,7 +26,7 @@
 
 **Выполненные темы блока C:** C1.1 — Rust toolchain (rustup/rustc/cargo, Cargo.toml/lock, edition, crate binary vs library, crates.io); главы 1–2 The Book (hello_world, guessing_game). C1.2 — главы 3–4 The Book: типы (`i32`/`u32`/`usize`/`bool`/`char` Unicode, integer overflow панично в debug, wrapping в release), `let`/`mut`/`const`, shadowing (новая переменная того же имени, в т.ч. с другим типом), statements vs expressions (блок и `if` — выражения, `;` отбрасывает значение), control flow (`if` строго `bool`, `loop`/`while`/`for in collection`, ranges `a..b` exclusive / `a..=b` inclusive). Ownership (move vs Copy — `String` not Copy, `i32` is Copy), borrow (`&T` shared N штук / `&mut T` exclusive 1 штука — XOR), `String` (owned, heap) vs `&str` (slice, view), slices `&s[a..b]` без аллокации, deref coercion `&String` → `&str`, dangling reference как compile error (lifetime). Видел реальные сообщения borrow checker'а: E0499 (two &mut), E0502 (mut+immut), E0382 (use after move), E0106/E0515 (dangling) — см. [[ownership]].
 
-**Последний выполненный task:** task-13 — OWASP Top 10 web теория (2026-05-20).
+**Последний выполненный task:** reading-02 — Redis anet.c (обёртка над sockets API), 2026-05-21.
 
 **Следующий шаг — B2: разбор пакетов (libpcap)**
 - Перехват и парсинг пакетов на уровне Ethernet/IP/TCP.
@@ -46,8 +46,8 @@
 ### Счётчики
 
 - **Счётчик задач с последнего мок-собеса:** 6 *(каждые 8 — предложить `mock-interview`)*
-- **Счётчик задач с последнего reading-code:** 4 *(каждые 4 — обязательно `reading-code`. Также обязательно при завершении любого блока. Reading-01 — 2026-05-08.)* **→ триггер сработал, следующая сессия должна быть reading-code.**
-- **Счётчик задач с последнего CTF:** 5 *(каждые 5 — мягко предложить `ctf`. Параллельный трек, ~1-2 часа на picoCTF.)* **→ триггер сработал, после reading можно предложить CTF.**
+- **Счётчик задач с последнего reading-code:** 0 *(каждые 4 — обязательно `reading-code`. Последняя — Reading-02, 2026-05-21, Redis anet.c.)*
+- **Счётчик задач с последнего CTF:** 5 *(каждые 5 — мягко предложить `ctf`. Параллельный трек, ~1-2 часа на picoCTF.)* **→ триггер активен, мягко предложить следующей сессией.**
 
 ### Невыполненные закрепляющие задания
 
@@ -80,6 +80,7 @@
 | # | Дата | Источник | Цель | Vault |
 |---|------|----------|------|-------|
 | 01 | 2026-05-08 | musl libc | popen/pclose/_Fork — fd inheritance, FD_CLOEXEC | [[musl-popen]] |
+| 02 | 2026-05-21 | Redis (`src/anet.c`) | обёртка над sockets API: симметрия connect/server, гигиена сокета, библиотечная дисциплина ошибок | [[redis-anet]] |
 
 ---
 
@@ -138,6 +139,9 @@
 ## Темы — Networking
 
 - [[tcp-sockets]] — TCP-сокеты, socket/bind/listen/accept/connect, partial read, EPIPE, SIGPIPE защита
+- [[event-loop-epoll]] — event loop model, epoll, non-blocking I/O, readiness ≠ correctness
+- [[nagle-tcp-nodelay]] — алгоритм Нагла, TCP_NODELAY, когда выключать
+- [[getaddrinfo]] — resolve, addrinfo linked list, gai_strerror, паттерн "свой namespace ошибок"
 
 ## Темы — Security / CTF
 
@@ -151,10 +155,12 @@
 - [[string-formatting-c]] — snprintf, sscanf, strncmp
 - [[error-handling-c]] — обработка ошибок, errno, perror
 - [[sorting-c]] — qsort, компаратор
+- [[bitwise-flags]] — битовые флаги, идиомы (`|=`, `&= ~`, `!!`), file status vs descriptor flags
 
 ## Темы — Reading (разборы чужого кода)
 
 - [[musl-popen]] — musl libc popen/pclose/_Fork, fd inheritance, FD_CLOEXEC
+- [[redis-anet]] — Redis обёртка над sockets API: симметрия connect/server, гигиена сокета, паттерн goto error
 
 ---
 
