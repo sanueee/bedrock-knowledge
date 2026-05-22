@@ -1,5 +1,5 @@
 ---
-обновлено: 2026-05-22 (CTF session-02 Forensics)
+обновлено: 2026-05-22 (task-14 Rust ch.5 structs+methods)
 ---
 
 # Roadmap — хаб проекта
@@ -16,7 +16,7 @@
 
 > Обновляется после каждой завершённой сессии через `session-debrief`. **Это primary source** для всех skills (give-task, mock-interview, reading-code, ctf).
 
-**Активный блок:** B — Сетевой стек (C). B1 завершён, B0 (OWASP теория) завершён. Параллельно: блок C — Rust, C1.2 завершён.
+**Активный блок:** B — Сетевой стек (C). B1 завершён, B0 (OWASP теория) завершён. Параллельно: блок C — Rust, C1.3 (часть 1, structs) завершён; глава 6 (enums + match) — следующей Rust-сессией.
 
 **Фундамент (theory 2026-05-14):** syscalls + kernel/user boundary, fd kernel model + refcount, async-signal-safety, virtual memory + copy-on-write, EINTR семантика.
 
@@ -24,9 +24,9 @@
 
 **Выполненные темы блока B:** B1 — TCP-сокеты (socket/bind/listen/accept/connect/send/recv, sockaddr_in + htons/htonl, SO_REUSEADDR/TIME_WAIT, accept value-result socklen_t, three-way recv (0/-1/>0), partial read on stream, EINTR на разных слоях, EPIPE/ECONNRESET как штатное событие, SIGPIPE через sigaction(SIG_IGN), inet_pton/inet_ntop). B0 — OWASP Top 10 web (2021) теория: authn vs authz, prepared statement как структурная защита (prepare/execute, данные вне грамматики SQL), XSS reflected/stored/DOM-based, SSRF + cloud metadata 169.254.169.254 (Capital One 2019), allowlist vs denylist + DNS rebinding, IDOR (ID из клиента vs сессии), password hashing (bcrypt/argon2id, не SHA-256), supply chain (xz-utils, event-stream, SolarWinds), insecure deserialization. Принципы: defense in depth, структурные защиты > текстовые, не доверять клиенту. Практика DVWA/PortSwigger — отложена до отдельной сессии.
 
-**Выполненные темы блока C:** C1.1 — Rust toolchain (rustup/rustc/cargo, Cargo.toml/lock, edition, crate binary vs library, crates.io); главы 1–2 The Book (hello_world, guessing_game). C1.2 — главы 3–4 The Book: типы (`i32`/`u32`/`usize`/`bool`/`char` Unicode, integer overflow панично в debug, wrapping в release), `let`/`mut`/`const`, shadowing (новая переменная того же имени, в т.ч. с другим типом), statements vs expressions (блок и `if` — выражения, `;` отбрасывает значение), control flow (`if` строго `bool`, `loop`/`while`/`for in collection`, ranges `a..b` exclusive / `a..=b` inclusive). Ownership (move vs Copy — `String` not Copy, `i32` is Copy), borrow (`&T` shared N штук / `&mut T` exclusive 1 штука — XOR), `String` (owned, heap) vs `&str` (slice, view), slices `&s[a..b]` без аллокации, deref coercion `&String` → `&str`, dangling reference как compile error (lifetime). Видел реальные сообщения borrow checker'а: E0499 (two &mut), E0502 (mut+immut), E0382 (use after move), E0106/E0515 (dangling) — см. [[ownership]].
+**Выполненные темы блока C:** C1.1 — Rust toolchain (rustup/rustc/cargo, Cargo.toml/lock, edition, crate binary vs library, crates.io); главы 1–2 The Book (hello_world, guessing_game). C1.2 — главы 3–4 The Book: типы (`i32`/`u32`/`usize`/`bool`/`char` Unicode, integer overflow панично в debug, wrapping в release), `let`/`mut`/`const`, shadowing (новая переменная того же имени, в т.ч. с другим типом), statements vs expressions (блок и `if` — выражения, `;` отбрасывает значение), control flow (`if` строго `bool`, `loop`/`while`/`for in collection`, ranges `a..b` exclusive / `a..=b` inclusive). Ownership (move vs Copy — `String` not Copy, `i32` is Copy), borrow (`&T` shared N штук / `&mut T` exclusive 1 штука — XOR), `String` (owned, heap) vs `&str` (slice, view), slices `&s[a..b]` без аллокации, deref coercion `&String` → `&str`, dangling reference как compile error (lifetime). Видел реальные сообщения borrow checker'а: E0499 (two &mut), E0502 (mut+immut), E0382 (use after move), E0106/E0515 (dangling) — см. [[ownership]]. C1.3 часть 1 — глава 5 The Book: struct (named-field / tuple / unit-like), field init shorthand, struct update syntax `..base` (move не-Copy полей), `impl` блок, три формы receiver (`&self` / `&mut self` / `self`), associated function vs method (конструктор `new` — конвенциональная associated fn, не языковая конструкция; вызов через `::`), `Self` (большая) как алиас типа, automatic referencing (компилятор сам добавит `&`/`&mut`/`*` к receiver — но **не к аргументам**), `#[derive(Debug)]` + `{:?}` / `{:#?}` / `dbg!(&x)` (stderr + позиция в файле). См. [[structs-methods]].
 
-**Последний выполненный task:** CTF session-02 Forensics — 4 таска picoCTF (CanYouSee / Verify / Corrupted file / Secret of the Polyglot), 2026-05-22.
+**Последний выполненный task:** task-14 — Rust ch.5 structs + methods (`rectangles`), 2026-05-23.
 
 **Следующий шаг — B2: разбор пакетов (libpcap)**
 - Перехват и парсинг пакетов на уровне Ethernet/IP/TCP.
@@ -36,7 +36,7 @@
 - Перед началом перечитать: `topics/networking/tcp-sockets.md` (host vs network byte order), `topics/linux/proc-net.md` (структура IP/TCP заголовков на уровне байтов).
 
 **Параллельные блоки/треки доступны сейчас:**
-- **Блок C — Rust**. C1.2 (The Book гл. 3–4) завершено — Ownership, borrow, slices, типы, control flow. Следующий шаг: **C1.3 — главы 5–6** (structs, enums, match exhaustive — закрывает вопрос 6 из [[guessing-game-notes]]). Чередовать с B-задачами сессиями.
+- **Блок C — Rust**. C1.3 часть 1 (гл. 5 — structs + methods) завершено: [[structs-methods]]. Следующий шаг: **C1.3 часть 2 — глава 6** (enums + `match` exhaustive — закрывает вопрос 6 из [[guessing-game-notes]]; `Option<T>`, паттерны, `if let`). Чередовать с B-задачами сессиями.
 - **B0 — OWASP Top 10 (web)** — **теория завершена (task-13, 2026-05-20)**. Конспект: [[owasp-top10]]. Практика DVWA/PortSwigger labs (3–5 челленджей) отложена — добавить отдельной сессией перед B5 TLS.
 - **picoCTF** — управляется счётчиком CTF.
 - **Reading-code** — управляется счётчиком reading.
@@ -45,9 +45,9 @@
 
 ### Счётчики
 
-- **Счётчик задач с последнего мок-собеса:** 6 *(каждые 8 — предложить `mock-interview`)*
-- **Счётчик задач с последнего reading-code:** 0 *(каждые 4 — обязательно `reading-code`. Последняя — Reading-02, 2026-05-21, Redis anet.c.)*
-- **Счётчик задач с последнего CTF:** 0 *(каждые 5 — мягко предложить `ctf`. Последняя — Session-02 Forensics, 2026-05-22, 4 таска picoCTF.)*
+- **Счётчик задач с последнего мок-собеса:** 7 *(каждые 8 — предложить `mock-interview`)*
+- **Счётчик задач с последнего reading-code:** 1 *(каждые 4 — обязательно `reading-code`. Последняя — Reading-02, 2026-05-21, Redis anet.c.)*
+- **Счётчик задач с последнего CTF:** 1 *(каждые 5 — мягко предложить `ctf`. Последняя — Session-02 Forensics, 2026-05-22, 4 таска picoCTF.)*
 
 ### Невыполненные закрепляющие задания
 
@@ -72,6 +72,7 @@
 | 11 | [[task-11-rust-ch1-2\|Rust: toolchain + hello_world + Guessing Game]] | ✅ выполнено (2026-05-18) | `rust/hello_world/`, `rust/guessing_game/` |
 | 12 | [[task-12-rust-ch3-4\|Rust ch.3–4 + word_tools (slices/ownership)]] | ✅ выполнено (2026-05-18) | `rust/word_tools/src/main.rs` |
 | 13 | [[task-13-owasp-top10\|OWASP Top 10 (web) теория]] | ✅ выполнено (2026-05-20) | — (reading + vault) |
+| 14 | [[task-14-rust-ch5-structs\|Rust ch.5 — structs + methods (rectangles)]] | ✅ выполнено (2026-05-23) | `rust/rectangles/src/main.rs` |
 
 ---
 
@@ -139,6 +140,7 @@
 - [[guessing-game-notes]] — открытые вопросы после главы 2 The Book (закрыто 1,2,3,5,7; открыто 4,6,8)
 - [[types-control-flow]] — глава 3: immutable by default, shadowing, типы, statements vs expressions, ranges
 - [[ownership]] — глава 4: move/copy, `&T`/`&mut T`, slices, dangling, реальные сообщения borrow checker'а
+- [[structs-methods]] — глава 5: struct (named/tuple/unit), `impl`, `&self`/`&mut self`/`self`, associated function vs method, `Self`, automatic referencing, `#[derive(Debug)]` + `{:?}`/`{:#?}`/`dbg!`
 
 ## Темы — Networking
 
