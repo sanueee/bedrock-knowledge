@@ -1,5 +1,5 @@
 ---
-обновлено: 2026-05-21 (reading-02)
+обновлено: 2026-05-22 (CTF session-02 Forensics)
 ---
 
 # Roadmap — хаб проекта
@@ -26,7 +26,7 @@
 
 **Выполненные темы блока C:** C1.1 — Rust toolchain (rustup/rustc/cargo, Cargo.toml/lock, edition, crate binary vs library, crates.io); главы 1–2 The Book (hello_world, guessing_game). C1.2 — главы 3–4 The Book: типы (`i32`/`u32`/`usize`/`bool`/`char` Unicode, integer overflow панично в debug, wrapping в release), `let`/`mut`/`const`, shadowing (новая переменная того же имени, в т.ч. с другим типом), statements vs expressions (блок и `if` — выражения, `;` отбрасывает значение), control flow (`if` строго `bool`, `loop`/`while`/`for in collection`, ranges `a..b` exclusive / `a..=b` inclusive). Ownership (move vs Copy — `String` not Copy, `i32` is Copy), borrow (`&T` shared N штук / `&mut T` exclusive 1 штука — XOR), `String` (owned, heap) vs `&str` (slice, view), slices `&s[a..b]` без аллокации, deref coercion `&String` → `&str`, dangling reference как compile error (lifetime). Видел реальные сообщения borrow checker'а: E0499 (two &mut), E0502 (mut+immut), E0382 (use after move), E0106/E0515 (dangling) — см. [[ownership]].
 
-**Последний выполненный task:** reading-02 — Redis anet.c (обёртка над sockets API), 2026-05-21.
+**Последний выполненный task:** CTF session-02 Forensics — 4 таска picoCTF (CanYouSee / Verify / Corrupted file / Secret of the Polyglot), 2026-05-22.
 
 **Следующий шаг — B2: разбор пакетов (libpcap)**
 - Перехват и парсинг пакетов на уровне Ethernet/IP/TCP.
@@ -47,7 +47,7 @@
 
 - **Счётчик задач с последнего мок-собеса:** 6 *(каждые 8 — предложить `mock-interview`)*
 - **Счётчик задач с последнего reading-code:** 0 *(каждые 4 — обязательно `reading-code`. Последняя — Reading-02, 2026-05-21, Redis anet.c.)*
-- **Счётчик задач с последнего CTF:** 5 *(каждые 5 — мягко предложить `ctf`. Параллельный трек, ~1-2 часа на picoCTF.)* **→ триггер активен, мягко предложить следующей сессией.**
+- **Счётчик задач с последнего CTF:** 0 *(каждые 5 — мягко предложить `ctf`. Последняя — Session-02 Forensics, 2026-05-22, 4 таска picoCTF.)*
 
 ### Невыполненные закрепляющие задания
 
@@ -108,6 +108,10 @@
 | # | Дата | Платформа | Категория | Таск | Главное |
 |---|------|-----------|-----------|------|---------|
 | 01 | 2026-04-30 | picoCTF | General Skills | [[ctf/picoctf/general-skills/ping-cmd\|ping-cmd]] | command injection через `&&`; space vs shell metacharacter; `execve` over `system` |
+| 02 | 2026-05-22 | picoCTF | Forensics | [[ctf/picoctf/forensics/session-02-writeup\|CanYouSee]] | base64 в `Attribution URL` (XMP); подозрительное содержимое поля метаданных = указатель на флаг |
+| 03 | 2026-05-22 | picoCTF | Forensics | [[ctf/picoctf/forensics/session-02-writeup\|Verify]] | `sha256sum files/* \| grep <hash>`; `Salted__` = `openssl enc -salt`, не редактором |
+| 04 | 2026-05-22 | picoCTF | Forensics | [[ctf/picoctf/forensics/session-02-writeup\|Corrupted file]] | magic bytes JPEG (`FF D8`); `dd conv=notrunc bs=1 count=2` — точечная правка байтов без обрезания файла |
+| 05 | 2026-05-22 | picoCTF | Forensics | [[ctf/picoctf/forensics/session-02-writeup\|Secret of the Polyglot]] | polyglot PNG+PDF; `grep -aob '%PDF'` → offset, `dd skip=` извлекает; `Trailer data after IEND` в exiftool = сигнал polyglot |
 
 Цель к концу 2026: **30+ решённых челленджей**. Темп: 1-2 в неделю.
 
@@ -147,6 +151,7 @@
 
 - [[command-injection]] — command injection в picoCTF ping-cmd, защита через `execve`
 - [[owasp-top10]] — OWASP Top 10 (web, 2021): 10 категорий мышления, prepared statement / XSS / SSRF / IDOR глубоко
+- [[session-02-writeup]] — Forensics session-02: 4 таска (метаданные, sha256sum+openssl, magic bytes JPEG, polyglot PNG+PDF); таблица инструментов forensics (`exiftool`, `xxd`, `dd conv=notrunc`, `grep -aob`)
 
 ## Темы — C
 
@@ -181,5 +186,5 @@
 - [ ] Понимаешь что происходит при `connect()` на уровне ядра
 - [ ] Можешь написать простую структуру данных на Rust без подсказок
 - [ ] OWASP Top 10 (web и LLM) — могу объяснить на пальцах
-- [ ] picoCTF: минимум 30 решённых челленджей
-- [ ] Reading-code: ≥ 6 разборов чужого кода в `topics/reading/` (сейчас: 1)
+- [ ] picoCTF: минимум 30 решённых челленджей (сейчас: 5)
+- [ ] Reading-code: ≥ 6 разборов чужого кода в `topics/reading/` (сейчас: 2)
