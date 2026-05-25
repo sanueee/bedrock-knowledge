@@ -20,7 +20,10 @@
       "Bash(gcc:*)",
       "Edit",
       "Write",
-      "Read"
+      "Read",
+      "Edit(/.claude/skills/reading-code/**)",
+      "Edit(/.claude/skills/ctf/**)",
+      "Edit(/.claude/skills/session-debrief/**)"
     ]
   }
 }

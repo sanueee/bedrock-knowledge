@@ -33,8 +33,8 @@
 | LLM-security (этапы Z/I/J) | `knowledge-base/topics/llm-sec/` |
 | Web/CTF/общая безопасность | `knowledge-base/topics/security/` |
 | Концепция Rust | `knowledge-base/topics/rust/` (создать при первом C-task'е) |
-| Выполненное задание | `knowledge-base/tasks/task-NN.md` |
-| Reading-сессия | `knowledge-base/tasks/reading-NN.md` + конспект в `topics/reading/` |
+| Выполненное задание | `knowledge-base/tasks/block-X-<name>/task-NN.md` (в папке активного блока, например `block-b-networking/`) |
+| Reading-сессия | `knowledge-base/tasks/block-X-<name>/reading-NN.md` (в папке тематического блока) + конспект в `topics/reading/` |
 | Мок-собес | `knowledge-base/interviews/interview-NN.md` |
 | CTF writeup | `knowledge-base/ctf/<platform>/<category>/<task>.md` |
 | Обновление существующей записи | найти файл → дополнить (не создавать дубликат) |
@@ -153,3 +153,12 @@ date: YYYY-MM-DD
 - Не дублировать: tasks/ про опыт, topics/ про концепцию.
 - Не пропускать шаг 1 (если вопрос ещё не задавался в этой сессии).
 - Не начинать с длинного введения — сразу к сути.
+
+---
+
+## Обнови skills
+
+На основе переписки и замечаний пользователя — обнови `.claude/skills/*.md`.
+Конкретизируй, подстраивайся под стиль общения, записывай замечания.
+При необходимости создавай новые скиллы.
+Цель: идеальное понимание без толчков "посмотри в тот файл".

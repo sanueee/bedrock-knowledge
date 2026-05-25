@@ -22,7 +22,7 @@
 |------------|---------|
 | C | Джун, уверенно. POSIX dirent + /proc, qsort/snprintf/readlink, fork/exec/wait, signals (sigaction, async-signal-safety, SA_RESTART), pipes/IPC (pipe/dup2), pthreads (mutex, data race), TCP-сокеты (socket/bind/listen/accept, SO_REUSEADDR, partial read, EINTR/EPIPE/SIGPIPE через SIG_IGN), парсинг /proc/net/tcp (sscanf, bitwise, little-endian), libpcap + parsing сетевых пакетов на проводе (Ethernet/IPv4/TCP layout, переменная длина заголовков ip_hl*4/th_off*4, NBO, BPF фильтр в ядре, pcap_breakloop из SIGINT, snprintf с offset). |
 | Rust | Старт. Toolchain (rustc 1.94.0, cargo). The Book гл. 1–5 прочитаны. Понимаю: immutable by default, `mut`, shadowing, типы (`i32`/`u32`/`usize`/`bool`/`char` Unicode, overflow panic в debug), statements vs expressions, ranges (`..` / `..=`), `if`/`loop`/`for in collection`. Ownership: move vs Copy, `&T` shared XOR `&mut T` exclusive, `String` (owned heap) vs `&str` (slice view), slices без аллокации, deref coercion, dangling = compile error. Видел реальные сообщения borrow checker'а (E0499/E0502/E0382/E0106/E0515). Structs: named-field/tuple/unit-like, field init shorthand, `impl` блок, три формы receiver (`&self`/`&mut self`/`self`), associated function vs method (конструктор `new` — конвенция, не языковая фича), `Self` как алиас типа, automatic referencing для receiver (но не для аргументов), `#[derive(Debug)]` + `{:?}`/`{:#?}`/`dbg!`. Написал `word_tools` (slices) и `rectangles` (struct + методы). Открыто: enums + `match` exhaustive (гл. 6), `Result`/`?` (гл. 9), traits (гл. 10), lifetimes (гл. 10). |
-| Linux | Комфортно в терминале. /proc — знаю предметно (parsing, fd, маршрутизация запросов через `/proc/[pid]/`). Понимаю kernel/user boundary, syscalls, fd kernel model + refcount, virtual memory + copy-on-write, async-signal-safety, EINTR-семантику. Internals глубже (планировщик, VFS, namespaces) — пока поверхностно. |
+| Linux | Комфортно в терминале. /proc — знаю предметно (parsing, fd, маршрутизация запросов через `/proc/[pid]/`). Понимаю kernel/user boundary, syscalls, fd kernel model + refcount, virtual memory + copy-on-write, async-signal-safety, EINTR-семантику.
 | Git | Базово (add/commit/push/log/diff), формирую привычку коммитить по смыслу. Ребейзы, rerere, bisect, worktrees — пока не трогал. |
 | Сети | TCP/IP концептуально (handshake, TIME_WAIT, RST, FIN, partial read/write на stream). /proc/net/tcp — парсил. Сокеты — написал echo server+client (B1). Захват пакетов — написал sniffer на libpcap (B2): BPF фильтр, парсинг Ethernet/IP/TCP, флаги через bitwise AND, payload_len = ntohs(ip_len) - ip_hl*4 - th_off*4. |
 | Английский | B2: читаю и смотрю свободно, говорить и слушать на слух — слабее. |
@@ -97,9 +97,9 @@ Claude Code **обязан** прочитать соответствующий s
 | Я пишу "у меня есть N часов" или "дай задание" | `.claude/skills/give-task/skill.md` |
 | Я пишу "не компилируется", "segfault", "ошибка", "не работает" | `.claude/skills/debug/skill.md` |
 | Я прошу "добавь в vault", "запиши тему", или вызов из другого скилла | `.claude/skills/vault-write/skill.md` |
-| Я пишу "мок-собес" / "проверь меня" / "вопросы по пройденному", или give-task видит счётчик ≥ 8 | `.claude/skills/mock-interview/skill.md` |
-| Я пишу "дай почитать код", "хочу разобрать чужой код", или give-task видит счётчик reading ≥ 4, или завершён блок | `.claude/skills/reading-code/skill.md` |
-| Я пишу "дай ctf", "хочу picoctf", "ctf-сессия", или give-task видит счётчик ctf ≥ 5 | `.claude/skills/ctf/skill.md` |
+| Я пишу "мок-собес" / "проверь меня" / "вопросы по пройденному" | `.claude/skills/mock-interview/skill.md` |
+| Я пишу "дай почитать код", "хочу разобрать чужой код" — **или** Claude решает по контексту (после интеграционного задания, как часть мок-собеса, при переходе на новую технологию) | `.claude/skills/reading-code/skill.md` |
+| Я пишу "дай ctf", "хочу picoctf", "ctf-сессия" | `.claude/skills/ctf/skill.md` |
 | Я пишу "на этом все" / "заканчиваем", или Claude понял что тема усвоена | `.claude/skills/session-debrief/skill.md` |
 
 **Ветка "хочу разобраться в теме не из стратегии"**:
