@@ -10,10 +10,6 @@
 #include <netinet/ip.h> // сетевой
 #include <netinet/tcp.h> // транспортный
 
-#ifdef __APPLE__
-#define TH_PSH TH_PUSH
-#endif
-
 static pcap_t *g_handler = NULL;
 
 static const struct { uint8_t mask; const char *name; } flag_table[] = {
@@ -21,7 +17,7 @@ static const struct { uint8_t mask; const char *name; } flag_table[] = {
     { TH_ACK, "ACK" },
     { TH_FIN, "FIN" },
     { TH_RST, "RST" },
-    { TH_PSH, "PSH" },
+    { TH_PUSH, "PSH" },
     { TH_URG, "URG" },
 };
 

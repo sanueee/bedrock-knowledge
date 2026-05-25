@@ -1,5 +1,5 @@
 ---
-обновлено: 2026-05-22 (task-14 Rust ch.5 structs+methods)
+обновлено: 2026-05-25 (task-15 pcap sniffer — B2 закрыт)
 ---
 
 # Roadmap — хаб проекта
@@ -16,24 +16,24 @@
 
 > Обновляется после каждой завершённой сессии через `session-debrief`. **Это primary source** для всех skills (give-task, mock-interview, reading-code, ctf).
 
-**Активный блок:** B — Сетевой стек (C). B1 завершён, B0 (OWASP теория) завершён. Параллельно: блок C — Rust, C1.3 (часть 1, structs) завершён; глава 6 (enums + match) — следующей Rust-сессией.
+**Активный блок:** B — Сетевой стек (C). B1, B2, B0 (OWASP теория) завершены. Параллельно: блок C — Rust, C1.3 (часть 1, structs) завершён; глава 6 (enums + match) — следующей Rust-сессией.
 
 **Фундамент (theory 2026-05-14):** syscalls + kernel/user boundary, fd kernel model + refcount, async-signal-safety, virtual memory + copy-on-write, EINTR семантика.
 
 **Выполненные темы блока A:** /proc filesystem, directory traversal, file descriptors + readlink, snprintf/qsort, error handling, fork/exec/wait, signals (sigaction/SIGINT/SIGTERM/pause), pipes/IPC (pipe/dup2/read/write), /proc/net/tcp parsing (sscanf, bitwise ops, little-endian IP), pthreads (pthread_create/join, mutex, data race), interview-01 reinforce (opendir/readdir errors, getppid vs fork return, WIFEXITED/WEXITSTATUS, async-signal-safety, volatile sig_atomic_t, SA_RESTART, pipe write-end counter, char* vs char[]).
 
-**Выполненные темы блока B:** B1 — TCP-сокеты (socket/bind/listen/accept/connect/send/recv, sockaddr_in + htons/htonl, SO_REUSEADDR/TIME_WAIT, accept value-result socklen_t, three-way recv (0/-1/>0), partial read on stream, EINTR на разных слоях, EPIPE/ECONNRESET как штатное событие, SIGPIPE через sigaction(SIG_IGN), inet_pton/inet_ntop). B0 — OWASP Top 10 web (2021) теория: authn vs authz, prepared statement как структурная защита (prepare/execute, данные вне грамматики SQL), XSS reflected/stored/DOM-based, SSRF + cloud metadata 169.254.169.254 (Capital One 2019), allowlist vs denylist + DNS rebinding, IDOR (ID из клиента vs сессии), password hashing (bcrypt/argon2id, не SHA-256), supply chain (xz-utils, event-stream, SolarWinds), insecure deserialization. Принципы: defense in depth, структурные защиты > текстовые, не доверять клиенту. Практика DVWA/PortSwigger — отложена до отдельной сессии.
+**Выполненные темы блока B:** B1 — TCP-сокеты (socket/bind/listen/accept/connect/send/recv, sockaddr_in + htons/htonl, SO_REUSEADDR/TIME_WAIT, accept value-result socklen_t, three-way recv (0/-1/>0), partial read on stream, EINTR на разных слоях, EPIPE/ECONNRESET как штатное событие, SIGPIPE через sigaction(SIG_IGN), inet_pton/inet_ntop). B2 — libpcap + парсинг пакетов на проводе: pcap lifecycle (open_live → compile/setfilter → freecode → loop → breakloop → stats → close), BPF фильтр в ядре, callback signature (user + pkthdr + bytes), caplen vs len vs ip_len (три разных длины), layered проверки caplen перед каждым cast'ом, переменная длина IP/TCP заголовков через `ip_hl*4` / `th_off*4` (4-битное поле в 4-байтных словах = self-describing формат), Ethernet/IPv4/TCP layout байт за байтом, network byte order (ntohs обязателен на ether_type/ip_len/порта), pointer arithmetic через cast в `u_char *` (иначе `+N` уезжает на `N*sizeof`), th_flags как битовая маска (AND, не ==), payload_len = `ntohs(ip_len) - ip_hl*4 - th_off*4` (а не из caplen из-за Ethernet padding'а), SA_RESTART=0 для кооперативного выхода через pcap_breakloop, async-signal-safety только у pcap_breakloop, errbuf vs pcap_geterr (handle ещё нет vs есть). B0 — OWASP Top 10 web (2021) теория: authn vs authz, prepared statement как структурная защита (prepare/execute, данные вне грамматики SQL), XSS reflected/stored/DOM-based, SSRF + cloud metadata 169.254.169.254 (Capital One 2019), allowlist vs denylist + DNS rebinding, IDOR (ID из клиента vs сессии), password hashing (bcrypt/argon2id, не SHA-256), supply chain (xz-utils, event-stream, SolarWinds), insecure deserialization. Принципы: defense in depth, структурные защиты > текстовые, не доверять клиенту. Практика DVWA/PortSwigger — отложена до отдельной сессии.
 
 **Выполненные темы блока C:** C1.1 — Rust toolchain (rustup/rustc/cargo, Cargo.toml/lock, edition, crate binary vs library, crates.io); главы 1–2 The Book (hello_world, guessing_game). C1.2 — главы 3–4 The Book: типы (`i32`/`u32`/`usize`/`bool`/`char` Unicode, integer overflow панично в debug, wrapping в release), `let`/`mut`/`const`, shadowing (новая переменная того же имени, в т.ч. с другим типом), statements vs expressions (блок и `if` — выражения, `;` отбрасывает значение), control flow (`if` строго `bool`, `loop`/`while`/`for in collection`, ranges `a..b` exclusive / `a..=b` inclusive). Ownership (move vs Copy — `String` not Copy, `i32` is Copy), borrow (`&T` shared N штук / `&mut T` exclusive 1 штука — XOR), `String` (owned, heap) vs `&str` (slice, view), slices `&s[a..b]` без аллокации, deref coercion `&String` → `&str`, dangling reference как compile error (lifetime). Видел реальные сообщения borrow checker'а: E0499 (two &mut), E0502 (mut+immut), E0382 (use after move), E0106/E0515 (dangling) — см. [[ownership]]. C1.3 часть 1 — глава 5 The Book: struct (named-field / tuple / unit-like), field init shorthand, struct update syntax `..base` (move не-Copy полей), `impl` блок, три формы receiver (`&self` / `&mut self` / `self`), associated function vs method (конструктор `new` — конвенциональная associated fn, не языковая конструкция; вызов через `::`), `Self` (большая) как алиас типа, automatic referencing (компилятор сам добавит `&`/`&mut`/`*` к receiver — но **не к аргументам**), `#[derive(Debug)]` + `{:?}` / `{:#?}` / `dbg!(&x)` (stderr + позиция в файле). См. [[structs-methods]].
 
-**Последний выполненный task:** task-14 — Rust ch.5 structs + methods (`rectangles`), 2026-05-23.
+**Последний выполненный task:** task-15 — pcap sniffer (`networking/sniffer.c`), 2026-05-25.
 
-**Следующий шаг — B2: разбор пакетов (libpcap)**
-- Перехват и парсинг пакетов на уровне Ethernet/IP/TCP.
-- Библиотека: libpcap (нужна установка `libpcap-dev`).
-- Код: `networking/sniffer/` или подобное.
-- Vault: `knowledge-base/tasks/task-11-pcap.md`, темы: `topics/networking/libpcap.md`, `topics/networking/ethernet-frame.md`.
-- Перед началом перечитать: `topics/networking/tcp-sockets.md` (host vs network byte order), `topics/linux/proc-net.md` (структура IP/TCP заголовков на уровне байтов).
+**Следующий шаг — B3: port scanner**
+- Применение сокетов: `connect()` с таймаутом на диапазон портов.
+- Функции: `socket()`, `connect()`, `select()`/`poll()` для таймаутов (или `O_NONBLOCK` + `connect` → `EINPROGRESS` → `poll`), `getservbyport()` для определения сервиса.
+- Код: `networking/portscan/` или подобное.
+- Vault: `knowledge-base/tasks/task-16-portscan.md`, темы: `topics/networking/port-scanning.md`, `topics/networking/connect-timeout.md`.
+- Перед началом перечитать: `topics/networking/tcp-sockets.md` (connect/socket semantics), `topics/networking/libpcap.md` (если решишь добавить ARP discovery позже).
 
 **Параллельные блоки/треки доступны сейчас:**
 - **Блок C — Rust**. C1.3 часть 1 (гл. 5 — structs + methods) завершено: [[structs-methods]]. Следующий шаг: **C1.3 часть 2 — глава 6** (enums + `match` exhaustive — закрывает вопрос 6 из [[guessing-game-notes]]; `Option<T>`, паттерны, `if let`). Чередовать с B-задачами сессиями.
@@ -41,13 +41,13 @@
 - **picoCTF** — управляется счётчиком CTF.
 - **Reading-code** — управляется счётчиком reading.
 
-При запросе задания `give-task` обязан учитывать что пользователь может выбрать главный трек (B2) **или** параллельный (C1 / B0 / CTF). Если параллельные блоки доступны — спросить какой трек, не выдавать B2 по умолчанию молча.
+При запросе задания `give-task` обязан учитывать что пользователь может выбрать главный трек (B3) **или** параллельный (C1 / B0 / CTF). Если параллельные блоки доступны — спросить какой трек, не выдавать B3 по умолчанию молча.
 
 ### Счётчики
 
-- **Счётчик задач с последнего мок-собеса:** 7 *(каждые 8 — предложить `mock-interview`)*
-- **Счётчик задач с последнего reading-code:** 1 *(каждые 4 — обязательно `reading-code`. Последняя — Reading-02, 2026-05-21, Redis anet.c.)*
-- **Счётчик задач с последнего CTF:** 1 *(каждые 5 — мягко предложить `ctf`. Последняя — Session-02 Forensics, 2026-05-22, 4 таска picoCTF.)*
+- **Счётчик задач с последнего мок-собеса:** 8 *(порог достигнут — следующая сессия должна быть `mock-interview`)*
+- **Счётчик задач с последнего reading-code:** 2 *(каждые 4 — обязательно `reading-code`. Последняя — Reading-02, 2026-05-21, Redis anet.c.)*
+- **Счётчик задач с последнего CTF:** 2 *(каждые 5 — мягко предложить `ctf`. Последняя — Session-02 Forensics, 2026-05-22, 4 таска picoCTF.)*
 
 ### Невыполненные закрепляющие задания
 
@@ -73,6 +73,7 @@
 | 12 | [[task-12-rust-ch3-4\|Rust ch.3–4 + word_tools (slices/ownership)]] | ✅ выполнено (2026-05-18) | `rust/word_tools/src/main.rs` |
 | 13 | [[task-13-owasp-top10\|OWASP Top 10 (web) теория]] | ✅ выполнено (2026-05-20) | — (reading + vault) |
 | 14 | [[task-14-rust-ch5-structs\|Rust ch.5 — structs + methods (rectangles)]] | ✅ выполнено (2026-05-23) | `rust/rectangles/src/main.rs` |
+| 15 | [[task-15-pcap-sniffer\|pcap sniffer — Ethernet → IP → TCP]] | ✅ выполнено (2026-05-25) | `networking/sniffer.c` |
 
 ---
 
@@ -148,6 +149,8 @@
 - [[event-loop-epoll]] — event loop model, epoll, non-blocking I/O, readiness ≠ correctness
 - [[nagle-tcp-nodelay]] — алгоритм Нагла, TCP_NODELAY, когда выключать
 - [[getaddrinfo]] — resolve, addrinfo linked list, gai_strerror, паттерн "свой namespace ошибок"
+- [[libpcap]] — захват пакетов из user space, BPF фильтр в ядре, pcap lifecycle, caplen vs len, breakloop
+- [[ethernet-frame]] — layout Ethernet/IPv4/TCP в памяти, ip_hl*4 / th_off*4, NBO, pointer arithmetic через u_char *, payload length
 
 ## Темы — Security / CTF
 
