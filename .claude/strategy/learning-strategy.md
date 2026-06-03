@@ -51,11 +51,13 @@
 
 ## Структура блока
 
-Каждый блок состоит из **21 задания**:
+Базовая структура блока — **21 задание**:
 
 - **16 атомарных** — одна тема на задание.
 - **4 интеграционных** — на позициях 5, 10, 15, 20. Не новая теория, а **синтез последних 4 атомарных в одной задаче**. Цель — совместить уже пройденное в одном проекте под давлением. Это и есть переход от "видел" к "умею".
-- **1 магнум опус** — финальный проект блока (21-е задание). Определяется в начале блока, к нему ведут все остальные. Сдаётся как отдельная репа на GitHub с README.
+- **1 магнум опус** — финальное задание блока. Определяется в начале блока, к нему ведут все остальные. Сдаётся как отдельная репа на GitHub с README.
+
+**Размер блока — гибкий.** 21 — базовый минимум, не потолок. Если глубина темы требует — блок растягивается (26, 31, 36...). Структура сохраняется: атомарные идут пачками по 4, **интеграционное — каждое 5-е задание**, магнум опус — последнее. Решение о размере принимается на сессии дизайна блока (карта тем → размер → опус), фиксируется в этом файле и в roadmap. Пример: блок B спроектирован на **26 заданий** (20 атомарных + 5 интеграционных + 1 опус) — глубина сетевого стека под якорный проект "network scanner" не уместилась в 16 атомарных слотов.
 
 **Гейт закрытия блока:**
 1. Магнум опус сдан.
@@ -156,42 +158,88 @@
 
 ### Блок B — Сетевой стек (C)
 
-> **Статус: карта тем и магнум опус — в переработке** под новую структуру блока (16 атомарных + 4 интеграционных + 1 магнум опус).
+> **Структура: 26 заданий** (20 атомарных + 5 интеграционных + 1 магнум опус). Спроектировано 2026-05-25.
 >
-> Уже пройдено по старой разбивке: B0 (OWASP web теория), B1 (TCP echo), B2 (libpcap sniffer). Эти задания пойдут в новый план как первые атомарные слоты.
->
-> Существующие пункты B3–B6 ниже — старая разбивка, **остаётся как референс** до утверждения новой карты тем. После проектирования карты этот раздел переписывается полностью.
+> Интеграционные на позициях **5, 10, 15, 20, 25**. Магнум опус — позиция **26**.
 
-#### B0 — OWASP Top 10 (web): теоретический заход
-Цель: знать на пальцах SQLi, XSS, SSRF, IDOR, Broken Auth, CSRF и остальные.
-Это не код, это знание для собеседований и для понимания "что атакуют" в блоке B.
-Формат: прочитать актуальный OWASP Top 10, потом 3-5 челленджей на DVWA/WebGoat.
-Место: `topics/security/owasp-top10.md`.
-Параллельный трек — не блокирует writing-задачи блока B. Закрыть до B5 (TLS) — тогда HTTP-контекст будет под рукой.
+**Магнум опус (B-26): network scanner.** Отдельная репа на GitHub.
+- ARP discovery (layer 2, `PF_PACKET`) для локальной подсети
+- ICMP ping sweep (layer 3, raw socket) для маршрутизируемых сетей
+- TCP connect scan (non-blocking + epoll, без root)
+- TCP SYN scan (raw socket send + pcap capture, с `CAP_NET_RAW`)
+- Service detection: библиотека пробов (SSH banner, HTTP HEAD, SMTP greeting и т.д.)
+- CLI: CIDR-диапазоны, список портов, выбор техники, output форматы (text/json)
+- README, tests, CI (GitHub Actions с clang-tidy + ASan/UBSan)
 
-#### B1 — TCP-сокеты: первый клиент-сервер
-Простейший echo-сервер и клиент.
-Функции: `socket()`, `bind()`, `listen()`, `accept()`, `connect()`, `send()`, `recv()`
+Место: `networking/scanner/` (внутри fn2s) + **отдельная репа на GitHub**.
 
-#### B2 — Разбор пакетов: raw sockets / pcap
-Перехват и парсинг пакетов на уровне Ethernet/IP/TCP.
-Библиотека: libpcap
+#### Фаза 1 — TCP базис и наблюдение
 
-#### B3 — Написать простой port scanner
-Применение сокетов: connect() с таймаутом на диапазон портов.
+**B-1 (atomic) — OWASP Top 10 (web): теория.** ✅ task-13.
+Знать на пальцах SQLi/XSS/SSRF/IDOR/Broken Auth/CSRF и остальные. Параллельный трек, синергия с HTTP-темами фазы 3. Место: `topics/security/owasp-top10.md`.
 
-#### B4 — DNS: ручной запрос
-Собрать DNS-запрос вручную, отправить UDP, распарсить ответ.
+**B-2 (atomic) — TCP-сокеты: echo server + client.** ✅ task-10.
+`socket`/`bind`/`listen`/`accept`/`connect`/`send`/`recv`, `SO_REUSEADDR`, partial read на stream, `EINTR`/`EPIPE`/`SIGPIPE` через `SIG_IGN`. Конспект: [[tcp-sockets]].
 
-#### B5 — TLS: что происходит при HTTPS
-Цель: понять TLS 1.3 handshake. Не писать — разбирать через Wireshark.
-Формат: Wireshark на любой HTTPS-сессии + запись в vault.
-Место: `topics/networking/tls.md`
+**B-3 (atomic) — libpcap sniffer.** ✅ task-15.
+pcap lifecycle, BPF фильтр в ядре, парсинг Ethernet/IPv4/TCP байт за байтом, переменная длина заголовков. Конспекты: [[libpcap]], [[ethernet-frame]].
 
-#### B6 — Финал этапа: network scanner
-Объединить B1–B4: ARP discovery + TCP connect scan + определение сервиса по порту.
-Язык: C. Это зачётная работа этапа 1.
-Место: `networking/scanner/`
+**B-4 (atomic) — getaddrinfo + DNS resolution.** ← следующее.
+Resolve hostname в `sockaddr`, addrinfo linked list, `gai_strerror`, IPv4/IPv6 abstraction. Паттерн "свой namespace ошибок". Заготовка конспекта уже есть: [[getaddrinfo]].
+
+**B-5 (integration) — `host-probe`.** Резолв имени через getaddrinfo → TCP connect → recv баннера → печать. Синтез B-2 (sockets), B-3 (понимание layer), B-4 (resolve).
+
+#### Фаза 2 — Non-blocking I/O и connect-scan
+
+**B-6 (atomic) — Non-blocking I/O.** `fcntl(O_NONBLOCK)`, `EAGAIN`/`EWOULDBLOCK`, `EINPROGRESS` на connect, `SO_RCVTIMEO`/`SO_SNDTIMEO` как альтернатива.
+
+**B-7 (atomic) — Multiplexing: epoll.** Сравнение `select`/`poll`/`epoll`, edge-triggered vs level-triggered, `epoll_ctl`/`epoll_wait`, `EPOLLIN`/`EPOLLOUT`/`EPOLLERR`. Заготовка конспекта: [[event-loop-epoll]].
+
+**B-8 (atomic) — Connect-with-timeout pattern.** Non-blocking connect → epoll на `EPOLLOUT` → `getsockopt(SO_ERROR)` для проверки успеха. Классический pattern для port scanner'а.
+
+**B-9 (atomic) — UDP sockets.** `recvfrom`/`sendto`, connectionless model, отсутствие partial read (datagram-границы), потеря пакетов как штатное событие.
+
+**B-10 (integration) — port-scan v1.** Connect-scan диапазона портов одного хоста: epoll + non-blocking connect + тайм-ауты + сводка open/closed/filtered. Синтез B-6/B-7/B-8.
+
+#### Фаза 3 — Application protocols + service detection
+
+**B-11 (atomic) — HTTP basics.** GET/HEAD запрос, status line, `Server:` header, `Content-Length` vs chunked transfer. Минимальный клиент достаточный для banner grab.
+
+**B-12 (atomic) — DNS protocol manually.** Построить A-record query поверх UDP, парсить ответ, **компрессия имён обязательна** (без неё парсинг реальных ответов фейкнет). Сравнить с getaddrinfo из B-4.
+
+**B-13 (atomic) — Service fingerprinting.** Библиотека пробов: SSH banner (server присылает первым), HTTP HEAD на 80/8080/8443, SMTP greeting на 25/587, FTP banner на 21. Таблица "порт → проба → паттерн".
+
+**B-14 (atomic) — TLS handshake observational.** Wireshark на HTTPS-сессии, разбор ClientHello/ServerHello/Certificate/Finished, SNI extension, ALPN. **Без кода.** Место: `topics/networking/tls.md`. Закрывает чекпойнт этапа 1 "понимаешь что происходит при connect() на уровне ядра" — расширяет на L7.
+
+**B-15 (integration) — scanner v2.** Scan диапазона + identification сервиса для каждого открытого порта (используя пробы из B-13). Синтез B-11/B-12/B-13 поверх B-10.
+
+#### Фаза 4 — Raw sockets + L2/L3
+
+**B-16 (atomic) — Interface enumeration.** `getifaddrs` для списка интерфейсов с их IP и масками, парсинг `/proc/net/route` для default gateway. Откуда сканер вообще знает в какой он подсети.
+
+**B-17 (atomic) — Raw sockets и capabilities.** `SOCK_RAW`, модель привилегий, `CAP_NET_RAW` через `libcap-ng`, `setcap cap_net_raw+ep` на бинарник вместо запуска под root. Принцип "minimum capability surface".
+
+**B-18 (atomic) — Internet checksum.** RFC 1071, алгоритм one's complement sum, конструкция IP/TCP заголовков в памяти, псевдо-заголовок для TCP-checksum'а.
+
+**B-19 (atomic) — ICMP echo.** Ping одного хоста через raw socket: построить ICMP echo request, отправить, поймать echo reply, измерить RTT.
+
+**B-20 (integration) — ICMP ping sweep.** Sweep по `/24`: параллельная отправка echo requests, асинхронный сбор ответов с тайм-аутом. Синтез B-16 (откуда `/24`) + B-17 (raw + caps) + B-18 (checksum) + B-19 (один ICMP).
+
+#### Фаза 5 — ARP + SYN scan + threading
+
+**B-21 (atomic) — ARP protocol + PF_PACKET.** Layer-2 frame на проводе: `socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ARP))`, конструкция ARP request, парсинг ARP reply. Зачем ARP отдельно от ICMP (L2 vs L3).
+
+**B-22 (atomic) — TCP SYN packet construction.** Собрать IP+TCP заголовок с `SYN`-флагом, посчитать checksum (включая псевдо-заголовок из B-18), отправить через raw socket. Не получать ответ — только отправка.
+
+**B-23 (atomic) — SYN-ACK capture через pcap.** BPF фильтр `tcp[tcpflags] & (tcp-syn|tcp-ack) == (tcp-syn|tcp-ack) and src host <target>`, rate-limit, корреляция reply ↔ исходный SYN по `dst port`. Переиспользует мышцу из B-3.
+
+**B-24 (atomic) — pthread pool + work queue.** Применяется к SYN scan pipeline: один поток шлёт SYN'ы (B-22), второй ловит SYN-ACK через pcap (B-23), третий агрегирует результаты. `pthread_mutex_t` для очереди, `pthread_cond_t` для wait/signal. Connect-scan остаётся однопоточным на epoll'е — это **мотивированный выбор**: SYN scan асимметричен (send/recv разделены), connect-scan нет.
+
+**B-25 (integration) — host discovery.** ARP-sweep для локальной подсети (B-21) + ICMP-sweep для маршрутизируемой (B-20), выбор техники по сравнению target-сети и интерфейсов из B-16.
+
+#### Магнум опус
+
+**B-26 — network scanner.** Финальная сборка всех компонентов в один CLI инструмент. Отдельная репа, README, tests, CI. См. "Магнум опус" выше.
 
 ---
 
