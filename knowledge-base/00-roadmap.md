@@ -40,7 +40,7 @@
 
 **Следующий шаг:** **B-4 — getaddrinfo + DNS resolution.** Resolve hostname в `sockaddr`, addrinfo linked list, `gai_strerror`, паттерн "свой namespace ошибок". Заготовка конспекта: [[getaddrinfo]]. После — интеграционное B-5 (`host-probe`: резолв → connect → recv баннера).
 
-Параллельный трек (Rust) под новую структуру не требует переработки сейчас (блок C будет переработан перед стартом).
+Параллельный трек (Rust) **намеренно ведётся линейно по главам The Book** — одна глава = одно (обычно атомарное) задание `C-N`. Под структуру «4 атомарных + интеграционное + опус» он не переводится: правило «каждое 5-е интеграционное» к Rust-треку не применяется. См. [strategy/learning-strategy.md](../.claude/strategy/learning-strategy.md) → "## Структура блока" → исключение для учебник-driven блоков.
 
 **Параллельные блоки/треки доступны сейчас:**
 - **Блок C — Rust**. Глава 6 завершена (enums + match + Option/if let): [[enums-match]], task-c04. Следующий шаг: **главы 7–8 The Book** (modules/packages + collections: `Vec`/`String`/`HashMap`) либо **глава 9** (error handling — `Result`/`?`, закрывает вопрос 4 из [[guessing-game-notes]]). Открытое: traits (гл. 10), lifetimes (гл. 10). Замечание: match как выражение требует ещё практики.
@@ -51,7 +51,9 @@
 
 ### Невыполненные закрепляющие задания
 
-Пусто. *(После каждого мок-собеса сюда добавляются `[[task-NN-interviewMM-reinforce]]` — закрывать до перехода к следующей теме плана.)*
+Interview 02 (2026-06-04, Rust): отдельного reinforce-task не заводим — пробелы 3–4 (match/E0004, get/Option) отрабатываются прямо в C-5; пробелы 1–2 (receiver'ы, Copy/double-free) вынесены **мини-разминкой в начало [[task-c05-rust-ch7-8-modules-collections]]** (перечитать [[structs-methods]] и [[ownership]] + микро-проверка перед кодом). Закрывается вместе с C-5.
+
+*(После каждого мок-собеса сюда добавляются `[[task-NN-interviewMM-reinforce]]` — закрывать до перехода к следующей теме плана.)*
 
 ---
 
@@ -114,6 +116,7 @@
 | # | Блок | Дата | Слабые места |
 |---|------|------|-------------|
 | 01 | A | 2026-04-28 | opendir vs readdir, зомби/таблица процессов, sigaction vs signal, pipe EOF |
+| 02 | C | 2026-06-04 | receiver'ы (`&mut self`=borrow не владение; `self`=move не shadowing), почему `String` не `Copy` (double free), `match` exhaustiveness=`E0004` compile-time, `v[i]` паника в runtime не compile-time |
 
 Детальные записи: `knowledge-base/interviews/interview-NN.md`.
 Закрепляющие задания после каждого мок-собеса — оформляются как `task-<блок><NN>-interviewMM-reinforce.md` (нумерация внутри блока) и попадают в раздел "Невыполненные закрепляющие задания" (Текущая позиция). После выполнения — в "Задачи — writing" под своим блоком.
