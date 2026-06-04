@@ -1,5 +1,5 @@
 ---
-task: 10
+task: task-b02
 title: TCP echo server + client
 block: B1 — TCP-сокеты
 date_started: 2026-05-14
@@ -7,7 +7,7 @@ date_finished: 2026-05-17
 status: выполнено
 ---
 
-# Task 10 — TCP echo server + client
+# task-b02 — TCP echo server + client
 
 Первый task блока B. Цель — пройти весь жизненный цикл TCP-соединения на blocking sockets API без надстроек: понять кто что делает из `socket/bind/listen/accept/connect/send/recv/close`, почему сервер пишет в новый fd, что возвращает `accept()`, чем `send/recv` отличается от `write/read`, и где затаились частичные чтения (`partial reads`).
 
@@ -131,7 +131,7 @@ status: выполнено
 - **`EPIPE` и `ECONNRESET` — штатные события**, без `perror`. Это значит peer ушёл, переходим к следующему клиенту.
 - **`socklen_t` — value-result параметр.** Инициализировать `sizeof` **перед каждым** `accept`/`recvfrom`. С `sockaddr_in` стабильно (всегда 16), но с `sockaddr_storage` (универсальный v4/v6) — без инициализации усечётся IPv6.
 - **`TIME_WAIT` ~60s** держит порт после закрытия. Без `SO_REUSEADDR` — `EADDRINUSE` при повторном `bind`.
-- **`htons` (16 бит, порт) vs `htonl` (32 бита, IPv4).** Network byte order = big-endian. Зеркально к `/proc/net/tcp` (task-07).
+- **`htons` (16 бит, порт) vs `htonl` (32 бита, IPv4).** Network byte order = big-endian. Зеркально к `/proc/net/tcp` (task-a07).
 - **`memset(&addr, 0, sizeof addr)` обязателен** — есть `sin_zero[8]` padding, мусор → `EINVAL`.
 - **`strtol` валидация по трём условиям**: `errno != 0` (overflow ERANGE), `end == argv[1]` (не съел ни символа = не число), `*end != '\0'` (хвост после числа). errno **это не битовая маска**, обычный thread-local int.
 

@@ -175,13 +175,13 @@
 
 #### Фаза 1 — TCP базис и наблюдение
 
-**B-1 (atomic) — OWASP Top 10 (web): теория.** ✅ task-13.
+**B-1 (atomic) — OWASP Top 10 (web): теория.** ✅ task-b01.
 Знать на пальцах SQLi/XSS/SSRF/IDOR/Broken Auth/CSRF и остальные. Параллельный трек, синергия с HTTP-темами фазы 3. Место: `topics/security/owasp-top10.md`.
 
-**B-2 (atomic) — TCP-сокеты: echo server + client.** ✅ task-10.
+**B-2 (atomic) — TCP-сокеты: echo server + client.** ✅ task-b02.
 `socket`/`bind`/`listen`/`accept`/`connect`/`send`/`recv`, `SO_REUSEADDR`, partial read на stream, `EINTR`/`EPIPE`/`SIGPIPE` через `SIG_IGN`. Конспект: [[tcp-sockets]].
 
-**B-3 (atomic) — libpcap sniffer.** ✅ task-15.
+**B-3 (atomic) — libpcap sniffer.** ✅ task-b03.
 pcap lifecycle, BPF фильтр в ядре, парсинг Ethernet/IPv4/TCP байт за байтом, переменная длина заголовков. Конспекты: [[libpcap]], [[ethernet-frame]].
 
 **B-4 (atomic) — getaddrinfo + DNS resolution.** ← следующее.

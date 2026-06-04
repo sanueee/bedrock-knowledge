@@ -1,5 +1,5 @@
 ---
-task: task-03
+task: task-a03
 title: fdlist — список файловых дескрипторов процесса
 status: выполнено
 date: 2026-04-11

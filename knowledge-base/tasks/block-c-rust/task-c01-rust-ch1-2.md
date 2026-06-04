@@ -1,5 +1,5 @@
 ---
-task: 11
+task: task-c01
 block: C — Rust
 substep: C1.1 — The Book главы 1–2
 дата начала: 2026-05-17
@@ -7,7 +7,7 @@ substep: C1.1 — The Book главы 1–2
 статус: выполнено
 ---
 
-# Task-11 — Rust: установка + первая программа + Guessing Game
+# task-c01 — Rust: установка + первая программа + Guessing Game
 
 Старт блока C. Цель — поставить toolchain, запустить hello_world через cargo, написать Guessing Game по [главе 2 The Book](https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html). Главы 3–4 (типы, control flow, Ownership) — следующая Rust-сессия.
 

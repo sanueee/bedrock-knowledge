@@ -1,5 +1,5 @@
 ---
-task: task-01
+task: task-a01
 title: procinfo — чтение /proc/<pid>/status
 status: выполнено
 date: 2026-04

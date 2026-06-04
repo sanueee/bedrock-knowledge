@@ -33,7 +33,7 @@
 | LLM-security (этапы Z/I/J) | `knowledge-base/topics/llm-sec/` |
 | Web/CTF/общая безопасность | `knowledge-base/topics/security/` |
 | Концепция Rust | `knowledge-base/topics/rust/` (создать при первом C-task'е) |
-| Выполненное задание | `knowledge-base/tasks/block-X-<name>/task-NN.md` (в папке активного блока, например `block-b-networking/`) |
+| Выполненное задание | `knowledge-base/tasks/block-X-<name>/task-<блок><NN>-<name>.md` (нумерация внутри блока с буквенным префиксом, например `block-b-networking/task-b04-getaddrinfo.md`) |
 | Reading-сессия | `knowledge-base/tasks/block-X-<name>/reading-NN.md` (в папке тематического блока) + конспект в `topics/reading/` |
 | Мок-собес | `knowledge-base/interviews/interview-NN.md` |
 | CTF writeup | `knowledge-base/ctf/<platform>/<category>/<task>.md` |
@@ -96,7 +96,7 @@
 
 ```
 ---
-task: task-NN
+task: task-<блок><NN>
 title: name — short description
 status: выполнено | in-progress
 date: YYYY-MM-DD
@@ -142,7 +142,7 @@ date: YYYY-MM-DD
 - Секции до `---` — описание задания (что дано). Секции после — опыт (что сделал).
 - Для in-progress задач: секции после `---` оставить `*(заполняется после выполнения)*`.
 - `## Связанные темы` — обязательно, это граф. Минимум 2 `[[wikilink]]`.
-- После создания задания — проверить что `00-roadmap.md` содержит ссылку `[[task-NN-name]]`.
+- После создания задания — проверить что `00-roadmap.md` содержит ссылку `[[task-<блок><NN>-name]]` в таблице нужного блока (таблицы «Задачи — writing» разбиты по блокам A/B/C/...).
 
 ---
 

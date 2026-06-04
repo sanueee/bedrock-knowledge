@@ -1,5 +1,5 @@
 ---
-task: task-05
+task: task-a05
 title: signals — обработка SIGINT и SIGTERM через sigaction
 status: выполнено
 date: 2026-04-21

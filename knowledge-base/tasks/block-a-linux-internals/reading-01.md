@@ -20,7 +20,7 @@ type: reading
 **Главный вопрос:**
 Как `popen()` атомарно соединяет дочерний процесс с pipe и родителем — так, чтобы:
 1. У ребёнка stdin/stdout правильно перенаправлены на нужный конец pipe.
-2. У ребёнка не остался лишний (не перенаправленный) конец pipe — иначе `read()` у читателя никогда не получит EOF (то самое, что закрывали в task-09).
+2. У ребёнка не остался лишний (не перенаправленный) конец pipe — иначе `read()` у читателя никогда не получит EOF (то самое, что закрывали в task-a09).
 3. Родитель получил `FILE*` для своего конца pipe и при этом **не утёк** второй конец.
 
 **Парный вопрос:**
@@ -37,7 +37,7 @@ type: reading
 
 - Где вызывается `pipe()` / `pipe2()` (musl использует `O_CLOEXEC` — почему именно так?).
 - Какие fd закрываются у ребёнка и в какой момент.
-- Как `posix_spawn_file_actions_*` используется чтобы заменить stdin/stdout (это аналог `dup2` из task-06, но через структуру, передаваемую в spawn).
+- Как `posix_spawn_file_actions_*` используется чтобы заменить stdin/stdout (это аналог `dup2` из task-a06, но через структуру, передаваемую в spawn).
 - Как `popen` решает "какой конец pipe — мой, какой — ребёнка" в зависимости от `mode` (`"r"` или `"w"`).
 - В `pclose`: порядок `fclose` → `waitpid` и почему он именно такой.
 
@@ -45,10 +45,10 @@ type: reading
 
 | Что в коде | Откуда я это знаю |
 |------------|-------------------|
-| `pipe()` + `O_CLOEXEC` | task-06 (pipes), task-09 (pipe-eof) |
-| `dup2`-эквивалент через file_actions | task-06 (pipes) |
-| `waitpid` + `WIFEXITED`/`WEXITSTATUS` | task-04 (procfork), task-09 (zombie) |
-| `_Fork` vs обычный `fork` | связь с темой async-signal-safety из task-09 |
+| `pipe()` + `O_CLOEXEC` | task-a06 (pipes), task-a09 (pipe-eof) |
+| `dup2`-эквивалент через file_actions | task-a06 (pipes) |
+| `waitpid` + `WIFEXITED`/`WEXITSTATUS` | task-a04 (procfork), task-a09 (zombie) |
+| `_Fork` vs обычный `fork` | связь с темой async-signal-safety из task-a09 |
 
 ## Время
 

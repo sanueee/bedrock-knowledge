@@ -1,5 +1,5 @@
 ---
-task: task-07
+task: task-a07
 title: procnet — чтение активных TCP-соединений из /proc/net/tcp
 status: in-progress
 date: 2026-04
@@ -71,7 +71,7 @@ gcc procnet.c -o procnet && ./procnet
 
 - Битовые операции для разбора IP — не очевидно самостоятельно, потребовалось объяснение
 - `%*d` вместо `%*s` для пропуска первого поля — `%*d` останавливался перед `:`
-- `sizeof(buf)` вместо `strlen(buf)` в `write()` — отправлял мусор (из task-06)
+- `sizeof(buf)` вместо `strlen(buf)` в `write()` — отправлял мусор (из task-a06)
 
 ## Что бы сделал иначе
 

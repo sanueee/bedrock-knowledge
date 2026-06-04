@@ -95,5 +95,5 @@ system(cmd);   // ← shell парсит всю строку, включая met
 ## Связанные темы
 
 - [[topics/security/command-injection]] — концепция (создаётся этим writeup'ом)
-- [[topics/linux/pipes]] — концепция pipe (task-06)
-- [[topics/linux/fork-exec-wait]] — почему `execve` безопаснее `system` (task-04)
+- [[topics/linux/pipes]] — концепция pipe (task-a06)
+- [[topics/linux/fork-exec-wait]] — почему `execve` безопаснее `system` (task-a04)

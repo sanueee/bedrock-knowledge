@@ -23,7 +23,10 @@
       "Read",
       "Edit(/.claude/skills/reading-code/**)",
       "Edit(/.claude/skills/ctf/**)",
-      "Edit(/.claude/skills/session-debrief/**)"
+      "Edit(/.claude/skills/session-debrief/**)",
+      "Bash(code \"/Users/sanueee/vscode_projects/fn2s/knowledge-base/tasks/*.md\")",
+      "Edit(/.claude/skills/give-task/**)",
+      "Edit(/.claude/skills/vault-write/**)"
     ]
   }
 }

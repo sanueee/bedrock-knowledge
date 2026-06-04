@@ -86,7 +86,7 @@ CTF и мок-собес здесь не предлагаются как аль�
 - Для интеграционного — **явно перечислить какие 4 атомарных темы синтезируются** и где каждая используется в задаче.
 - На каком механизме тренироваться.
 - Где сохранить код (`linux/proc/`, `networking/` и т.д.).
-- Что создать в vault: `knowledge-base/tasks/block-X-<name>/task-NN.md`, где `block-X-<name>` — папка активного блока (`block-a-linux-internals`, `block-b-networking`, `block-c-rust`, и т.д. — название в kebab-case на английском).
+- Что создать в vault: `knowledge-base/tasks/block-X-<name>/task-<блок><NN>-<name>.md`, где `block-X-<name>` — папка активного блока (`block-a-linux-internals`, `block-b-networking`, `block-c-rust`, и т.д. — название в kebab-case на английском). **Нумерация — внутри блока, с буквенным префиксом** (`task-b04-getaddrinfo`, `task-c05-...`). NN — двузначный (`01`, `02`, ...), равен позиции в блоке. Префикс блока в имени файла обязателен (иначе wikilink-имена конфликтуют между папками: `[[task-04]]` неоднозначен).
 
 **Домен задачи определяется активным блоком** в "Текущей позиции" стратегии. Не предлагать темы из других блоков (Python, Rust, eBPF...) без явного запроса пользователя.
 
@@ -104,7 +104,7 @@ CTF и мок-собес здесь не предлагаются как аль�
 
 ### 7. Создай файл задания
 
-Создай файл сразу — с заполненным разделом "Задание". Путь: `knowledge-base/tasks/block-X-<name>/task-NN.md`, где `block-X-<name>` — папка активного блока. Текущие папки: `block-a-linux-internals`, `block-b-networking`, `block-c-rust`. Если активный блок ещё не имеет папки (D, E, F, G, H, I, J, Z) — создать её по той же конвенции (`block-X-<short-name-en>`, kebab-case, lowercase). Reading-сессии (`reading-NN.md`) — тоже в папку блока по тематике.
+Создай файл сразу — с заполненным разделом "Задание". Путь: `knowledge-base/tasks/block-X-<name>/task-<блок><NN>-<name>.md` (нумерация внутри блока с буквенным префиксом — `task-b04-getaddrinfo`), где `block-X-<name>` — папка активного блока. Текущие папки: `block-a-linux-internals`, `block-b-networking`, `block-c-rust`. Если активный блок ещё не имеет папки (D, E, F, G, H, I, J, Z) — создать её по той же конвенции (`block-X-<short-name-en>`, kebab-case, lowercase). Reading-сессии (`reading-NN.md`) — отдельная сквозная последовательность (не per-block), кладутся в папку блока по тематике.
 
 В заголовке/frontmatter указать тип: `type: atomic | integration | magnum-opus` и позицию в блоке (`block-position: B-5`).
 Остальные разделы оставить пустыми — заполнит `vault-write` по итогам.

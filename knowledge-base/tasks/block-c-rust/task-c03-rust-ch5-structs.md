@@ -1,5 +1,5 @@
 ---
-task: task-14
+task: task-c03
 title: Rust ch.5 — structs + methods (rectangles)
 status: выполнено
 date: 2026-05-22

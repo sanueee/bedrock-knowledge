@@ -1,5 +1,5 @@
 ---
-task: task-06
+task: task-a06
 title: pipes — межпроцессная передача данных через pipe
 status: выполнено
 date: 2026-04

@@ -95,7 +95,7 @@ CPU x86/ARM хранит числа в **little-endian** (младший бай�
 1. Привычка — если завтра вместо `INADDR_ANY` поставишь `inet_addr("192.168.1.1")`, без `htonl` уедешь не туда.
 2. Стандарт может поменять константу — твой код переживёт.
 
-Это зеркально к `/proc/net/tcp` (task-07), где наоборот разбирали big-endian hex в host order.
+Это зеркально к `/proc/net/tcp` (task-a07), где наоборот разбирали big-endian hex в host order.
 
 ## SO_REUSEADDR и TIME_WAIT
 
@@ -218,7 +218,7 @@ if (n > 0)         // прочитали n байт
 
 **Антипаттерн:** ставить `handler` (свою функцию) на `SIGPIPE`. Работает, но: лишняя печать, дополнительные `EINTR` в других syscall'ах, нет смысла. Цель — **подавить** сигнал, а не ловить.
 
-## Пример — minimal server skeleton (из task-10)
+## Пример — minimal server skeleton (из task-b02)
 
 ```c
 int server = socket(AF_INET, SOCK_STREAM, 0);

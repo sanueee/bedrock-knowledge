@@ -1,12 +1,12 @@
 ---
-task: 08
+task: task-a08
 title: pthreads — параллельный сбор данных из /proc
 блок: A
 статус: выполнено
 date: 2026-04-28
 ---
 
-# Task 08 — pthreads
+# task-a08 — pthreads
 
 ## Задание
 

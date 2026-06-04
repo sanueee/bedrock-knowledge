@@ -1,5 +1,5 @@
 ---
-task: task-04
+task: task-a04
 title: procfork — создание N дочерних процессов
 status: выполнено
 date: 2026-04-13

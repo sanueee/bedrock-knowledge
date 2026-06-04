@@ -31,5 +31,5 @@ status: completed
 ## Связанные темы
 
 - [[topics/security/command-injection]] — концепция (создана в этой сессии)
-- Связь с [[topics/linux/pipes]] (`|` как pipe из task-06)
-- Связь с [[topics/linux/fork-exec-wait]] (`execve` vs `system` из task-04)
+- Связь с [[topics/linux/pipes]] (`|` как pipe из task-a06)
+- Связь с [[topics/linux/fork-exec-wait]] (`execve` vs `system` из task-a04)

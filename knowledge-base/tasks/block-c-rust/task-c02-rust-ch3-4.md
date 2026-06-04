@@ -1,5 +1,5 @@
 ---
-task: 12
+task: task-c02
 block: C — Rust
 substep: C1.2 — The Book главы 3–4 + программа на slices/ownership
 дата начала: 2026-05-18
@@ -7,7 +7,7 @@ substep: C1.2 — The Book главы 3–4 + программа на slices/own
 статус: выполнено
 ---
 
-# Task-12 — Rust: типы, control flow, Ownership
+# task-c02 — Rust: типы, control flow, Ownership
 
 Содержательное ядро Rust. После этой сессии должны закрыться вопросы 1, 2, 3, 5, 7 из [[guessing-game-notes]] — про `mut`, `&mut`, `String` vs `&str`, shadowing, диапазоны. Вопросы 4, 6, 8 (`Result`, `match` exhaustive, traits) закроются дальше.
 
