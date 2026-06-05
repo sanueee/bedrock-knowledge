@@ -18,15 +18,18 @@
       "Bash(clang:*)",
       "Bash(make:*)",
       "Bash(gcc:*)",
+      "Bash(cargo run:*)",
+      "Bash(cargo new:*)",
+      "Bash(cargo build:*)",
+      "Bash(cargo check:*)",
       "Edit",
       "Write",
       "Read",
-      "Edit(/.claude/skills/reading-code/**)",
-      "Edit(/.claude/skills/ctf/**)",
-      "Edit(/.claude/skills/session-debrief/**)",
       "Bash(code \"/Users/sanueee/vscode_projects/fn2s/knowledge-base/tasks/*.md\")",
-      "Edit(/.claude/skills/give-task/**)",
-      "Edit(/.claude/skills/vault-write/**)"
+      "Edit(/.claude/skills/**)",
+      "Edit(/.claude/CLAUDE.md)",
+      "Edit(/.claude/strategy/learning-strategy.md)",
+      "Edit(/knowledge-base/00-roadmap.md)"
     ]
   }
 }

@@ -4,7 +4,7 @@ block-position: C-5
 block: C — Rust (параллельный трек)
 тема: The Book главы 7–8 — modules/packages + collections (Vec/String/HashMap)
 дата: 2026-06-04
-статус: в работе
+статус: выполнено
 код: rust/scan_aggregator/
 связанные: [[enums-match]], [[structs-methods]], [[ownership]], [[guessing-game-notes]]
 ---
@@ -133,8 +133,20 @@ Vault (этот файл): `knowledge-base/tasks/block-c-rust/task-c05-rust-ch7-
 
 ## Ход выполнения
 
-*(заполнить по итогам)*
+Написал `scan_aggregator` из трёх модулей (`main` / `model` / `report`), 2026-06-04.
+
+- **`model.rs`** — `enum PortState` (derive `Clone, Copy, PartialEq, Eq, Hash`) + `impl PortState::describe(&self) -> &str` (через `match`, литералы `&'static str` — изначально писал `-> String` с `String::from`, на ревью переделал на `-> &str` без аллокации). `struct ScanResult { host: String, port: u16, state: PortState }`, поля `pub`.
+- **`report.rs`** — `count_ports` (фильтр `Open` + счётчик), `group_open_ports` (`HashMap<String, Vec<u16>>` через `entry().or_insert_with(Vec::new).push()`, `host.clone()` — владение через `&` не отдать), `count_by_state` (гистограмма `HashMap<PortState, u32>`, `*counter += 1` через разыменование `&mut u32`), `write_report` (сборка `String` через `push_str`/`format!`, сепаратор-флаг `first` для `N−1` запятых). Наружу только `write_report` — `pub`, остальное приватно (инкапсуляция).
+- **`main.rs`** — `mod model; mod report;`, `use`, захардкоженные данные, `println!(write_report(&results))`.
+
+Ревью (`/check`, 2 итерации): 1-я — 4 блокера (мусорный символ `∆`, заглушка `use {...}`, `PortState` без `Display`, пустой `main`); 2-я — баг логики: `group_open_ports` клал **все** порты, а не только `Open` (имя врало, не хватало гварда). Плюс прогон по теории модулей (package/crate/module, пути, `pub`/`E0603`, `use`, prelude).
 
 ## Что усвоено / слабые места
 
-*(заполнить по итогам — особенно: зашёл ли `entry` API, путаница `crate::`/`super::`, borrow при итерации Vec)*
+**Усвоено:** `entry` API (`or_insert_with` ленивый vs `or_insert` eager), разыменование `&mut` для инкремента счётчика в map, `host.clone()` потому что `String` не вынести из `&`, derive `Eq+Hash` на ключ, file-based модули + `pub`-инкапсуляция, `use` как ярлык имени (не `#include`), prelude.
+
+**Слабые места (со слов пользователя на дебрифе):**
+1. **Ownership-терминология** — тянусь к «дропнулось» там, где работает «**отдал владение** (move)». Drop вторичен; компилятор запрещает по факту move'а статически (`E0382`), ещё до рантайма. См. [[ownership]].
+2. **package / crate / module** — путал уровни (package спутал с путём в `std`; модуль определял «по отсутствию `main`»). Правильно: package = `Cargo.toml`-бандл ⊃ crate ⊃ module ⊃ item; `main.rs` сам по себе модуль (root = `crate`). См. [[modules]].
+
+Связанные конспекты по итогам: [[modules]], [[collections]], [[ownership]], [[interview-02]].
