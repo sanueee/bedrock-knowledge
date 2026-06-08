@@ -25,7 +25,7 @@
       "Edit",
       "Write",
       "Read",
-      "Bash(code \"/Users/sanueee/vscode_projects/fn2s/knowledge-base/tasks/*\")",
+      "Bash(code \"/Users/sanueee/vscode_projects/fn2s/knowledge-base/tasks*\")",
       "Edit(/.claude/skills/**)",
       "Edit(/.claude/CLAUDE.md)",
       "Edit(/.claude/strategy/learning-strategy.md)",

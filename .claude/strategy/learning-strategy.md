@@ -245,6 +245,20 @@ Resolve hostname в `sockaddr`, addrinfo linked list, `gai_strerror`, IPv4/IPv6 
 
 **B-26 — network scanner.** Финальная сборка всех компонентов в один CLI инструмент. Отдельная репа, README, tests, CI. См. "Магнум опус" выше.
 
+#### Interview 03 — 2026-06-09
+
+**Scope:** блок B (B-1…B-6), удержание. **Результат:** с пробелами (механику держит, модель blocking/non-blocking — гэп).
+
+**Уверенно:** три исхода `recv` (`0`=FIN); `ip_hl × 4` (переменная длина, self-describing); каст `sockaddr` по `ai_family` (type tag, выбор схемы чтения); `EAGAIN` vs `EINTR` (противоположные реакции); `getsockopt(SO_ERROR)` после `poll(POLLOUT)` — readiness ≠ correctness, async-канал ошибки (разобрал отлично).
+
+**Слабые места:**
+- **Что делает сокет блокирующим** — путает: «таймаут (`SO_RCVTIMEO`) делает сокет блокирующим». На деле blocking — режим по умолчанию; `SO_RCVTIMEO` лишь ограничивает уже существующую блокировку. Режим задаётся `O_NONBLOCK` (fcntl), не таймаутом.
+- **Исход «hang vs мгновенная сдача» при убранном `poll`** — считает недетерминированным («что угодно»). На деле жёстко задан режимом: non-blocking → `recv` `EAGAIN` мгновенно → выход без данных (не hang); hang — только blocking без таймаута. Матрица 2×2 не автоматизм.
+- Терминология: `EINTR` = прерван **сигналом**, не «сисколлом».
+
+**Закрепляющие задания:**
+- `sockmode_demo` ([[task-b-interview03-reinforce]]) — один `recv` на молчащем сервере в трёх конфигурациях: (1) blocking + `SO_RCVTIMEO(1s)` → блок ~1с → `EAGAIN`; (2) non-blocking (`O_NONBLOCK`) → `EAGAIN` мгновенно (~0мс); (3) blocking без таймаута под `alarm(2)` → виснет, пока `SIGALRM` не прервёт (`EINTR`). Замерять elapsed по каждому (`clock_gettime`/`gettimeofday`) и печатать. Цель — **тактильно** ощутить «кто ждёт и сколько». Хедеры: `<sys/socket.h>`, `<fcntl.h>`, `<sys/time.h>`, `<unistd.h>` (`alarm`), `<signal.h>`, `<errno.h>`, `<time.h>`. Закрыть до B-7, в связке с `/theory` по [[nonblocking-poll]].
+
 ---
 
 ### Блок C — Rust [параллельный трек, доступен после B1]
