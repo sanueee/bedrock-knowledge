@@ -1,5 +1,5 @@
 ---
-обновлено: 2026-06-07 (B-6 выполнено — non-blocking I/O nbconnect.c: O_NONBLOCK + EINPROGRESS connect + poll(POLLOUT)/getsockopt(SO_ERROR) + poll(POLLIN)/recv-цикл; создан конспект nonblocking-poll прицельно под слабое место «blocking vs non-blocking + poll»)
+обновлено: 2026-06-09 (закрыто закрепляющее Interview 03 — sockmode_demo.c: матрица blocking/non-blocking руками, прогон 1001/0/2005мс; провели /theory по nonblocking-poll, главный узел «различитель режима — elapsed, не errno» закрыт; конспект дополнен. Невыполненных reinforce нет → путь к B-7 открыт)
 ---
 
 # Roadmap — хаб проекта
@@ -24,7 +24,7 @@
 
 **Позиция в блоке B:** 6/26 выполнено (B-1 OWASP web теория, B-2 TCP echo, B-3 pcap sniffer, B-4 getaddrinfo, B-5 host-probe интеграционное, B-6 non-blocking I/O nbconnect). **Следующее — атомарное B-7** (Multiplexing: epoll — `select`/`poll`/`epoll` сравнение, edge- vs level-triggered, `epoll_ctl`/`epoll_wait`, `EPOLLIN`/`EPOLLOUT`/`EPOLLERR`; заготовка [[event-loop-epoll]]). Фаза 2 блока.
 
-> **Слабое место для следующих сессий (отмечено в B-6):** blocking vs non-blocking сокеты + роль `poll` — тема всплывает 3-й раз (B-2/B-5/B-6), автоматизма нет, пользователь сам попросил `/theory` по теме. Конспект [[nonblocking-poll]] написан прицельно. Перед B-7 (epoll) — провести `/theory`-сессию по [[nonblocking-poll]] + ещё практика. B-7 естественно продолжает тему (poll → epoll), но фундамент стоит закрепить отдельно.
+> **Слабое место (blocking vs non-blocking + `poll`) — проработано 2026-06-09.** Провели `/theory` по [[nonblocking-poll]] + закрепляющее `sockmode_demo` (прогон 1001/0/2005мс). Главный узел закрыт: **различитель режима — elapsed, а не `errno`** (один `EAGAIN` у blocking+timeout и у non-blocking, разница только во времени сна). Конспект дополнен разделом про это. Со слов пользователя — окончательно сядет на **многоклиентском сервере (B-7, epoll)**, где non-blocking + `poll`/`epoll` работают «в бою». Перепроверить автоматизм на старте B-7.
 
 **Параллельно:** блок C — Rust, C-5 завершён (главы 7–8 The Book — modules + collections, task-c05 `scan_aggregator`). Следующая Rust-сессия — **C-6: глава 9** (error handling — `Result`/`?`, закрывает вопрос 4 из [[guessing-game-notes]]). Карта блока C по главам — в [strategy/learning-strategy.md](../.claude/strategy/learning-strategy.md) → "### Блок C".
 
@@ -55,7 +55,7 @@
 
 ### Невыполненные закрепляющие задания
 
-- [[task-b-interview03-reinforce]] (Interview 03, 2026-06-09) — `sockmode_demo`: один `recv` на молчащем сервере в трёх конфигах (blocking+`SO_RCVTIMEO` / non-blocking / blocking без таймаута под `alarm`) + замер времени. Цель — физически прочувствовать матрицу 2×2 blocking/non-blocking ([[nonblocking-poll]]). **Закрыть до B-7**, в связке с рекомендованной `/theory`-сессией по тому же слабому месту.
+- *(пусто)* — [[task-b-interview03-reinforce]] закрыт 2026-06-09 (`sockmode_demo`, прогон 1001/0/2005мс) в связке с `/theory` по [[nonblocking-poll]]. Слабое место Interview 03 проработано.
 
 *(После каждого мок-собеса сюда добавляются `[[task-NN-interviewMM-reinforce]]` — закрывать до перехода к следующей теме плана.)*
 
@@ -89,6 +89,7 @@
 | B-4 | [[task-b04-getaddrinfo\|getaddrinfo + DNS resolution (resolve)]] | ✅ выполнено (2026-06-05) | `networking/resolve.c` |
 | B-5 | [[task-b05-host-probe\|host-probe — banner grab (integration)]] | ✅ выполнено (2026-06-06) | `networking/host_probe.c` |
 | B-6 | [[task-b06-nonblocking-io\|non-blocking I/O — nbconnect]] | ✅ выполнено (2026-06-07) | `networking/nbconnect.c` |
+| B-rf | [[task-b-interview03-reinforce\|sockmode_demo — матрица blocking/non-blocking (Interview 03 reinforce)]] | ✅ выполнено (2026-06-09) | `networking/sockmode_demo.c` |
 
 ### Блок C — Rust (параллельный трек) — активный (5/?)
 
