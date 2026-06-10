@@ -33,6 +33,7 @@
 | LLM-security (этапы Z/I/J) | `knowledge-base/topics/llm-sec/` |
 | Web/CTF/общая безопасность | `knowledge-base/topics/security/` |
 | Концепция Rust | `knowledge-base/topics/rust/` (создать при первом C-task'е) |
+| Структура данных (экзамен-блок) | `knowledge-base/topics/ds/` (хаб: `00-index.md`; ведётся скиллом `/exam`) |
 | Выполненное задание | `knowledge-base/tasks/block-X-<name>/task-<блок><NN>-<name>.md` (нумерация внутри блока с буквенным префиксом, например `block-b-networking/task-b04-getaddrinfo.md`) |
 | Reading-сессия | `knowledge-base/tasks/block-X-<name>/reading-NN.md` (в папке тематического блока) + конспект в `topics/reading/` |
 | Мок-собес | `knowledge-base/interviews/interview-NN.md` |
@@ -48,7 +49,7 @@
 ```
 ---
 тема: <развёрнутое название: русское + английский термин, как в заголовке>
-блок: <A — Linux syscalls | B — Сетевой стек | C — Rust | D — Rust intermediate | E — Crypto | F — VPN | G — Sandbox | H — eBPF | I — LLM-sec | J — LLM-sec | Z — Python bonus | Фундамент (theory) | Reading | Security/CTF | Курс — Архитектура Linux>
+блок: <A — Linux syscalls | B — Сетевой стек | C — Rust | D — Rust intermediate | E — Crypto | F — VPN | G — Sandbox | H — eBPF | I — LLM-sec | J — LLM-sec | Z — Python bonus | DS — Структуры данных (экзамен) | Фундамент (theory) | Reading | Security/CTF | Курс — Архитектура Linux>
 дата: YYYY-MM-DD
 связано:
   - "[[wikilink1]]"
