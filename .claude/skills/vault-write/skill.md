@@ -5,7 +5,6 @@
 - вызов из `session-debrief` (шаги 2–3)
 - вызов из `explain-code` после объяснения новой концепции
 - вызов из `code-review` после обнаружения концепции которой нет в topics/
-- вызов из `debug` после типичной ошибки
 
 ---
 
@@ -33,7 +32,7 @@
 | LLM-security (этапы Z/I/J) | `knowledge-base/topics/llm-sec/` |
 | Web/CTF/общая безопасность | `knowledge-base/topics/security/` |
 | Концепция Rust | `knowledge-base/topics/rust/` (создать при первом C-task'е) |
-| Структура данных (экзамен-блок) | `knowledge-base/topics/ds/` (хаб: `00-index.md`; ведётся скиллом `/exam`) |
+| Структура данных (часть закрытого блока A) | `knowledge-base/topics/ds/` (хаб: `00-index.md`) |
 | Выполненное задание | `knowledge-base/tasks/block-X-<name>/task-<блок><NN>-<name>.md` (нумерация внутри блока с буквенным префиксом, например `block-b-networking/task-b04-getaddrinfo.md`) |
 | Reading-сессия | `knowledge-base/tasks/block-X-<name>/reading-NN.md` (в папке тематического блока) + конспект в `topics/reading/` |
 | Мок-собес | `knowledge-base/interviews/interview-NN.md` |
@@ -155,11 +154,3 @@ date: YYYY-MM-DD
 - Не пропускать шаг 1 (если вопрос ещё не задавался в этой сессии).
 - Не начинать с длинного введения — сразу к сути.
 
----
-
-## Обнови skills
-
-На основе переписки и замечаний пользователя — обнови `.claude/skills/*.md`.
-Конкретизируй, подстраивайся под стиль общения, записывай замечания.
-При необходимости создавай новые скиллы.
-Цель: идеальное понимание без толчков "посмотри в тот файл".

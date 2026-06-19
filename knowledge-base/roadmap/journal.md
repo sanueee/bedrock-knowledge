@@ -8,7 +8,9 @@
 
 > Нумерация **внутри блока** (A-N / B-N / C-N), не сквозная. Файлы: `tasks/block-X/task-<блок><NN>-<name>.md`. Reading/theory/mock/ctf — отдельные последовательности (см. ниже).
 
-### Блок A — Linux internals (C) — закрыт
+### Блок A — Linux internals + Data Structures (C) — закрыт
+
+**Linux internals:**
 
 | # | Задание | Статус | Код |
 |---|---------|--------|-----|
@@ -22,7 +24,23 @@
 | A-8 | [[task-a08-pthreads\|pthreads]] | ✅ выполнено | `linux/proc/procthreads.c` |
 | A-9 | [[task-a09-interview01-reinforce\|interview-01 reinforce]] | ✅ выполнено | `linux/reinforce/` |
 
-### Блок B — Сетевой стек (C) — активный (6/26)
+**Data Structures:**
+
+| Структура | Конспект | Статус | Код |
+|-----------|----------|--------|-----|
+| Массив — частотный подсчёт, row/column-major | [[05-arrays]] | ✅ | `ds/array_freq.c` |
+| Запись `struct` — padding/выравнивание | [[06-records-struct]] | ✅ | `ds/record_ops.c` |
+| `union` + вариантные записи — type punning | [[07-union-variant]] | ✅ | `ds/union_variant.c` |
+| Множество (Set) — битовая маска | [[08-set]] | ✅ | `ds/bitset.c` |
+| Динамический массив — амортизация, рост | [[11-dynamic-array]] | ✅ | `ds/dynarray.c` |
+| Линейный список — reverse, `Node**` | [[12-linked-list]] | ✅ | `ds/list.c` |
+| Стек / очередь / дека | [[13-stack-queue-deque]] | ✅ | `ds/stack_queue_deque.c` |
+| BST — insert/search/delete(3 случая)/free | [[14-trees-bst]], [[15-recursion-bst-c]] | ✅ | `ds/bst.c` |
+| AVL — повороты + единый rebalance | [[16-avl]] | ✅ | `ds/avl.c` |
+| Splay — zig/zig-zig/zig-zag + insert | [[17-splay]] | ✅ | `ds/splay.c` |
+| B-дерево — split/merge, borrow | [[18-btree]] | ✅ | `ds/btree.c` |
+
+### Блок B — Сетевой стек (C) — активный (7/26)
 
 | # | Задание | Статус | Код |
 |---|---------|--------|-----|
@@ -49,31 +67,12 @@
 
 ## Reading-сессии
 
-| # | Блок | Дата | Источник | Цель | Vault |
-|---|------|------|----------|------|-------|
-| 01 | A | 2026-05-08 | musl libc | popen/pclose/_Fork — fd inheritance, FD_CLOEXEC | [[musl-popen]] |
-| 02 | B | 2026-05-21 | Redis (`src/anet.c`) | обёртка над sockets API: симметрия connect/server, гигиена сокета, библиотечная дисциплина ошибок | [[redis-anet]] |
-
----
-
-## Theory-сессии
-
-| # | Блок | Дата | Темы | Vault |
-|---|------|------|------|-------|
-| 1 | B (prep) | 2026-05-14 | фундамент перед B-1: syscalls, kernel/user boundary, fd model + refcount, async-signal-safety, copy-on-write, EINTR | [[syscalls-linux]], [[fd-kernel-model]], [[async-signal-safe]], [[virtual-memory-cow]] |
-
+Детальные записи: `knowledge-base/topics/reading/**.md`
 ---
 
 ## Мок-собесы
 
-| # | Блок | Дата | Слабые места |
-|---|------|------|-------------|
-| 01 | A | 2026-04-28 | opendir vs readdir, зомби/таблица процессов, sigaction vs signal, pipe EOF |
-| 02 | C | 2026-06-04 | receiver'ы (`&mut self`=borrow не владение; `self`=move не shadowing), почему `String` не `Copy` (double free), `match` exhaustiveness=`E0004` compile-time, `v[i]` паника в runtime не compile-time |
-| 03 | B | 2026-06-09 | что делает сокет блокирующим (путаница: «таймаут делает blocking»; на деле blocking — дефолт, `SO_RCVTIMEO` лишь ограничивает); исход «hang vs мгновенная сдача» детерминирован режимом, не «что угодно»; `EINTR`=сигнал не «сисколл». Уверенно: recv-исходы, `ip_hl×4`, sockaddr-каст, EAGAIN/EINTR, `SO_ERROR` после POLLOUT |
-
 Детальные записи: `knowledge-base/interviews/interview-NN.md`.
-Закрепляющие задания после каждого мок-собеса — оформляются как `task-<блок><NN>-interviewMM-reinforce.md` (нумерация внутри блока) и попадают в раздел "Невыполненные закрепляющие задания" ([00-roadmap.md](00-roadmap.md) → "Текущая позиция"). После выполнения — в "Задачи — writing" под своим блоком.
 
 ---
 
@@ -86,5 +85,3 @@
 | 03 | 2026-05-22 | picoCTF | Forensics | [[ctf/picoctf/forensics/session-02-writeup\|Verify]] | `sha256sum files/* \| grep <hash>`; `Salted__` = `openssl enc -salt`, не редактором |
 | 04 | 2026-05-22 | picoCTF | Forensics | [[ctf/picoctf/forensics/session-02-writeup\|Corrupted file]] | magic bytes JPEG (`FF D8`); `dd conv=notrunc bs=1 count=2` — точечная правка байтов без обрезания файла |
 | 05 | 2026-05-22 | picoCTF | Forensics | [[ctf/picoctf/forensics/session-02-writeup\|Secret of the Polyglot]] | polyglot PNG+PDF; `grep -aob '%PDF'` → offset, `dd skip=` извлекает; `Trailer data after IEND` в exiftool = сигнал polyglot |
-
-Цель к концу 2026: **30+ решённых челленджей**. Темп: 1-2 в неделю.
