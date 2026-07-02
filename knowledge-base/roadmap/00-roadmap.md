@@ -1,5 +1,5 @@
 ---
-обновлено: 2026-06-19 (DS-блок (структуры данных, экзамен 1 курса) свёрнут в блок A как завершённый: «Блок A — Linux internals + Data Structures (C)»; структура пройденного DS-материала (модули 0–8 + сквозные темы) записана в archive.md. Прошлая запись: закрыт B-7 — epoll_echo.c, многоклиентский echo на event loop. Ревью /check → 5 фиксов: SIGINT-выход через sigaction без SA_RESTART, EPOLLOUT-backlog (per-client conn_t + flush_out/arm), EINTR на recv, fd-leak, EPOLL_CTL_DEL с NULL. Прогон в Docker gcc-контейнере (epoll Linux-only): сборка чистая, 3 одновременных клиента — независимый echo. По словам — логика event-loop-сервера нова целиком + большой пласт нового синтаксиса. Позиция 7/26)
+обновлено: 2026-07-02 (закрыт B-8 — connect_timeout.c, примитив connect-scan: non-blocking connect → epoll EPOLLOUT → getsockopt(SO_ERROR), три исхода open/closed/filtered. Прогон в Docker gcc: open (127.0.0.1:75 + epoll_echo &) / closed (127.0.0.1:9) верно; filtered под Docker Desktop не тестируется (userspace NAT-прокси ACK'ает всё). По словам — лёгкое, механизм освежён, концептуальных затыков нет; пробуксовки только синтаксические (while(...EINTR) без тела — 2 итерации). Пользователь выбрал приоритет блока B над ритмом 3:1. Позиция 8/26)
 ---
 
 # Roadmap — диспетчер проекта
@@ -34,21 +34,21 @@
 - **B — Сетевой стек (C)** — 🔵 активный, 7/26.
 - **C — Rust (параллельный трек)** — 🔵 активный, 5/?.
 
-### Активный блок B — Сетевой стек (7/26)
+### Активный блок B — Сетевой стек (8/26)
 
 **Структура:** 26 заданий (20 атомарных + 5 интеграционных + 1 магнум опус), интеграционные на 5/10/15/20/25, опус — 26. Карта тем зафиксирована 2026-05-25 (стратегия → "### Блок B"). Базовая структура растягивается под глубину темы (скилл `plan-block`).
 
 **Магнум опус (B-26):** network scanner — ARP discovery + ICMP ping sweep + TCP connect scan + TCP SYN scan + service detection. Отдельная репа на GitHub.
 
-**Позиция:** 7/26 (B-1…B-7 — детали в [archive.md](archive.md), таблица заданий в [journal.md](journal.md)). Последний task — task-b07 (`epoll_echo`, 2026-06-18).
+**Позиция:** 8/26 (B-1…B-8 — детали в [archive.md](archive.md), таблица заданий в [journal.md](journal.md)). Последний task — task-b08 (`connect_timeout`, 2026-07-02).
 
-**Следующий шаг — B-8 (атомарное, Connect-with-timeout pattern):** non-blocking `connect` → epoll на `EPOLLOUT` → `getsockopt(SO_ERROR)` для проверки успеха. Классический паттерн для port scanner'а. Синтез B-6 (non-blocking connect/`EINPROGRESS`) + B-7 (epoll/`EPOLLOUT`). Фаза 2 блока. Хедеры: `<sys/socket.h>`, `<sys/epoll.h>`, `<fcntl.h>`, `<errno.h>`. Код: `networking/`.
+**Следующий шаг — B-9 (атомарное, UDP sockets):** `recvfrom`/`sendto`, connectionless model, отсутствие partial read (datagram-границы), потеря пакетов как штатное событие. Фаза 2 блока. **B-10 (позиция 10) — интеграционное** (port-scan v1: синтез B-6/B-7/B-8). Хедеры: `<sys/socket.h>`, `<netinet/in.h>`, `<arpa/inet.h>`, `<errno.h>`. Код: `networking/`.
 
 ### Параллельный блок C — Rust (5/?)
 
 **Структура:** Ведётся линейно по главам The Book — одна глава = одно (обычно атомарное) задание `C-N`. Под структуру «4 атомарных + интеграционное + опус» не переводится: правило «каждое 5-е интеграционное» к Rust-треку не применяется (скилл `plan-block`).
 
-**Позиция:** C-5 завершён (главы 7–8 — modules + collections, `scan_aggregator`). **Следующий шаг — C-6 (глава 9):** error handling — `Result`/`?` (закрывает вопрос 4 из [[guessing-game-notes]]). Дальше по карте: гл.10 (traits/generics/lifetimes), гл.11 (тесты), гл.12 (minigrep). Карта блока — стратегия → "### Блок C".
+**Позиция:** C-5 завершён (главы 7–8 — modules + collections, `scan_aggregator`). Трек **отложен** — приоритет отдан блоку B (реш. 2026-07-02, [[feedback-prioritize-block-b]]). **Следующий шаг при возврате — C-6 (глава 9):** error handling — `Result`/`?` (закрывает вопрос 4 из [[guessing-game-notes]]). Файл задания `task-c06-rust-ch9-error-handling.md` **уже создан** (2026-07-02, ждёт). Дальше по карте: гл.10 (traits/generics/lifetimes), гл.11 (тесты), гл.12 (minigrep). Карта блока — стратегия → "### Блок C".
 
 ### Невыполненные закрепляющие задания
 
@@ -56,8 +56,8 @@
 
 ### Параллельные блоки/треки доступны сейчас
 
-- **Блок C — Rust** (см. выше). Следующий шаг — C-6 (глава 9, error handling). **По ритму 3:1 — рекомендуемый следующий шаг.**
-- **Главный трек — B-8** (Connect-with-timeout: non-blocking connect + epoll `EPOLLOUT` + `getsockopt(SO_ERROR)`).
+- **Главный трек — B-9 (UDP sockets). Рекомендуемый следующий шаг:** пользователь 2026-07-02 выбрал **приоритет блока B над ритмом 3:1** — хочет закрыть сетевой блок раньше (см. [[feedback-prioritize-block-b]]). По умолчанию рекомендовать B, не переключать на C по счётчику, пока пользователь не скажет иначе.
+- **Блок C — Rust** (параллельный, отложен по решению пользователя). Следующий шаг при возврате — C-6 (глава 9, error handling); файл `task-c06-rust-ch9-error-handling.md` уже создан и ждёт.
 - **Мок-собес / reading-code / CTF** — управляются скиллами (по запросу пользователя или решению Claude), не счётчиками. См. таблицу триггеров в [CLAUDE.md](../../.claude/CLAUDE.md).
 
 При запросе задания `give-task` обязан учитывать что пользователь может выбрать главный трек **или** параллельный. Если параллельные блоки доступны — спросить какой трек.

@@ -88,11 +88,10 @@ config 3  blocking + alarm(2)        → 2005 мс, EINTR   (спал до си�
 Главная трудность (со слов): **путаница blocking vs non-blocking** — она же причина Interview 03. По ходу всплыла в живом виде: в `/theory` ошибочно решил, что конфиг 1 «неблокирующий, раз вернул `EAGAIN`» (на деле `EAGAIN` — не маркер режима). Закрыто через замер времени.
 
 Баги по итерациям `/check`:
-1. `#include <cstdlib>` — C++-хедер в C-файле → не компилировалось.
-2. `time_end.tv_sec - time_end.tv_sec` (×3) — вычитание конца из самого себя, elapsed всегда 0. Сердце задания было мертво.
-3. `recv(blocking_with_timeout, ...)` в блоке non-blocking — копипаста на уже закрытом fd → `EBADF`.
-4. Конфиг 3: сокет `blocking` не подключён (`connect` забыт) → `recv` дал бы мгновенный `ENOTCONN`, а не 2с hang.
-5. **`EINPROGRESS` принят за ошибку** (подтверждено прогоном): non-blocking `connect` на loopback вернул `-1`/`EINPROGRESS`, код сделал `perror`+`close` → `recv` на закрытом fd → `EBADF` вместо `EAGAIN`. Чинится guard'ом `if (errno != EINPROGRESS)`. Ту же логику уже писал правильно в B-6 (`nbconnect.c`), но сюда не перенёс.
+1. `time_end.tv_sec - time_end.tv_sec` (×3) — вычитание конца из самого себя, elapsed всегда 0. Сердце задания было мертво.
+2. `recv(blocking_with_timeout, ...)` в блоке non-blocking — копипаста на уже закрытом fd → `EBADF`.
+3. Конфиг 3: сокет `blocking` не подключён (`connect` забыт) → `recv` дал бы мгновенный `ENOTCONN`, а не 2с hang.
+4. **`EINPROGRESS` принят за ошибку** (подтверждено прогоном): non-blocking `connect` на loopback вернул `-1`/`EINPROGRESS`, код сделал `perror`+`close` → `recv` на закрытом fd → `EBADF` вместо `EAGAIN`. Чинится guard'ом `if (errno != EINPROGRESS)`. Ту же логику уже писал правильно в B-6 (`nbconnect.c`), но сюда не перенёс.
 
 ## Что бы сделал иначе
 

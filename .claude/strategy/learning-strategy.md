@@ -99,8 +99,6 @@
 
 #### Фаза 2 — Non-blocking I/O и connect-scan
 
-**B-8 (atomic) — Connect-with-timeout pattern.** Non-blocking connect → epoll на `EPOLLOUT` → `getsockopt(SO_ERROR)` для проверки успеха. Классический pattern для port scanner'а.
-
 **B-9 (atomic) — UDP sockets.** `recvfrom`/`sendto`, connectionless model, отсутствие partial read (datagram-границы), потеря пакетов как штатное событие.
 
 **B-10 (integration) — port-scan v1.** Connect-scan диапазона портов одного хоста: epoll + non-blocking connect + тайм-ауты + сводка open/closed/filtered. Синтез B-6/B-7/B-8.
