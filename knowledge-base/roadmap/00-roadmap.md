@@ -1,5 +1,5 @@
 ---
-обновлено: 2026-07-02 (закрыт B-8 — connect_timeout.c, примитив connect-scan: non-blocking connect → epoll EPOLLOUT → getsockopt(SO_ERROR), три исхода open/closed/filtered. Прогон в Docker gcc: open (127.0.0.1:75 + epoll_echo &) / closed (127.0.0.1:9) верно; filtered под Docker Desktop не тестируется (userspace NAT-прокси ACK'ает всё). По словам — лёгкое, механизм освежён, концептуальных затыков нет; пробуксовки только синтаксические (while(...EINTR) без тела — 2 итерации). Пользователь выбрал приоритет блока B над ритмом 3:1. Позиция 8/26)
+обновлено: 2026-07-03 (закрыт B-9 — udp_echo.c, UDP sockets: recvfrom/sendto, connectionless, датаграммные границы, потеря пакета как штатное событие. Прогон на macOS clang: connectionless (2 клиента, разные эфемерные порты) / усечение (hello-world→hello-wo при BUFSZ 8) / потеря (сервер off → SO_RCVTIMEO timeout, exit 1) — все три верно. Затыки: (1) главный — механика подсчёта байт (printf %s по recvfrom-буферу = OOB-read, доверие n а не «ожидаемой» длине; поправлено на %.*s); (2) sockaddr_in init — в клиенте забыл memset+sin_family; (3) return res в main пришлось напомнить дважды. Приоритет блока B сохраняется. Позиция 9/26)
 ---
 
 # Roadmap — диспетчер проекта
@@ -25,24 +25,24 @@
 - **Rust** — старт: The Book гл. 1–8 (ownership, structs, enums/match, modules, collections). Дальше: `Result`/`?`, traits, lifetimes. Слабые места: ownership-терминология, уровни package/crate/module.
 - **Linux** — комфортно в терминале; /proc, fd-модель, virtual memory + CoW, EINTR.
 - **Git** — базово (add/commit/push/log/diff); rebase/bisect/worktrees — не трогал.
-- **Сети** — TCP/IP концептуально; написаны echo, sniffer, DNS-resolver, banner-grab. Слабое место: адресные структуры, синтаксис сетевого кода не на автомате.
+- **Сети** — TCP/IP концептуально; написаны echo, sniffer, DNS-resolver, banner-grab, UDP echo. Слабые места: адресные структуры (`sockaddr_in` init — `memset`+`sin_family` забывается); **механика подсчёта байт** — что означает возврат `recv*`/`send*`, трактовать ровно `n` а не «ожидаемую» длину, `%s` по неполной строке = OOB-read (печать сетевых данных только `%.*s`).
 - **Английский** — B2.
 - **Инструментальные:** Python (школьный базис) — LLM-обвязка, SAST, CTF; Go (0) — eBPF user-space, DevSecOps-тулинг. Учим по необходимости, без отдельных учебных блоков.
 
 **Блоки:**
 - **A — Linux internals + Data Structures (C)** — ✅ закрыт (структура пройденного → [archive.md](archive.md)).
-- **B — Сетевой стек (C)** — 🔵 активный, 7/26.
+- **B — Сетевой стек (C)** — 🔵 активный, 9/26.
 - **C — Rust (параллельный трек)** — 🔵 активный, 5/?.
 
-### Активный блок B — Сетевой стек (8/26)
+### Активный блок B — Сетевой стек (9/26)
 
 **Структура:** 26 заданий (20 атомарных + 5 интеграционных + 1 магнум опус), интеграционные на 5/10/15/20/25, опус — 26. Карта тем зафиксирована 2026-05-25 (стратегия → "### Блок B"). Базовая структура растягивается под глубину темы (скилл `plan-block`).
 
 **Магнум опус (B-26):** network scanner — ARP discovery + ICMP ping sweep + TCP connect scan + TCP SYN scan + service detection. Отдельная репа на GitHub.
 
-**Позиция:** 8/26 (B-1…B-8 — детали в [archive.md](archive.md), таблица заданий в [journal.md](journal.md)). Последний task — task-b08 (`connect_timeout`, 2026-07-02).
+**Позиция:** 9/26 (B-1…B-9 — детали в [archive.md](archive.md), таблица заданий в [journal.md](journal.md)). Последний task — task-b09 (`udp_echo`, 2026-07-03).
 
-**Следующий шаг — B-9 (атомарное, UDP sockets):** `recvfrom`/`sendto`, connectionless model, отсутствие partial read (datagram-границы), потеря пакетов как штатное событие. Фаза 2 блока. **B-10 (позиция 10) — интеграционное** (port-scan v1: синтез B-6/B-7/B-8). Хедеры: `<sys/socket.h>`, `<netinet/in.h>`, `<arpa/inet.h>`, `<errno.h>`. Код: `networking/`.
+**Следующий шаг — B-10 (позиция 10, ИНТЕГРАЦИОННОЕ), port-scan v1:** connect-scan диапазона портов одного хоста — синтез **B-6** (non-blocking connect) + **B-7** (epoll event loop) + **B-8** (connect-with-timeout, три исхода). epoll + non-blocking connect + тайм-ауты + сводка open/closed/filtered по диапазону. **Не вводить новой теории** — совместить пройденное. Хедеры: `<sys/socket.h>`, `<sys/epoll.h>`, `<netinet/in.h>`, `<arpa/inet.h>`, `<fcntl.h>`, `<errno.h>`. Код: `networking/`.
 
 ### Параллельный блок C — Rust (5/?)
 
@@ -56,7 +56,7 @@
 
 ### Параллельные блоки/треки доступны сейчас
 
-- **Главный трек — B-9 (UDP sockets). Рекомендуемый следующий шаг:** пользователь 2026-07-02 выбрал **приоритет блока B над ритмом 3:1** — хочет закрыть сетевой блок раньше (см. [[feedback-prioritize-block-b]]). По умолчанию рекомендовать B, не переключать на C по счётчику, пока пользователь не скажет иначе.
+- **Главный трек — B-10 (интеграционное, port-scan v1: синтез B-6/B-7/B-8). Рекомендуемый следующий шаг:** пользователь 2026-07-02 выбрал **приоритет блока B над ритмом 3:1** — хочет закрыть сетевой блок раньше (см. [[feedback-prioritize-block-b]]). По умолчанию рекомендовать B, не переключать на C по счётчику, пока пользователь не скажет иначе.
 - **Блок C — Rust** (параллельный, отложен по решению пользователя). Следующий шаг при возврате — C-6 (глава 9, error handling); файл `task-c06-rust-ch9-error-handling.md` уже создан и ждёт.
 - **Мок-собес / reading-code / CTF** — управляются скиллами (по запросу пользователя или решению Claude), не счётчиками. См. таблицу триггеров в [CLAUDE.md](../../.claude/CLAUDE.md).
 

@@ -36,6 +36,7 @@ syscalls + kernel/user boundary, fd kernel model + refcount, async-signal-safety
 
 **Пройденные темы** (суть в 1–2 предложениях; детали — в конспектах по ссылкам):
 
+- **B-9** — UDP sockets (`udp_echo.c`): `SOCK_DGRAM`, connectionless (без `listen`/`accept`/`connect`), `recvfrom`/`sendto` с явным адресом peer'а. Три свойства: датаграммные границы (усечение вместо partial read при малом буфере), потеря пакета как штатное событие (`SO_RCVTIMEO` → `EAGAIN`), эфемерный порт клиента. Security: `%s` по `recvfrom`-буферу = OOB-read (нет `'\0'`) → печать `%.*s` по `n`. → [[udp-sockets]].
 - **B-8** — Connect-with-timeout (`connect_timeout.c`, синтез B-6+B-7): non-blocking `connect` → `epoll` ждёт `EPOLLOUT` с таймаутом → `getsockopt(SO_ERROR)` = вердикт (open/closed/filtered). Ключ: readiness ≠ correctness (EPOLLOUT срабатывает и на RST). → [[connect-timeout-scan]].
 - **B-7** — Multiplexing: epoll (`epoll_echo.c`, многоклиентский echo): однопоточный event loop, диспетчер по битовой маске `events`, EPOLLOUT-backlog + back-pressure через readiness, чистый выход по SIGINT без `SA_RESTART`. → [[event-loop-epoll]].
 - **B-6** — non-blocking I/O (`nbconnect.c`): режим сокета решает, кто ждёт (`O_NONBLOCK` → `EAGAIN`); non-blocking `connect` → `EINPROGRESS` → `poll(POLLOUT)` → `SO_ERROR`; «не висеть вечно» даёт таймаут в poll, не сам poll. → [[nonblocking-poll]].
@@ -96,6 +97,7 @@ syscalls + kernel/user boundary, fd kernel model + refcount, async-signal-safety
 - [[nonblocking-poll]] — blocking vs non-blocking сокеты + poll: матрица 2×2, три роли (режим/poll/timeout/recv), EINPROGRESS connect, SO_ERROR (прицельно под слабое место B-6)
 - [[event-loop-epoll]] — event loop model, epoll, non-blocking I/O, readiness ≠ correctness
 - [[connect-timeout-scan]] — connect-with-timeout, примитив connect-scan (B-6+B-7): три исхода open/closed/filtered, SO_ERROR = вердикт, синхронный vs async refused, Docker Desktop NAT врёт
+- [[udp-sockets]] — UDP sockets: recvfrom/sendto, connectionless, датаграммные границы (усечение), потеря пакета = SO_RCVTIMEO/EAGAIN, %s по recvfrom-буферу = OOB-read
 - [[nagle-tcp-nodelay]] — алгоритм Нагла, TCP_NODELAY, когда выключать
 - [[getaddrinfo]] — resolve, addrinfo linked list, gai_strerror, паттерн "свой namespace ошибок"
 - [[libpcap]] — захват пакетов из user space, BPF фильтр в ядре, pcap lifecycle, caplen vs len, breakloop
