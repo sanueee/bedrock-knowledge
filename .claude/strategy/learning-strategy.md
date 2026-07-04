@@ -97,10 +97,6 @@
 
 Место: `networking/scanner/` (внутри fn2s) + **отдельная репа на GitHub**.
 
-#### Фаза 2 — Non-blocking I/O и connect-scan
-
-**B-10 (integration) — port-scan v1.** Connect-scan диапазона портов одного хоста: epoll + non-blocking connect + тайм-ауты + сводка open/closed/filtered. Синтез B-6/B-7/B-8.
-
 #### Фаза 3 — Application protocols + service detection
 
 **B-11 (atomic) — HTTP basics.** GET/HEAD запрос, status line, `Server:` header, `Content-Length` vs chunked transfer. Минимальный клиент достаточный для banner grab.

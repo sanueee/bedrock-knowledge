@@ -40,7 +40,7 @@
 | Splay — zig/zig-zig/zig-zag + insert | [[17-splay]] | ✅ | `ds/splay.c` |
 | B-дерево — split/merge, borrow | [[18-btree]] | ✅ | `ds/btree.c` |
 
-### Блок B — Сетевой стек (C) — активный (9/26)
+### Блок B — Сетевой стек (C) — активный (10/26)
 
 | # | Задание | Статус | Код |
 |---|---------|--------|-----|
@@ -53,6 +53,7 @@
 | B-7 | [[task-b07-epoll\|epoll — многоклиентский echo на event loop]] | ✅ выполнено (2026-06-18) | `networking/epoll_echo.c` |
 | B-8 | [[task-b08-connect-timeout\|connect-with-timeout — примитив connect-scan]] | ✅ выполнено (2026-07-02) | `networking/connect_timeout.c` |
 | B-9 | [[task-b09-udp-echo\|UDP echo — recvfrom/sendto, датаграммные границы, потеря пакета]] | ✅ выполнено (2026-07-03) | `networking/udp_echo.c` |
+| B-10 | [[task-b10-port-scan-v1\|port-scan v1 — connect-scan диапазона, bounded concurrency (integration)]] | ✅ выполнено (2026-07-04) | `networking/portscan.c` |
 | B-rf | [[task-b-interview03-reinforce\|sockmode_demo — матрица blocking/non-blocking (Interview 03 reinforce)]] | ✅ выполнено (2026-06-09) | `networking/sockmode_demo.c` |
 
 ### Блок C — Rust (параллельный трек) — активный (5/?)

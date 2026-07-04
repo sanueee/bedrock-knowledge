@@ -36,6 +36,7 @@ syscalls + kernel/user boundary, fd kernel model + refcount, async-signal-safety
 
 **Пройденные темы** (суть в 1–2 предложениях; детали — в конспектах по ссылкам):
 
+- **B-10** (интеграционное, первое в блоке) — port-scan v1 (`portscan.c`, синтез B-6/B-7/B-8): connect-scan диапазона портов. **Bounded concurrency** — окно фиксированных слотов (256), fd→slot через `epoll_event.data.u32` (не `port_of_fd[]`); per-socket дедлайны на `CLOCK_MONOTONIC`; три вердикта open/closed/filtered на диапазоне. Ключевые уроки (4 итерации `/check`): `epoll_wait` ждёт **относительный** таймаут (`min_deadline - now`, кламп ≥0), не абсолютный момент; условие выхода цикла = порты **ИЛИ** активные пробы (иначе filtered теряется, loopback прячет баг); счётчик in-flight парен занятию слота (лишний `active--` в `CONNECT_ERROR` = рассинхрон). → [[port-scan-scaling]].
 - **B-9** — UDP sockets (`udp_echo.c`): `SOCK_DGRAM`, connectionless (без `listen`/`accept`/`connect`), `recvfrom`/`sendto` с явным адресом peer'а. Три свойства: датаграммные границы (усечение вместо partial read при малом буфере), потеря пакета как штатное событие (`SO_RCVTIMEO` → `EAGAIN`), эфемерный порт клиента. Security: `%s` по `recvfrom`-буферу = OOB-read (нет `'\0'`) → печать `%.*s` по `n`. → [[udp-sockets]].
 - **B-8** — Connect-with-timeout (`connect_timeout.c`, синтез B-6+B-7): non-blocking `connect` → `epoll` ждёт `EPOLLOUT` с таймаутом → `getsockopt(SO_ERROR)` = вердикт (open/closed/filtered). Ключ: readiness ≠ correctness (EPOLLOUT срабатывает и на RST). → [[connect-timeout-scan]].
 - **B-7** — Multiplexing: epoll (`epoll_echo.c`, многоклиентский echo): однопоточный event loop, диспетчер по битовой маске `events`, EPOLLOUT-backlog + back-pressure через readiness, чистый выход по SIGINT без `SA_RESTART`. → [[event-loop-epoll]].
@@ -98,6 +99,7 @@ syscalls + kernel/user boundary, fd kernel model + refcount, async-signal-safety
 - [[event-loop-epoll]] — event loop model, epoll, non-blocking I/O, readiness ≠ correctness
 - [[connect-timeout-scan]] — connect-with-timeout, примитив connect-scan (B-6+B-7): три исхода open/closed/filtered, SO_ERROR = вердикт, синхронный vs async refused, Docker Desktop NAT врёт
 - [[udp-sockets]] — UDP sockets: recvfrom/sendto, connectionless, датаграммные границы (усечение), потеря пакета = SO_RCVTIMEO/EAGAIN, %s по recvfrom-буферу = OOB-read
+- [[port-scan-scaling]] — масштабирование connect-scan: bounded concurrency, окно проб, fd→slot через data.u32, relative epoll timeout, liveness-условие цикла (порты ИЛИ активные пробы), счётчик in-flight
 - [[nagle-tcp-nodelay]] — алгоритм Нагла, TCP_NODELAY, когда выключать
 - [[getaddrinfo]] — resolve, addrinfo linked list, gai_strerror, паттерн "свой namespace ошибок"
 - [[libpcap]] — захват пакетов из user space, BPF фильтр в ядре, pcap lifecycle, caplen vs len, breakloop

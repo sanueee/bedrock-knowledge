@@ -32,7 +32,8 @@
       "Edit(/.claude/skills/**)",
       "Edit(/.claude/CLAUDE.md)",
       "Edit(/.claude/strategy/learning-strategy.md)",
-      "Edit(/knowledge-base/00-roadmap.md)"
+      "Edit(/knowledge-base/00-roadmap.md)",
+      "Bash(code *)"
     ]
   }
 }
