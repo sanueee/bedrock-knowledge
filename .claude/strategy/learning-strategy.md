@@ -99,8 +99,6 @@
 
 #### Фаза 3 — Application protocols + service detection
 
-**B-11 (atomic) — HTTP basics.** GET/HEAD запрос, status line, `Server:` header, `Content-Length` vs chunked transfer. Минимальный клиент достаточный для banner grab.
-
 **B-12 (atomic) — DNS protocol manually.** Построить A-record query поверх UDP, парсить ответ, **компрессия имён обязательна** (без неё парсинг реальных ответов фейкнет). Сравнить с getaddrinfo из B-4.
 
 **B-13 (atomic) — Service fingerprinting.** Библиотека пробов: SSH banner (server присылает первым), HTTP HEAD на 80/8080/8443, SMTP greeting на 25/587, FTP banner на 21. Таблица "порт → проба → паттерн".
