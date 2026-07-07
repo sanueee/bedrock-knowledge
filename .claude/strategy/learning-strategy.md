@@ -99,8 +99,6 @@
 
 #### Фаза 3 — Application protocols + service detection
 
-**B-12 (atomic) — DNS protocol manually.** Построить A-record query поверх UDP, парсить ответ, **компрессия имён обязательна** (без неё парсинг реальных ответов фейкнет). Сравнить с getaddrinfo из B-4.
-
 **B-13 (atomic) — Service fingerprinting.** Библиотека пробов: SSH banner (server присылает первым), HTTP HEAD на 80/8080/8443, SMTP greeting на 25/587, FTP banner на 21. Таблица "порт → проба → паттерн".
 
 **B-14 (atomic) — TLS handshake observational.** Wireshark на HTTPS-сессии, разбор ClientHello/ServerHello/Certificate/Finished, SNI extension, ALPN. **Без кода.** Место: `topics/networking/tls.md`. Закрывает чекпойнт этапа 1 "понимаешь что происходит при connect() на уровне ядра" — расширяет на L7.
