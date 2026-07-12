@@ -9,10 +9,10 @@
 
 - **Закрытые/пройденные темы по блокам + индекс тем (оценка знаний, пересмотр стратегии):** [archive.md](archive.md)
 - **Журнал выполненного (задачи + код, reading/theory/mock/ctf):** [journal.md](journal.md)
-- **План и принципы (будущее):** [learning-strategy.md](../../.claude/strategy/learning-strategy.md)
+- **План и принципы (будущее):** [learning-strategy.md](../strategy/learning-strategy.md)
 - **Контекст о пользователе + реестр скиллов:** [CLAUDE.md](../../.claude/CLAUDE.md)
 
-Код: `linux/`, `networking/`, ... | Теория: `topics/` | Задания: `tasks/`
+Код+задания вместе: `sections/<domain>/<name>/` (domain: `ds`/`linux`/`networking`/`rust`/`crypto`) | Теория: `knowledge-base/topics/` | leetcode: `sections/leetcode/`
 
 ---
 
@@ -22,7 +22,7 @@
 
 **Снимок уровня по стеку** (детали усвоенного — в [archive.md](archive.md)):
 - **C** — джун, уверенно: системка (POSIX/proc, signals, IPC, pthreads) + сеть (сокеты, libpcap).
-- **Структуры данных** — теория курса + реализации на C (массивы/списки/стек/очередь/дека, деревья BST/AVL/splay/B, хеши, графы, сортировки). Слабые: AVL LR/RL, вывод констант сложности. Детали — [[00-index]] + [archive.md](archive.md).
+- **Структуры данных** — теория курса + реализации на C (массивы/списки/стек/очередь/дека, деревья BST/AVL/splay/B, хеши, графы, сортировки). Слабые: AVL LR/RL, вывод констант сложности. Детали — [[index]] + [archive.md](archive.md).
 - **Rust** — старт: The Book гл. 1–8 (ownership, structs, enums/match, modules, collections). Дальше: `Result`/`?`, traits, lifetimes. Слабые места: ownership-терминология, уровни package/crate/module.
 - **Linux** — комфортно в терминале; /proc, fd-модель, virtual memory + CoW, EINTR.
 - **Git** — базово (add/commit/push/log/diff); rebase/bisect/worktrees — не трогал.

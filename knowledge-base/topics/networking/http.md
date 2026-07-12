@@ -110,7 +110,7 @@ data\r\n
 
 ## Пример
 
-Сборка запроса (`snprintf`) и цикл чтения — как в `networking/httpget.c` (B-11):
+Сборка запроса (`snprintf`) и цикл чтения — как в `sections/networking/http-basics/httpget.c` (B-11):
 
 ```c
 char req[1024];

@@ -26,7 +26,7 @@
 Передай ответ из Шага 1 — повторно не спрашивай.
 
 Что обновить:
-- `knowledge-base/tasks/block-X-<name>/task-NN.md` — моё решение, ошибки, рефлексия (файл уже создан скиллом `give-task` в нужной папке блока)
+- `sections/<domain>/<name>/task-<блок>NN-<name>.md` — моё решение, ошибки, рефлексия (файл уже создан скиллом `give-task` в папке задачи рядом с кодом)
 - `knowledge-base/topics/` — каждая концепция которая всплыла в сессии
 
 ### 3. Обнови roadmap (диспетчер + journal + archive)
@@ -110,7 +110,7 @@ Roadmap разбит на 3 файла в `knowledge-base/roadmap/` — обно
 ```
 task(B-9): UDP echo — recvfrom/sendto, границы датаграмм, потеря пакета
 
-- networking/udp_echo.c: server/client, SO_RCVTIMEO, grateful shutdown
+- sections/networking/udp-echo/udp_echo.c: server/client, SO_RCVTIMEO, grateful shutdown
 - vault: topics/networking/udp-sockets.md + дозаполнен task-b09
 - roadmap: позиция 9/26, след. шаг B-10, слабое место «подсчёт байт»
 ```

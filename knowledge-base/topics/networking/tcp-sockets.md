@@ -308,7 +308,7 @@ while (!stop) {
 close(server);
 ```
 
-(Полный код — `networking/echo_server.c`.)
+(Полный код — `sections/networking/tcp-echo/echo_server.c`.)
 
 ## Подводные камни
 

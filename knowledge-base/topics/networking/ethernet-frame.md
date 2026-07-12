@@ -125,7 +125,7 @@ p + N  // == адрес header + N байт
 
 ## Пример
 
-Из `networking/sniffer.c`:
+Из `sections/networking/pcap-sniffer/sniffer.c`:
 
 ```c
 if (h->caplen < sizeof(struct ether_header)) return;

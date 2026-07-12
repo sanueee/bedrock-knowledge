@@ -56,7 +56,7 @@ socket → собрать sockaddr_in вручную (sin_family, inet_pton, hto
 
 ## Пример
 
-Из `networking/udp_echo.c` (задание [[task-b09-udp-echo]]).
+Из `sections/networking/udp-echo/udp_echo.c` (задание [[task-b09-udp-echo]]).
 
 Сервер — цикл приёма с grateful shutdown:
 ```c

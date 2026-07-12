@@ -87,7 +87,7 @@ void packet_cb(u_char *user, const struct pcap_pkthdr *h, const u_char *bytes);
 
 ## Пример
 
-Фрагмент из `networking/sniffer.c`:
+Фрагмент из `sections/networking/pcap-sniffer/sniffer.c`:
 
 ```c
 static pcap_t *g_handler = NULL;

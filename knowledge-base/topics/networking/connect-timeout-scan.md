@@ -1,6 +1,6 @@
 # Connect-with-timeout — примитив connect-scan'а
 
-Задача B-8 (`networking/connect_timeout.c`). Синтез [[nonblocking-poll]] (B-6, `EINPROGRESS`/`SO_ERROR`) + [[event-loop-epoll]] (B-7, `epoll`/`EPOLLOUT`). Ядро TCP connect scan'а: одна проба одного порта с управляемым таймаутом, без блокировки и без root.
+Задача B-8 (`sections/networking/connect-timeout/connect_timeout.c`). Синтез [[nonblocking-poll]] (B-6, `EINPROGRESS`/`SO_ERROR`) + [[event-loop-epoll]] (B-7, `epoll`/`EPOLLOUT`). Ядро TCP connect scan'а: одна проба одного порта с управляемым таймаутом, без блокировки и без root.
 
 ## Проблема
 

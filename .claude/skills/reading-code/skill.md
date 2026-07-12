@@ -72,7 +72,7 @@
 
 ### 4. Создай файл задания
 
-Создай `knowledge-base/tasks/block-X-<name>/reading-NN.md` (в папке тематического блока, например `block-b-networking/reading-03.md` для разбора сетевого модуля) с шаблоном:
+Создай `sections/<domain>/reading-NN/reading-NN.md` (папка задачи по тематике домена, например `sections/networking/reading-03/reading-03.md` для разбора сетевого модуля) с шаблоном:
 
 ```markdown
 ---

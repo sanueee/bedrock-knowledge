@@ -2,7 +2,7 @@
 тема: Service fingerprinting — идентификация сервиса по пробе
 блок: B (сетевой стек)
 task: [[task-b13-service-fingerprint]]
-код: networking/fingerprint.c
+код: sections/networking/service-fingerprint/fingerprint.c
 дата: 2026-07-12
 ---
 
