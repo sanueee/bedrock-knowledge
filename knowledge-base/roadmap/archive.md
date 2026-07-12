@@ -94,6 +94,8 @@ syscalls + kernel/user boundary, fd kernel model + refcount, async-signal-safety
 - [[modules]] — глава 7: package ⊃ crate ⊃ module ⊃ item, пути `crate`/`super`/`self`, `pub`-видимость + `E0603`, `use` как ярлык (не `#include`), prelude
 - [[collections]] — глава 8: `Vec`/`String`/`HashMap`, `entry` API (`or_insert_with`/`or_insert`), `*`-разыменование счётчика, `v[i]` vs `v.get`, итерация borrow vs move
 
+- **B-13** — Service fingerprinting (`fingerprint.c`): идентификация сервиса по **ответу на пробу**, не по порту (порт лишь выбирает пробу). Ядро — **server-first vs client-first**: SSH/SMTP/FTP шлют баннер сами после connect (`recv` сразу), HTTP молчит до запроса (`send` payload → `recv`) — кодируется флагом `send_first` в `struct probe`. Статическая таблица `const probe` + `probes_for_port`. Пайплайн: `connect_timeout` (неблокирующий connect + select + `getsockopt(SO_ERROR)`, writable≠connected) → `run_probe` (**снять `O_NONBLOCK`** ради `SO_RCVTIMEO`, `send` в цикле-аккумуляторе при partial send, `recv`) → `memmem` по длине. Грабли `/check` (6 итераций): `strlen(NULL)` → SIGSEGV на server-first (payload==NULL, ловится только прогоном); неинициализированные аккумуляторы `sent`/`total` (рецидив класса); молчаливое усечение порта до валидации; fd leak на `continue` мимо `close`; `%s` по recv-буферу (нужен `%.*s`+`memmem`). Слабое место: **механические промахи на объёме error-handling/ветвей** (не непонимание — усталость). → [[service-fingerprint]].
+
 ### Темы — Networking
 
 - [[tcp-sockets]] — TCP-сокеты, socket/bind/listen/accept/connect, partial read, EPIPE, SIGPIPE защита
@@ -101,6 +103,7 @@ syscalls + kernel/user boundary, fd kernel model + refcount, async-signal-safety
 - [[event-loop-epoll]] — event loop model, epoll, non-blocking I/O, readiness ≠ correctness
 - [[connect-timeout-scan]] — connect-with-timeout, примитив connect-scan (B-6+B-7): три исхода open/closed/filtered, SO_ERROR = вердикт, синхронный vs async refused, Docker Desktop NAT врёт
 - [[dns]] — DNS wire format вручную (B-12): заголовок/флаги-битполе, QNAME labels, RR, name compression (`0xC0`), три гейта qr/rcode/ancount (NODATA vs NXDOMAIN), endianness, UB образования заграничного указателя
+- [[service-fingerprint]] — service fingerprinting (B-13): решает ответ не порт, server/client-first (`send_first`), таблица `const probe`, `connect_timeout`+`run_probe`, `SO_RCVTIMEO` требует снять `O_NONBLOCK`, `memmem` по длине, `strlen(NULL)`→SIGSEGV, partial send
 - [[udp-sockets]] — UDP sockets: recvfrom/sendto, connectionless, датаграммные границы (усечение), потеря пакета = SO_RCVTIMEO/EAGAIN, %s по recvfrom-буферу = OOB-read
 - [[port-scan-scaling]] — масштабирование connect-scan: bounded concurrency, окно проб, fd→slot через data.u32, relative epoll timeout, liveness-условие цикла (порты ИЛИ активные пробы), счётчик in-flight
 - [[nagle-tcp-nodelay]] — алгоритм Нагла, TCP_NODELAY, когда выключать

@@ -40,7 +40,7 @@
 | Splay — zig/zig-zig/zig-zag + insert | [[17-splay]] | ✅ | `ds/splay.c` |
 | B-дерево — split/merge, borrow | [[18-btree]] | ✅ | `ds/btree.c` |
 
-### Блок B — Сетевой стек (C) — активный (12/26)
+### Блок B — Сетевой стек (C) — активный (13/26)
 
 | # | Задание | Статус | Код |
 |---|---------|--------|-----|
@@ -56,6 +56,7 @@
 | B-10 | [[task-b10-port-scan-v1\|port-scan v1 — connect-scan диапазона, bounded concurrency (integration)]] | ✅ выполнено (2026-07-04) | `networking/portscan.c` |
 | B-11 | [[task-b11-http-basics\|HTTP basics — HTTP/1.1 клиент, framing (Content-Length/chunked/close), парсинг]] | ✅ выполнено (2026-07-05) | `networking/httpget.c` |
 | B-12 | [[task-b12-dns-query\|DNS-резолвер вручную — A-record поверх UDP, wire format, компрессия имён]] | ✅ выполнено (2026-07-07) | `networking/dnsquery.c` |
+| B-13 | [[task-b13-service-fingerprint\|Service fingerprinting — библиотека проб SSH/HTTP/SMTP/FTP, server/client-first, memmem-матчинг]] | ✅ выполнено (2026-07-12) | `networking/fingerprint.c` |
 | B-rf | [[task-b-interview03-reinforce\|sockmode_demo — матрица blocking/non-blocking (Interview 03 reinforce)]] | ✅ выполнено (2026-06-09) | `networking/sockmode_demo.c` |
 
 ### Блок C — Rust (параллельный трек) — активный (5/?)
