@@ -40,7 +40,7 @@
 | Splay — zig/zig-zig/zig-zag + insert | [[splay]] | ✅ | `sections/ds/splay/splay.c` |
 | B-дерево — split/merge, borrow | [[btree]] | ✅ | `sections/ds/btree/btree.c` |
 
-### Блок B — Сетевой стек (C) — активный (13/26)
+### Блок B — Сетевой стек (C) — активный (14/26)
 
 | # | Задание | Статус | Код |
 |---|---------|--------|-----|
@@ -57,6 +57,7 @@
 | B-11 | [[task-b11-http-basics\|HTTP basics — HTTP/1.1 клиент, framing (Content-Length/chunked/close), парсинг]] | ✅ выполнено (2026-07-05) | `sections/networking/http-basics/httpget.c` |
 | B-12 | [[task-b12-dns-query\|DNS-резолвер вручную — A-record поверх UDP, wire format, компрессия имён]] | ✅ выполнено (2026-07-07) | `sections/networking/dns-query/dnsquery.c` |
 | B-13 | [[task-b13-service-fingerprint\|Service fingerprinting — библиотека проб SSH/HTTP/SMTP/FTP, server/client-first, memmem-матчинг]] | ✅ выполнено (2026-07-12) | `sections/networking/service-fingerprint/fingerprint.c` |
+| B-14 | [[task-b14-tls-handshake\|TLS handshake observational — Wireshark на HTTPS, ClientHello/ServerHello/Certificate, ECDHE, SNI/ALPN, decrypt через SSLKEYLOGFILE]] | ✅ выполнено (2026-07-15) | — (observational + `topics/networking/tls.md`) |
 | B-rf | [[task-b-interview03-reinforce\|sockmode_demo — матрица blocking/non-blocking (Interview 03 reinforce)]] | ✅ выполнено (2026-06-09) | `sections/networking/interview03-reinforce/sockmode_demo.c` |
 
 ### Блок C — Rust (параллельный трек) — активный (5/?)

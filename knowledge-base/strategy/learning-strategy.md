@@ -99,8 +99,6 @@
 
 #### Фаза 3 — Application protocols + service detection
 
-**B-14 (atomic) — TLS handshake observational.** Wireshark на HTTPS-сессии, разбор ClientHello/ServerHello/Certificate/Finished, SNI extension, ALPN. **Без кода.** Место: `topics/networking/tls.md`. Закрывает чекпойнт этапа 1 "понимаешь что происходит при connect() на уровне ядра" — расширяет на L7.
-
 **B-15 (integration) — scanner v2.** Scan диапазона + identification сервиса для каждого открытого порта (используя пробы из B-13). Синтез B-11/B-12/B-13 поверх B-10.
 
 #### Фаза 4 — Raw sockets + L2/L3
