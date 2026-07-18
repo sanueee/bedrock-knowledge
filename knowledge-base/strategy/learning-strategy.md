@@ -99,7 +99,7 @@
 
 #### Фаза 3 — Application protocols + service detection
 
-**B-15 (integration) — scanner v2.** Scan диапазона + identification сервиса для каждого открытого порта (используя пробы из B-13). Синтез B-11/B-12/B-13 поверх B-10.
+*(Фаза 3 закрыта: B-11 HTTP, B-12 DNS, B-13 fingerprint, B-14 TLS, B-15 scanner v2 integration — выполнены.)*
 
 #### Фаза 4 — Raw sockets + L2/L3
 
