@@ -103,8 +103,6 @@
 
 #### Фаза 4 — Raw sockets + L2/L3
 
-**B-16 (atomic) — Interface enumeration.** `getifaddrs` для списка интерфейсов с их IP и масками, парсинг `/proc/net/route` для default gateway. Откуда сканер вообще знает в какой он подсети.
-
 **B-17 (atomic) — Raw sockets и capabilities.** `SOCK_RAW`, модель привилегий, `CAP_NET_RAW` через `libcap-ng`, `setcap cap_net_raw+ep` на бинарник вместо запуска под root. Принцип "minimum capability surface".
 
 **B-18 (atomic) — Internet checksum.** RFC 1071, алгоритм one's complement sum, конструкция IP/TCP заголовков в памяти, псевдо-заголовок для TCP-checksum'а.
