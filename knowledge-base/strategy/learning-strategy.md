@@ -103,8 +103,6 @@
 
 #### Фаза 4 — Raw sockets + L2/L3
 
-**B-17 (atomic) — Raw sockets и capabilities.** `SOCK_RAW`, модель привилегий, `CAP_NET_RAW` через `libcap-ng`, `setcap cap_net_raw+ep` на бинарник вместо запуска под root. Принцип "minimum capability surface".
-
 **B-18 (atomic) — Internet checksum.** RFC 1071, алгоритм one's complement sum, конструкция IP/TCP заголовков в памяти, псевдо-заголовок для TCP-checksum'а.
 
 **B-19 (atomic) — ICMP echo.** Ping одного хоста через raw socket: построить ICMP echo request, отправить, поймать echo reply, измерить RTT.
