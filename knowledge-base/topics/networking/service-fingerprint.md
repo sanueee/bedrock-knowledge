@@ -8,8 +8,7 @@ task: [[task-b13-service-fingerprint]]
 
 # Service fingerprinting
 
-Определить, **что реально слушает** на `host:port`, послав пробу и распознав ответ.
-Не lookup порта в `/etc/services` — сервис может висеть где угодно (SSH на 2222, HTTP на 8080).
+Определить, **что реально слушает** на `host:port`, послав пробу и распознав ответ. Не lookup порта в `/etc/services` — сервис может висеть где угодно (SSH на 2222, HTTP на 8080).
 
 ## Организующий принцип: решает ответ, не порт
 
@@ -23,8 +22,7 @@ task: [[task-b13-service-fingerprint]]
 | server-first | SSH (RFC 4253), SMTP, FTP | сразу `recv` баннер | 0 |
 | client-first | HTTP | сначала `send` запрос, потом `recv` | 1 |
 
-HTTP-сервер молчит, пока не пришлёшь запрос → если ждать баннер как от server-first,
-`recv` упрётся в таймаут → false negative. Это кодируется флагом `send_first` в `struct probe`.
+HTTP-сервер молчит, пока не пришлёшь запрос → если ждать баннер как от server-first, `recv` упрётся в таймаут → false negative. Это кодируется флагом `send_first` в `struct probe`.
 
 ## Таблица проб (const-данные)
 
@@ -37,8 +35,7 @@ HTTP-сервер молчит, пока не пришлёшь запрос → 
 ```
 
 - `HTTP/1.0` в payload намеренно: `1.1` требует заголовок `Host:`, `1.0` — нет.
-- SMTP и FTP оба несут `"220 "` → по содержимому неразличимы; здесь их разводит **порт**
-  (через выбор пробы), паттерн лишь подтверждает семейство. Строгое различение — по `SMTP`/`ESMTP` в greeting.
+- SMTP и FTP оба несут `"220 "` → по содержимому неразличимы; здесь их разводит **порт** (через выбор пробы), паттерн лишь подтверждает семейство. Строгое различение — по `SMTP`/`ESMTP` в greeting.
 
 ## Пайплайн (fingerprint.c)
 
@@ -56,19 +53,16 @@ HTTP-сервер молчит, пока не пришлёшь запрос → 
 
 ## Security / грабли
 
-- **`strlen(NULL)` → SIGSEGV** на server-first пробах (`payload==NULL`). `strlen` держать
-  внутри `if (send_first)`. Не ловится компилятором и чтением — только прогоном.
+- **`strlen(NULL)` → SIGSEGV** на server-first пробах (`payload==NULL`). `strlen` держать внутри `if (send_first)`. Не ловится компилятором и чтением — только прогоном.
 - **`recv` не кладёт `\0`**: `memmem` по длине `n`, печать `%.*s`, никаких `strstr`/`%s`.
-- **partial send**: `send` может отправить меньше → цикл `while (total < len)` с аккумулятором
-  (`total` и `sent` — **разные** переменные, оба инициализировать нулём).
+- **partial send**: `send` может отправить меньше → цикл `while (total < len)` с аккумулятором (`total` и `sent` — **разные** переменные, оба инициализировать нулём).
 - **усечение порта**: валидировать диапазон на `long` до сужения в `uint16_t`.
 - **fd leak**: `close(fd)` на каждой ветке, которая не возвращает fd.
 - **`timeout_ms`** — это миллисекунды: `3` = 3 мс (флейк на интернет-RTT), нужно `3000`.
 
 ## Ключевые термины (English)
 
-- **service fingerprinting**, **banner grabbing**, **server-first / client-first**,
-  **probe**, **`SO_RCVTIMEO`**, **partial send**, **writable ≠ connected**.
+- **service fingerprinting**, **banner grabbing**, **server-first / client-first**, **probe**, **`SO_RCVTIMEO`**, **partial send**, **writable ≠ connected**.
 
 ## См. также
 

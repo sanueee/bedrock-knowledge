@@ -103,8 +103,6 @@
 
 #### Фаза 4 — Raw sockets + L2/L3
 
-**B-18 (atomic) — Internet checksum.** RFC 1071, алгоритм one's complement sum, конструкция IP/TCP заголовков в памяти, псевдо-заголовок для TCP-checksum'а.
-
 **B-19 (atomic) — ICMP echo.** Ping одного хоста через raw socket: построить ICMP echo request, отправить, поймать echo reply, измерить RTT.
 
 **B-20 (integration) — ICMP ping sweep.** Sweep по `/24`: параллельная отправка echo requests, асинхронный сбор ответов с тайм-аутом. Синтез B-16 (откуда `/24`) + B-17 (raw + caps) + B-18 (checksum) + B-19 (один ICMP).

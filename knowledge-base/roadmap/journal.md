@@ -40,7 +40,7 @@
 | Splay — zig/zig-zig/zig-zag + insert | [[splay]] | ✅ | `sections/ds/splay/splay.c` |
 | B-дерево — split/merge, borrow | [[btree]] | ✅ | `sections/ds/btree/btree.c` |
 
-### Блок B — Сетевой стек (C) — активный (17/26)
+### Блок B — Сетевой стек (C) — активный (18/26)
 
 | # | Задание | Статус | Код |
 |---|---------|--------|-----|
@@ -61,6 +61,7 @@
 | B-15 | [[task-b15-scanner-v2\|scanner v2 — discovery диапазона + идентификация сервиса + извлечение детали (integration)]] | ✅ выполнено (2026-07-18) | `sections/networking/scanner-v2/scanner-v2.c` |
 | B-16 | [[task-b16-iface-enum\|Interface enumeration — getifaddrs + /proc/net/route, маски→CIDR, default gateway, endianness]] | ✅ выполнено (2026-07-19) | `sections/networking/iface-enum/ifenum.c` |
 | B-17 | [[task-b17-raw-socket-caps\|Raw sockets и capabilities — CAP_NET_RAW, minimum capability surface, setcap +ep, libcap-ng]] | ✅ выполнено (2026-07-20) | `sections/networking/raw-socket-caps/rawcap.c` |
+| B-18 | [[task-b18-internet-checksum\|Internet checksum — RFC 1071 one's complement, IP/TCP заголовки, pseudo-header, byte order на записи check]] | ✅ выполнено (2026-07-27) | `sections/networking/internet-checksum/checksum.c` |
 | B-rf | [[task-b-interview03-reinforce\|sockmode_demo — матрица blocking/non-blocking (Interview 03 reinforce)]] | ✅ выполнено (2026-06-09) | `sections/networking/interview03-reinforce/sockmode_demo.c` |
 
 ### Блок C — Rust (параллельный трек) — активный (5/?)
