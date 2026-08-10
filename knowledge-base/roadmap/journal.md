@@ -40,7 +40,7 @@
 | Splay — zig/zig-zig/zig-zag + insert | [[splay]] | ✅ | `sections/ds/splay/splay.c` |
 | B-дерево — split/merge, borrow | [[btree]] | ✅ | `sections/ds/btree/btree.c` |
 
-### Блок B — Сетевой стек (C) — активный (19/26)
+### Блок B — Сетевой стек (C) — активный (20/26)
 
 | # | Задание | Статус | Код |
 |---|---------|--------|-----|
@@ -63,6 +63,7 @@
 | B-17 | [[task-b17-raw-socket-caps\|Raw sockets и capabilities — CAP_NET_RAW, minimum capability surface, setcap +ep, libcap-ng]] | ✅ выполнено (2026-07-20) | `sections/networking/raw-socket-caps/rawcap.c` |
 | B-18 | [[task-b18-internet-checksum\|Internet checksum — RFC 1071 one's complement, IP/TCP заголовки, pseudo-header, byte order на записи check]] | ✅ выполнено (2026-07-27) | `sections/networking/internet-checksum/checksum.c` |
 | B-19 | [[task-b19-icmp-echo\|ICMP echo — ping через raw socket, корреляция id/sequence, абсолютный дедлайн, RTT по CLOCK_MONOTONIC]] | ✅ выполнено (2026-08-01) | `sections/networking/icmp-echo/ping.c` |
+| B-20 | [[task-b20-ping-sweep\|ICMP ping sweep — фазовая модель рассылка/сбор, массив слотов, sequence как индекс с проверкой границ, SO_RCVBUF и false negative (integration)]] | ✅ выполнено (2026-08-09) | `sections/networking/ping-sweep/net.h`, `sections/networking/ping-sweep/net.c`, `sections/networking/ping-sweep/sweep.c` |
 | B-rf | [[task-b-interview03-reinforce\|sockmode_demo — матрица blocking/non-blocking (Interview 03 reinforce)]] | ✅ выполнено (2026-06-09) | `sections/networking/interview03-reinforce/sockmode_demo.c` |
 
 ### Блок C — Rust (параллельный трек) — активный (5/?)

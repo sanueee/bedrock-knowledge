@@ -7,6 +7,7 @@
   - `roadmap/archive.md` — пройденные темы по блокам + индекс тем (оценка знаний, читается редко).
   - `roadmap/journal.md` — журнал заданий + код, reading/theory/mock/ctf.
 - **Будущее (план, карта блоков, стратегия): ЧИТАТЬ ЦЕЛИКОМ** - [knowledge-base/strategy/learning-strategy.md](../knowledge-base/strategy/learning-strategy.md). 
+- **Как писать код (конвенции C): ЧИТАТЬ перед генерацией любого C-кода и перед `/check`** — [CODESTYLE.md](CODESTYLE.md). Зафиксирован 2026-08-09 по итогам B-20; эталон — `sections/networking/ping-sweep/`. Расхождения с ним отмечать в ревью **отдельной секцией**, не смешивая с багами.
 
 ---
 
