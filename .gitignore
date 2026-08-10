@@ -6,7 +6,3 @@ roadmap-md
 strategy-md
 target/
 **/*.rs.bk
-
-# скомпилированные бинарники B-20
-sections/networking/ping-sweep/sweep
-sections/networking/ping-sweep/sweep_san
