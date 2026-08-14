@@ -1,6 +1,6 @@
 .obsidian
+.DS_Store
 *.out
-*.txt
 claude-md
 roadmap-md
 strategy-md
