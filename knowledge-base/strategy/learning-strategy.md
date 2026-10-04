@@ -1,4 +1,4 @@
-# Стратегия обучения — fn2s
+# Стратегия обучения — bedrock-knowledge
 
 Этот файл — **план и принципы** (будущее). Только то, что ещё впереди:
 - **Текущий блок** расписан по заданиям (одно задание = краткая сводка). По мере выполнения задания **удаляются** отсюда — выполненное живёт в `roadmap/`, не здесь.
@@ -95,7 +95,7 @@
 - CLI: CIDR-диапазоны, список портов, выбор техники, output форматы (text/json)
 - README, tests, CI (GitHub Actions с clang-tidy + ASan/UBSan)
 
-Место: `networking/scanner/` (внутри fn2s) + **отдельная репа на GitHub**.
+Место: `networking/scanner/` (внутри bedrock-knowledge) + **отдельная репа на GitHub**.
 
 #### Фаза 3 — Application protocols + service detection
 

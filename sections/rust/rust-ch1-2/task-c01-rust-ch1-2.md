@@ -28,7 +28,7 @@ substep: C1.1 — The Book главы 1–2
 ### Часть 2 — hello_world через cargo (глава 1)
 
 ```
-cd /Users/sanueee/vscode_projects/fn2s/rust
+cd /Users/sanueee/vscode_projects/bedrock-knowledge/rust
 cargo new hello_world
 cd hello_world
 cargo run
