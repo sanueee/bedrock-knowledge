@@ -25,18 +25,20 @@
 
 | Ситуация | Куда |
 |----------|------|
-| Концепция языка C | `knowledge-base/topics/c/` |
-| Концепция Linux internals | `knowledge-base/topics/linux/` |
-| Сети, сокеты, протоколы | `knowledge-base/topics/networking/` |
-| Разбор чужого open-source кода | `knowledge-base/topics/reading/` |
-| LLM-security (этапы Z/I/J) | `knowledge-base/topics/llm-sec/` |
-| Web/CTF/общая безопасность | `knowledge-base/topics/security/` |
-| Концепция Rust | `knowledge-base/topics/rust/` (создать при первом C-task'е) |
-| Структура данных (часть закрытого блока A) | `knowledge-base/topics/ds/` (хаб: `00-index.md`) |
-| Выполненное задание | `sections/<domain>/<name>/task-<блок><NN>-<name>.md` — рядом с кодом (файл создан `give-task`, здесь дозаполняется). Домен: `ds`/`linux`/`networking`/`rust`/`crypto`. Имя task-файла сохраняет блок-префикс (`task-b13-service-fingerprint.md`) ради wikilinks |
-| Reading-сессия | `sections/<domain>/reading-NN/reading-NN.md` (папка задачи по тематике домена) + конспект в `knowledge-base/topics/reading/` |
-| Мок-собес | `knowledge-base/interviews/interview-NN.md` |
-| CTF writeup | `knowledge-base/ctf/<platform>/<category>/<task>.md` |
+| Концепция языка C | `knowledge-base/self-study/topics/c/` |
+| Концепция Linux internals | `knowledge-base/self-study/topics/linux/` |
+| Сети, сокеты, протоколы | `knowledge-base/self-study/topics/networking/` |
+| Разбор чужого open-source кода | `knowledge-base/self-study/topics/reading/` |
+| LLM-security (этапы Z/I/J) | `knowledge-base/self-study/topics/llm-sec/` |
+| Web/CTF/общая безопасность | `knowledge-base/self-study/topics/security/` |
+| Концепция Rust | `knowledge-base/self-study/topics/rust/` (создать при первом C-task'е) |
+| Вуз — конспект лекции/темы предмета | `knowledge-base/university/<N>-semester/<предмет>/theory/` (папку предмета создать при первом материале) |
+| Вуз — лаба, задача, код | `knowledge-base/university/<N>-semester/<предмет>/practice/<name>/` |
+| Структура данных (2 семестр, закрыт; часть блока A) | `knowledge-base/university/2-semester/ds/theory/` (хаб: `00-index.md`) |
+| Выполненное задание | `self-practice/<domain>/<name>/task-<блок><NN>-<name>.md` — рядом с кодом (файл создан `give-task`, здесь дозаполняется). Домен: `linux`/`networking`/`rust` (новый — по активному блоку). Имя task-файла сохраняет блок-префикс (`task-b13-service-fingerprint.md`) ради wikilinks |
+| Reading-сессия | `self-practice/<domain>/reading-NN/reading-NN.md` (папка задачи по тематике домена) + конспект в `knowledge-base/self-study/topics/reading/` |
+| Мок-собес | **никуда** — слабые места подсвечиваются в чате, место фиксации пользователь пока не определил |
+| CTF writeup | `self-practice/ctf/<platform>/<category>/<task>.md` |
 | Обновление существующей записи | найти файл → дополнить (не создавать дубликат) |
 
 Перед созданием нового файла — проверить что он не существует (`Glob` или `Grep`).
@@ -48,7 +50,7 @@
 ```
 ---
 тема: <развёрнутое название: русское + английский термин, как в заголовке>
-блок: <A — Linux syscalls | B — Сетевой стек | C — Rust | D — Rust intermediate | E — Crypto | F — VPN | G — Sandbox | H — eBPF | I — LLM-sec | J — LLM-sec | Z — Python bonus | DS — Структуры данных (экзамен) | Фундамент (theory) | Reading | Security/CTF | Курс — Архитектура Linux>
+блок: <A — Linux syscalls | B — Сетевой стек | C — Rust | D — Rust intermediate | E — Crypto | F — VPN | G — Sandbox | H — eBPF | I — LLM-sec | J — LLM-sec | Z — Python bonus | DS — Структуры данных (экзамен) | Фундамент (theory) | Reading | Security/CTF | Курс — Архитектура Linux | Вуз — <предмет> (<N> семестр)>
 дата: YYYY-MM-DD
 связано:
   - "[[wikilink1]]"
@@ -94,7 +96,7 @@
 
 ### 4. Структура task-md — эталон задаёт `give-task`, здесь только дозаполнение
 
-**Структуру и порядок секций task-md определяет `give-task` (шаг 7 → «ОБЯЗАТЕЛЬНЫЙ шаблон task-md», эталон `sections/networking/service-fingerprint/task-b13-service-fingerprint.md`).** vault-write **НЕ** пересоздаёт заголовки и не плодит собственный шаблон — файл уже создан `give-task` с заполненными секциями (Задание / Центральная идея / Хедеры / Дизайн-подсказка / Алгоритм / Примеры для теста) и двумя **пустыми** финальными секциями. vault-write наполняет **только их**:
+**Структуру и порядок секций task-md определяет `give-task` (шаг 7 → «ОБЯЗАТЕЛЬНЫЙ шаблон task-md», эталон `self-practice/networking/service-fingerprint/task-b13-service-fingerprint.md`).** vault-write **НЕ** пересоздаёт заголовки и не плодит собственный шаблон — файл уже создан `give-task` с заполненными секциями (Задание / Центральная идея / Хедеры / Дизайн-подсказка / Алгоритм / Примеры для теста) и двумя **пустыми** финальными секциями. vault-write наполняет **только их**:
 
 - **`## Разбор /check`** — баги по итерациям + security-заметки (границы буфера, UB, утечки ресурсов, overflow). Таблица «итерация → найдено → класс» уместна. Источник — проведённый `/check`.
 - **`## Session-debrief / итог`** — опыт: что усвоено; реальное решение, если разошлось с планом; ошибки и трудности (**включая ответ из шага 1 debrief**); что бы сделал иначе; слабые места; вложенный `## Ключевые термины (English)` — глоссарий EN.

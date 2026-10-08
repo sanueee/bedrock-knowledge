@@ -63,10 +63,10 @@ CTF — **не критический путь**. Это параллельны�
 ### 1. Прочитай контекст
 
 Прочитай roadmap:
-- `knowledge-base/roadmap/00-roadmap.md` → "Текущая позиция" (активный блок) и `roadmap/archive.md` → выполненные темы (для подбора категории под уровень).
+- `knowledge-base/self-study/roadmap/00-roadmap.md` → "Текущая позиция" (активный блок) и `roadmap/archive.md` → выполненные темы (для подбора категории под уровень).
 - `roadmap/journal.md` → раздел `## CTF` → журнал решённых тасков. Это единственный авторитетный журнал CTF. Чтобы не предлагать повторно.
 
-Прочитай `knowledge-base/ctf/picoctf/` — структура каталогов с writeup'ами для деталей.
+Прочитай `self-practice/ctf/picoctf/` — структура каталогов с writeup'ами для деталей.
 
 ### 2. Подбери категорию под уровень
 
@@ -93,7 +93,7 @@ CTF — **не критический путь**. Это параллельны�
 
 ### 4. Создай файл-писмейкер сессии
 
-Создай `knowledge-base/ctf/picoctf/session-NN.md` с шаблоном:
+Создай `self-practice/ctf/picoctf/session-NN.md` с шаблоном:
 
 ```markdown
 ---
@@ -132,7 +132,7 @@ status: in-progress
 
 После разбора — для каждого нетривиального таска создать **отдельный writeup**:
 
-`knowledge-base/ctf/picoctf/<category>/<task-name>.md` со структурой:
+`self-practice/ctf/picoctf/<category>/<task-name>.md` со структурой:
 
 ```markdown
 ---
@@ -165,7 +165,7 @@ solved: true|false
 
 ### 6. Обнови журнал
 
-- Добавить запись в раздел "CTF" в `knowledge-base/roadmap/journal.md`. Формат:
+- Добавить запись в раздел "CTF" в `knowledge-base/self-study/roadmap/journal.md`. Формат:
   ```
   | NN | <дата> | <платформа> | <категория> | [[ctf/<platform>/<cat>/<task>\|<task>]] | <главное что узнал> |
   ```

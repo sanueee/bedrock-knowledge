@@ -24,7 +24,7 @@
 
 ### 1. Прочитай контекст
 
-Прочитай `knowledge-base/roadmap/00-roadmap.md` → "Текущая позиция":
+Прочитай `knowledge-base/self-study/roadmap/00-roadmap.md` → "Текущая позиция":
 - Активный блок (A / B / C / ...) и его статус.
 - "Выполненные темы блока X" — все пройденные блоки — в `roadmap/archive.md`.
 
@@ -72,7 +72,7 @@
 
 ### 4. Создай файл задания
 
-Создай `sections/<domain>/reading-NN/reading-NN.md` (папка задачи по тематике домена, например `sections/networking/reading-03/reading-03.md` для разбора сетевого модуля) с шаблоном:
+Создай `self-practice/<domain>/reading-NN/reading-NN.md` (папка задачи по тематике домена, например `self-practice/networking/reading-03/reading-03.md` для разбора сетевого модуля) с шаблоном:
 
 ```markdown
 ---
@@ -125,7 +125,7 @@ type: reading
 ### 6. Обнови журнал
 
 После завершения reading-сессии:
-- В `knowledge-base/roadmap/journal.md` → "Reading-сессии" — добавить строку с датой, источником, целью и `[[wikilink]]` на конспект в `topics/reading/`.
+- В `knowledge-base/self-study/roadmap/journal.md` → "Reading-сессии" — добавить строку с датой, источником, целью и `[[wikilink]]` на конспект в `topics/reading/`.
 - В `roadmap/archive.md` → "Темы — Reading" — добавить `[[wikilink]]` на конспект.
 
 ---
