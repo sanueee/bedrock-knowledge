@@ -8,3 +8,6 @@ target/
 **/*.rs.bk
 knowledge-base/pt-course/_images
 knowledge-base/pt-course.zip
+
+# Pintos build artifacts
+knowledge-base/university/3-semester/os/practice/pintos/src/*/build/
