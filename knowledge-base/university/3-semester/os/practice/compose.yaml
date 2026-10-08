@@ -1,0 +1,13 @@
+name: pintos
+
+services:
+  pintos:
+    build: .
+    image: pintos-env
+    container_name: pintos
+    hostname: pintos
+    volumes:
+      - ./pintos:/pintos
+    working_dir: /pintos/src
+    command: sleep infinity
+    init: true

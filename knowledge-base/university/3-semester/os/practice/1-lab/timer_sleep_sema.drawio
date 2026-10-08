@@ -1,0 +1,171 @@
+<mxfile host="65bd71144e">
+    <diagram name="timer_sleep (модифицированная)" id="timer_sleep_sema">
+        <mxGraphModel dx="752" dy="839" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="timer_sleep() после модификации" style="text;html=1;align=center;verticalAlign=middle;fontStyle=1;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="200" width="360" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="start" value="Начало&lt;br&gt;timer_sleep(sleep_ticks)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="50" width="240" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="d1" value="intr_get_level() == INTR_ON?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="150" width="280" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="err" value="ASSERT не выполнен:&lt;br&gt;PANIC(&quot;assertion failed&quot;)&lt;br&gt;остановка ядра" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="155" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="d2" value="sleep_ticks &amp;lt;= 0?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="270" width="280" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="endzero" value="Конец timer_sleep()&lt;br&gt;&lt;i&gt;пустой сон&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=0;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="280" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="p1" value="Создать описатель&lt;br&gt;&lt;b&gt;struct sleeper s&lt;/b&gt; в стеке потока;&lt;br&gt;sema_init(&amp;amp;s.sema, &lt;b&gt;0&lt;/b&gt;)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="390" width="260" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="p2" value="old_level = intr_disable()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="502" width="240" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="p3" value="s.deadline = ticks + sleep_ticks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="255" y="580" width="250" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="p4" value="list_insert_ordered(&amp;amp;sleep_list,&lt;br&gt;&amp;amp;s.elem, sleeper_less)&lt;br&gt;&lt;i&gt;вставка по возрастанию deadline&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="245" y="660" width="270" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="p5" value="intr_set_level(old_level)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="745" width="240" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="p6" value="&lt;b&gt;sema_down(&amp;amp;s.sema)&lt;/b&gt;&lt;br&gt;значение семафора = 0,&lt;br&gt;поток блокируется" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="245" y="845" width="270" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="end" value="Конец&lt;br&gt;timer_sleep()" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="985" width="240" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="start" target="d1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" parent="1" source="d1" target="err" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" parent="1" source="d1" target="d2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" parent="1" source="d2" target="endzero" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" parent="1" source="d2" target="p1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="p1" target="p2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="p2" target="p3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="p3" target="p4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="p4" target="p5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="p5" target="p6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" value="семафор поднят" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" parent="1" source="p6" target="end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="timer_interrupt (пробуждение)" id="timer_interrupt_sema">
+        <mxGraphModel dx="751" dy="1187" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="ititle" value="timer_interrupt() — пробуждение спящих потоков" style="text;html=1;align=center;verticalAlign=middle;fontStyle=1;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="130" width="560" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="istart" value="Аппаратное прерывание таймера&lt;br&gt;&lt;i&gt;TIMER_FREQ (100) раз в секунду&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="50" width="300" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip1" value="ticks++" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="165" width="240" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip2" value="thread_tick()&lt;br&gt;&lt;i&gt;учёт кванта времени&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="245" width="240" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="id1" value="list_empty(&amp;amp;sleep_list)?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="245" y="330" width="310" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip3" value="s = list_entry(list_front(&amp;amp;sleep_list),&lt;br&gt;struct sleeper, elem)&lt;br&gt;&lt;i&gt;голова списка — ближайший дедлайн&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="245" y="465" width="310" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="id2" value="s-&amp;gt;deadline &amp;gt; ticks?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="245" y="575" width="310" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip4" value="list_pop_front(&amp;amp;sleep_list)&lt;br&gt;&lt;i&gt;снять описатель до пробуждения&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="710" width="260" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="ip5" value="&lt;b&gt;sema_up(&amp;amp;s-&amp;gt;sema)&lt;/b&gt;&lt;br&gt;поток: BLOCKED &amp;rarr; READY" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="800" width="260" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="iend" value="Конец&lt;br&gt;timer_interrupt()" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="625" y="455" width="200" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="inote1" value="Список отсортирован по deadline:&lt;br&gt;если голова ещё не готова, то и все&lt;br&gt;последующие спят. Выход из цикла&lt;br&gt;после &lt;b&gt;одного сравнения&lt;/b&gt; — важно,&lt;br&gt;ведь обработчик вызывается 100 раз/с." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f5f5f5;strokeColor=#666666;size=14;fontSize=11;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="580" width="250" height="95" as="geometry"/>
+                </mxCell>
+                <mxCell id="inote2" value="sema_up() разрешено вызывать из&lt;br&gt;обработчика прерывания: он никогда&lt;br&gt;не блокируется. Цикл &lt;b&gt;while&lt;/b&gt;, т.к. на&lt;br&gt;одном такте может истечь срок&lt;br&gt;сразу нескольких потоков&lt;br&gt;(тест alarm-simultaneous)." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f5f5f5;strokeColor=#666666;size=14;fontSize=11;align=left;spacingLeft=6;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="780" width="255" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="ie1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="istart" target="ip1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ie2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="ip1" target="ip2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ie3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="ip2" target="id1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ie4" value="Да" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" parent="1" source="id1" target="iend" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ie5" value="Нет" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" parent="1" source="id1" target="ip3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ie6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="ip3" target="id2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ie7" value="Да&lt;br&gt;(ещё рано)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="id2" target="iend" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="725" y="625"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ie8" value="Нет&lt;br&gt;(срок наступил)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;labelBackgroundColor=#ffffff;" parent="1" source="id2" target="ip4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ie9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;" parent="1" source="ip4" target="ip5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ie10" value="следующий&lt;br&gt;спящий поток" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=classic;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="ip5" target="id1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="170" y="830"/>
+                            <mxPoint x="170" y="380"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ie11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;dashed=1;strokeColor=#666666;" parent="1" source="inote1" target="id2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ie12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=none;dashed=1;strokeColor=#666666;" parent="1" source="inote2" target="ip5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
